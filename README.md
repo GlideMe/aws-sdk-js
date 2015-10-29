@@ -6,7 +6,7 @@
 
 [![Version](https://badge.fury.io/js/aws-sdk.svg)](http://badge.fury.io/js/aws-sdk) [![Build Status](https://travis-ci.org/aws/aws-sdk-js.svg?branch=master)](https://travis-ci.org/aws/aws-sdk-js) [![Coverage Status](https://coveralls.io/repos/aws/aws-sdk-js/badge.svg?branch=master)](https://coveralls.io/r/aws/aws-sdk-js?branch=master)
 
-The official AWS SDK for JavaScript, available for browsers and mobile devices,
+The official AWS SDK for JavaScript modified by Glide for some debugging, available for browsers and mobile devices,
 or Node.js backends
 
 Release notes can be found at http://aws.amazon.com/releasenotes/SDK/JavaScript

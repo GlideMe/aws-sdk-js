@@ -67,6 +67,23 @@ describe 'AWS.S3.ManagedUpload', ->
         expect(reqs[0].params.ContentEncoding).to.equal('encoding')
         done()
 
+    it 'can not use provided ContentMD5 for a multipart upload', (done) ->
+      send Body: bigbody, ContentMD5: 'MD5HASH', ->
+        expect(data).not.to.exist
+        expect(err.code).to.equal('InvalidDigest')
+        done()
+
+    it 'can use provided ContentMD5 for single part upload', (done) ->
+      reqs = helpers.mockResponses [
+        data: ETag: 'ETAG'
+      ]
+
+      send Body: smallbody, ContentMD5: 'MD5HASH', ->
+        expect(err).not.to.exist
+        expect(data.ETag).to.equal('ETAG')
+        expect(helpers.operationsForRequests(reqs)).to.eql ['s3.putObject']
+        done()
+
     it 'can fail a single part', ->
       reqs = helpers.mockResponses [
         data: null
@@ -307,6 +324,18 @@ describe 'AWS.S3.ManagedUpload', ->
           expect(err).to.exist
           expect(data).not.to.exist
           done()
+
+    it 'returns data with ETag, Location, Bucket, and Key with single part upload', (done) ->
+      reqs = helpers.mockResponses [
+        data: ETag: 'ETAG'
+      ]
+      send Body: smallbody, ContentEncoding: 'encoding', ->
+        expect(err).not.to.exist
+        expect(data.ETag).to.equal('ETAG')
+        expect(data.Location).to.equal('https://bucket.s3.mock-region.amazonaws.com/key')
+        expect(data.Key).to.equal('key')
+        expect(data.Bucket).to.equal('bucket')
+        done()
 
     if AWS.util.isNode()
       describe 'streaming', ->

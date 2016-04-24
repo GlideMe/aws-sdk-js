@@ -4,23 +4,42 @@ config = {}
 try
   config = require('./configuration')
 
+acm = new AWS.ACM(AWS.util.merge(config, config.acm))
+apigateway = new AWS.APIGateway(AWS.util.merge(config, config.apigateway))
+cloudfront = new AWS.CloudFront(AWS.util.merge(config, config.cloudfront))
+cloudtrail = new AWS.CloudTrail(AWS.util.merge(config, config.cloudtrail))
 cloudwatch = new AWS.CloudWatch(AWS.util.merge(config, config.cloudwatch))
 cloudwatchlogs = new AWS.CloudWatchLogs(AWS.util.merge(config, config.cloudwatchlogs))
 cognitoidentity = new AWS.CognitoIdentity(AWS.util.merge(config, config.cognitoidentity))
+configservice = new AWS.ConfigService(AWS.util.merge(config, config.configservice))
+codecommit = new AWS.CodeCommit(AWS.util.merge(config, config.codecommit))
+codepipeline = new AWS.CodePipeline(AWS.util.merge(config, config.codepipeline))
 cognitosync = new AWS.CognitoSync(AWS.util.merge(config, config.cognitosync))
 devicefarm = new AWS.DeviceFarm(AWS.util.merge(config, config.devicefarm))
 dynamodb = new AWS.DynamoDB(AWS.util.merge(config, config.dynamodb))
 dynamodbstreams = new AWS.DynamoDBStreams(AWS.util.merge(config, config.dynamodbstreams))
 ec2 = new AWS.EC2(AWS.util.merge(config, config.ec2))
+ecr = new AWS.ECR(AWS.util.merge(config, config.ecr))
+ecs = new AWS.ECS(AWS.util.merge(config, config.ecs))
 elastictranscoder = new AWS.ElasticTranscoder(AWS.util.merge(config, config.elastictranscoder))
+elb = new AWS.ELB(AWS.util.merge(config, config.elb))
+config.inspector = config.inspector || {}
+config.inspector.region = 'us-west-2'
+inspector = new AWS.Inspector(AWS.util.merge(config, config.inspector))
 kinesis = new AWS.Kinesis(AWS.util.merge(config, config.kinesis))
+kms = new AWS.KMS(AWS.util.merge(config, config.kms))
 lambda = new AWS.Lambda(AWS.util.merge(config, config.lambda))
 mobileanalytics = new AWS.MobileAnalytics(AWS.util.merge(config, config.mobileanalytics))
 machinelearning = new AWS.MachineLearning(AWS.util.merge(config, config.machinelearning))
 opsworks = new AWS.OpsWorks(AWS.util.merge(config, config.opsworks))
+rds = new AWS.RDS(AWS.util.merge(config, config.rds))
+route53 = new AWS.Route53(AWS.util.merge(config, config.route53))
+route53domains = new AWS.Route53Domains(AWS.util.merge(config, config.route53domains))
 s3 = new AWS.S3(AWS.util.merge(config, config.s3))
-sqs = new AWS.SQS(AWS.util.merge(config, config.sqs))
 sns = new AWS.SNS(AWS.util.merge(config, config.sns))
+sqs = new AWS.SQS(AWS.util.merge(config, config.sqs))
+ssm = new AWS.SSM(AWS.util.merge(config, config.ssm))
+storagegateway = new AWS.StorageGateway(AWS.util.merge(config, config.storagegateway))
 sts = new AWS.STS(AWS.util.merge(config, config.sts))
 waf = new AWS.WAF(AWS.util.merge(config, config.waf))
 
@@ -109,6 +128,64 @@ integrationTests ->
       expect(headers['x-amzn-foo']).to.equal('foo')
       expect(headers['x-amzn-bar']).to.equal('bar')
 
+  describe 'AWS.ACM', ->
+    it 'makes a request', (done) ->
+      acm.listCertificates {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.CertificateSummaryList)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      params =
+        CertificateArn: 'fake-arn'
+      acm.describeCertificate params, (err, data) ->
+        assertError(err, 'ValidationException')
+        noData(data)
+        done()
+
+  describe 'AWS.APIGateway', ->
+    it 'makes a request', (done) ->
+      apigateway.getRestApis {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.items)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      params =
+        restApiId: 'fake-id'
+      apigateway.getRestApi params, (err, data) ->
+        assertError(err, 'NotFoundException')
+        noData(data)
+        done()
+
+  describe 'AWS.CloudFront', ->
+    it 'makes a request', (done) ->
+      cloudfront.listDistributions {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.DistributionList.Items)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      params =
+        Id: 'fake-distro'
+      cloudfront.getDistribution params, (err, data) ->
+        assertError(err, 'NoSuchDistribution')
+        noData(data)
+        done()
+
+  describe 'AWS.CloudTrail', ->
+    it 'makes a request', (done) ->
+      cloudtrail.listPublicKeys (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.PublicKeyList)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      cloudtrail.listTags {ResourceIdList: ['fake-arn']}, (err, data) ->
+        noData(data)
+        assertError(err, 'CloudTrailARNInvalidException')
+        done()
+
   describe 'AWS.CloudWatch', ->
     it 'makes a request', (done) ->
       cloudwatch.listMetrics (err, data) ->
@@ -144,6 +221,36 @@ integrationTests ->
         noData(data)
         done()
 
+    describe 'AWS.CodeCommit', ->
+      it 'makes a request', (done) ->
+        codecommit.listRepositories {}, (err, data) ->
+          noError(err)
+          expect(Array.isArray(data.repositories)).to.equal(true)
+          done()
+
+      it 'handles errors', (done) ->
+        params =
+          repositoryName: 'fake-repo'
+        codecommit.listBranches params, (err, data) ->
+          assertError(err, 'RepositoryDoesNotExistException')
+          noData(data)
+          done()
+
+  describe 'AWS.CodePipeline', ->
+    it 'makes a request', (done) ->
+      codepipeline.listPipelines {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.pipelines)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      params =
+        name: 'fake-pipeline'
+      codepipeline.getPipeline params, (err, data) ->
+        assertError(err, 'PipelineNotFoundException')
+        noData(data)
+        done()
+
   describe 'AWS.CognitoIdentity', ->
     it 'makes a request', (done) ->
       cognitoidentity.listIdentityPools MaxResults: 10, (err, data) ->
@@ -173,6 +280,21 @@ integrationTests ->
       cognitosync.describeIdentityPoolUsage params, (err, data) ->
         assertError(err, 'ResourceNotFoundException')
         matchError(err, 'IdentityPool \'us-east-1:aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee\' not found')
+        noData(data)
+        done()
+
+  describe 'AWS.ConfigService', ->
+    it 'makes a request', (done) ->
+      configservice.describeDeliveryChannels {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.DeliveryChannels)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      params =
+        DeliveryChannel: {name: ''}
+      configservice.putDeliveryChannel params, (err, data) ->
+        assertError(err, 'ValidationException')
         noData(data)
         done()
 
@@ -239,6 +361,32 @@ integrationTests ->
         matchError(err, 'The volume \'vol-12345678\' does not exist')
         done()
 
+  describe 'AWS.ECR', ->
+    it 'makes a request', (done) ->
+      ecr.describeRepositories (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.repositories)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      ecr.listImages {repositoryName: 'fake-name'}, (err, data) ->
+        noData(data)
+        assertError(err, 'RepositoryNotFoundException')
+        done()
+
+  describe 'AWS.ECS', ->
+    it 'makes a request', (done) ->
+      ecs.listClusters {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.clusterArns)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      ecs.stopTask {task: 'xxxxxxxxxxx-xxxxxxxxxxxx-xxxxxxxxxxx'}, (err, data) ->
+        assertError(err, 'ClusterNotFoundException')
+        noData(data)
+        done()
+
   describe 'AWS.ElasticTranscoder', ->
     it 'makes a request', (done) ->
       elastictranscoder.listPipelines (err, data) ->
@@ -246,12 +394,36 @@ integrationTests ->
         expect(Array.isArray(data.Pipelines)).to.equal(true)
         done()
 
-    # TODO This error code needs to be updated when the X-Amzn-ErrorType is whitelisted.
     it 'handles errors', (done) ->
       elastictranscoder.readJob {Id: '3333333333333-abcde3'}, (err, data) ->
         noData(data)
-        assertError(err, 'UnknownError')
-        matchError(err, 'The specified job was not found')
+        assertError(err, 'ResourceNotFoundException')
+        done()
+
+  describe 'AWS.ELB', ->
+    it 'makes a request', (done) ->
+      elb.describeLoadBalancers {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.LoadBalancerDescriptions)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      elb.describeTags {LoadBalancerNames: ['fake-name']}, (err, data) ->
+        assertError(err, 'LoadBalancerNotFound')
+        noData(data)
+        done()
+
+  describe 'AWS.Inspector', ->
+    it 'makes a request', (done) ->
+      inspector.listRulesPackages (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.rulesPackageArns)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      inspector.stopAssessmentRun {assessmentRunArn: 'fake-arn'}, (err, data) ->
+        noData(data)
+        assertError(err, 'InvalidInputException')
         done()
 
   describe 'AWS.Kinesis', ->
@@ -266,6 +438,19 @@ integrationTests ->
         noData(data)
         assertError(err, 'ResourceNotFoundException')
         matchError(err, 'Stream fake-stream under account')
+        done()
+
+  describe 'AWS.KMS', ->
+    it 'lists keys', (done) ->
+      kms.listKeys (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.Keys)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      kms.createAlias {AliasName: 'fake-alias', TargetKeyId: 'non-existent'}, (err, data) ->
+        noData(data)
+        assertError(err, 'ValidationException')
         done()
 
   describe 'AWS.Lambda', ->
@@ -339,6 +524,45 @@ integrationTests ->
         noData(data)
         assertError(err, 'ResourceNotFoundException')
         matchError(err, 'Unable to find stack with ID fake-id')
+        done()
+
+  describe 'AWS.RDS', ->
+    it 'makes a request', (done) ->
+      rds.describeCertificates (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.Certificates)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      rds.listTagsForResource {ResourceName: 'fake-name'}, (err, data) ->
+        noData(data)
+        assertError(err, 'InvalidParameterValue')
+        done()
+
+  describe 'AWS.Route53', ->
+    it 'makes a request', (done) ->
+      route53.listHostedZones (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.HostedZones)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      route53.createHostedZone {Name: 'fake-name', 'CallerReference': 'fake-ref'}, (err, data) ->
+        noData(data)
+        assertError(err, 'InvalidDomainName')
+        done()
+
+  describe 'AWS.Route53Domains', ->
+    it 'makes a request', (done) ->
+      route53domains.listDomains (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.Domains)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      route53domains.registerDomain {DomainName: 'example.com', DurationInYears: '1', AdminContact: {}, RegistrantContact: {}, TechContact: {}}, (err, data) ->
+        noData(data)
+        assertError(err, 'InvalidInput')
         done()
 
   describe 'AWS.S3', ->
@@ -419,13 +643,16 @@ integrationTests ->
             expect(progress[0].loaded > 10).to.equal(true)
             s3.deleteObject(Key: key).send(done)
 
-
-  describe 'AWS.STS', ->
-    it 'gets a session token', (done) ->
-      sts.getSessionToken (err, data) ->
+  describe 'AWS.SNS', ->
+    it 'creates and deletes topics', (done) ->
+      sns.createTopic {Name: uniqueName('aws-sdk-js')}, (err, data) ->
         noError(err)
-        expect(data.Credentials.AccessKeyId).not.to.equal('')
-        done()
+        arn = data.TopicArn
+        sns = new AWS.SNS(sns.config)
+        sns.config.params = TopicArn: arn
+        sns.listTopics (err, data) ->
+          expect(data.Topics.filter((o) -> o.TopicArn == arn)).not.to.equal(null)
+          sns.deleteTopic(done)
 
   describe 'AWS.SQS', ->
     it 'posts and receives messages on a queue', (done) ->
@@ -445,16 +672,40 @@ integrationTests ->
                   expect(data.Messages[0].MD5OfBody).to.equal(AWS.util.crypto.md5(msg, 'hex'))
                   sqs.deleteQueue(done)
 
-  describe 'AWS.SNS', ->
-    it 'creates and deletes topics', (done) ->
-      sns.createTopic {Name: uniqueName('aws-sdk-js')}, (err, data) ->
+  describe 'AWS.SSM', ->
+    it 'makes a request', (done) ->
+      ssm.listCommands {}, (err, data) ->
         noError(err)
-        arn = data.TopicArn
-        sns = new AWS.SNS(sns.config)
-        sns.config.params = TopicArn: arn
-        sns.listTopics (err, data) ->
-          expect(data.Topics.filter((o) -> o.TopicArn == arn)).not.to.equal(null)
-          sns.deleteTopic(done)
+        expect(Array.isArray(data.Commands)).to.equal(true)
+        done()
+    it 'handles errors', (done) ->
+      params =
+        Name: 'fake-name'
+      ssm.describeDocument params, (err, data) ->
+        assertError(err, 'InvalidDocument')
+        noData(data)
+        done()
+
+    describe 'AWS.StorageGateway', ->
+    it 'makes a request', (done) ->
+      storagegateway.listGateways {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.Gateways)).to.equal(true)
+        done()
+    it 'handles errors', (done) ->
+      params =
+        GatewayARN: 'fake-arn'
+      storagegateway.describeGatewayInformation params, (err, data) ->
+        assertError(err, 'ValidationException')
+        noData(data)
+        done()
+
+  describe 'AWS.STS', ->
+    it 'gets a session token', (done) ->
+      sts.getSessionToken (err, data) ->
+        noError(err)
+        expect(data.Credentials.AccessKeyId).not.to.equal('')
+        done()
 
   describe 'AWS.WAF', ->
     it 'makes a request', (done) ->
@@ -466,8 +717,8 @@ integrationTests ->
         done()
     it 'handles errors', (done) ->
       params =
-        Name: 'fake_name'
-        ChangeToken: 'fake_token'
+        Name: 'fake-name'
+        ChangeToken: 'fake-token'
       waf.createSqlInjectionMatchSet params, (err, data) ->
         assertError(err, 'WAFStaleDataException')
         noData(data)

@@ -157,9 +157,10 @@ eof
   end
 
   def add_methods(service, klass, model)
+    examples = load_examples(klass.downcase) || {}
     model['operations'].each_pair do |name, operation|
       meth = YARDJS::CodeObjects::PropertyObject.new(service, name[0].downcase + name[1..-1])
-      docs = MethodDocumentor.new(name, operation, model, klass).lines.join("\n")
+      docs = MethodDocumentor.new(name, operation, model, klass, {}, examples[name]).lines.join("\n")
       meth.property_type = :function
       meth.parameters = [['params', '{}'], ['callback', nil]]
       meth.signature = "#{name}(params = {}, [callback])"
@@ -206,8 +207,8 @@ eof
       obj.operation.docstring.add_tag YARD::Tags::Tag.new(:waiter, "{#{obj.path}}")
       obj.docstring = <<-eof
 Waits for the `#{name}` state by periodically calling the underlying
-{#{operation_name}} operation every #{config['interval']} seconds
-(at most #{config['max_attempts']} times).
+{#{operation_name}} operation every #{config['delay']} seconds
+(at most #{config['maxAttempts']} times).
 
 @callback (see #{obj.operation.path})
 @param (see #{obj.operation.path})
@@ -244,7 +245,7 @@ eof
   def load_model(file)
     json = JSON.parse(File.read(file))
 
-    waiters_file = file.sub(/\.normal\.json$/, '.waiters.json')
+    waiters_file = file.sub(/\.normal\.json$/, '.waiters2.json')
     if File.exist? waiters_file
       json = json.merge(JSON.parse(File.read(waiters_file)))
     end
@@ -261,5 +262,13 @@ eof
     end
 
     raise "Unknown class name for #{prefix}"
+  end
+
+  def load_examples(name)
+    paths = Dir[File.join($APIS_DIR, "#{name}-*.examples.json")]
+    unless paths.empty?
+      json = JSON.parse(File.read(paths[0]))
+      json['examples']
+    end
   end
 end

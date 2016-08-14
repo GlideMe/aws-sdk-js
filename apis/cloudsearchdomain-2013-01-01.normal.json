@@ -14,7 +14,7 @@
       "name":"Search",
       "http":{
         "method":"GET",
-        "requestUri":"/2013-01-01/search?format=sdk&pretty=true"
+        "requestUri":"/2013-01-01/search?pretty=true"
       },
       "input":{"shape":"SearchRequest"},
       "output":{"shape":"SearchResponse"},
@@ -27,7 +27,7 @@
       "name":"Suggest",
       "http":{
         "method":"GET",
-        "requestUri":"/2013-01-01/suggest?format=sdk&pretty=true"
+        "requestUri":"/2013-01-01/suggest?pretty=true"
       },
       "input":{"shape":"SuggestRequest"},
       "output":{"shape":"SuggestResponse"},

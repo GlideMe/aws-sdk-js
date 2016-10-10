@@ -1,7 +1,7 @@
 {
     "name": "aws-sdk",
     "description": "AWS SDK for JavaScript",
-    "version": "2.3.5",
+    "version": "2.6.7",
     "author": {
       "name":"Amazon Web Services",
       "email":"",
@@ -17,9 +17,9 @@
       "semver": "*",
       "coffee-script": "1.6.3",
       "eslint": "1.x",
-      "cucumber": "*",
+      "cucumber": "0.5.x",
       "coffeeify": "*",
-      "browserify": "3.x",
+      "browserify": "13.1.0",
       "uglify-js": "2.x",
       "mocha": "*",
       "chai": "*",
@@ -28,13 +28,22 @@
       "insert-module-globals": "^7.0.0"
     },
     "dependencies": {
+      "buffer": "4.9.1",
+      "crypto-browserify": "1.0.9",
+      "jmespath": "0.15.0",
+      "querystring": "0.2.0",
       "sax": "1.1.5",
+      "url": "0.10.3",
       "xml2js": "0.4.15",
-      "xmlbuilder": "2.6.2",
-      "jmespath": "0.15.0"
+      "xmlbuilder": "2.6.2"
     },
     "main": "lib/aws.js",
-    "browser": "lib/browser.js",
+    "browser": {
+      "lib/aws.js": "./lib/browser.js",
+      "fs": false,
+      "./global.js": "./browser.js",
+      "./lib/node_loader.js": "./lib/browser_loader.js"
+    },
     "browserify": { "transform": "./dist-tools/transform.js" },
     "directories":  {
       "lib": "lib"
@@ -65,6 +74,7 @@
       "buildertest": "mocha --compilers coffee:coffee-script -s 1000 -t 10000 dist-tools/test",
       "integration": "cucumber.js",
       "lint" : "eslint lib dist-tools/*.js",
-      "console": "./scripts/console"
+      "console": "./scripts/console",
+      "testfiles" : "istanbul `[ $COVERAGE ] && echo 'cover _mocha' || echo 'test mocha'`"      
     }
 }

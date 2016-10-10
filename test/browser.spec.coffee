@@ -4,45 +4,6 @@ config = {}
 try
   config = require('./configuration')
 
-acm = new AWS.ACM(AWS.util.merge(config, config.acm))
-apigateway = new AWS.APIGateway(AWS.util.merge(config, config.apigateway))
-cloudfront = new AWS.CloudFront(AWS.util.merge(config, config.cloudfront))
-cloudtrail = new AWS.CloudTrail(AWS.util.merge(config, config.cloudtrail))
-cloudwatch = new AWS.CloudWatch(AWS.util.merge(config, config.cloudwatch))
-cloudwatchlogs = new AWS.CloudWatchLogs(AWS.util.merge(config, config.cloudwatchlogs))
-cognitoidentity = new AWS.CognitoIdentity(AWS.util.merge(config, config.cognitoidentity))
-configservice = new AWS.ConfigService(AWS.util.merge(config, config.configservice))
-codecommit = new AWS.CodeCommit(AWS.util.merge(config, config.codecommit))
-codepipeline = new AWS.CodePipeline(AWS.util.merge(config, config.codepipeline))
-cognitosync = new AWS.CognitoSync(AWS.util.merge(config, config.cognitosync))
-devicefarm = new AWS.DeviceFarm(AWS.util.merge(config, config.devicefarm))
-dynamodb = new AWS.DynamoDB(AWS.util.merge(config, config.dynamodb))
-dynamodbstreams = new AWS.DynamoDBStreams(AWS.util.merge(config, config.dynamodbstreams))
-ec2 = new AWS.EC2(AWS.util.merge(config, config.ec2))
-ecr = new AWS.ECR(AWS.util.merge(config, config.ecr))
-ecs = new AWS.ECS(AWS.util.merge(config, config.ecs))
-elastictranscoder = new AWS.ElasticTranscoder(AWS.util.merge(config, config.elastictranscoder))
-elb = new AWS.ELB(AWS.util.merge(config, config.elb))
-config.inspector = config.inspector || {}
-config.inspector.region = 'us-west-2'
-inspector = new AWS.Inspector(AWS.util.merge(config, config.inspector))
-kinesis = new AWS.Kinesis(AWS.util.merge(config, config.kinesis))
-kms = new AWS.KMS(AWS.util.merge(config, config.kms))
-lambda = new AWS.Lambda(AWS.util.merge(config, config.lambda))
-mobileanalytics = new AWS.MobileAnalytics(AWS.util.merge(config, config.mobileanalytics))
-machinelearning = new AWS.MachineLearning(AWS.util.merge(config, config.machinelearning))
-opsworks = new AWS.OpsWorks(AWS.util.merge(config, config.opsworks))
-rds = new AWS.RDS(AWS.util.merge(config, config.rds))
-route53 = new AWS.Route53(AWS.util.merge(config, config.route53))
-route53domains = new AWS.Route53Domains(AWS.util.merge(config, config.route53domains))
-s3 = new AWS.S3(AWS.util.merge(config, config.s3))
-sns = new AWS.SNS(AWS.util.merge(config, config.sns))
-sqs = new AWS.SQS(AWS.util.merge(config, config.sqs))
-ssm = new AWS.SSM(AWS.util.merge(config, config.ssm))
-storagegateway = new AWS.StorageGateway(AWS.util.merge(config, config.storagegateway))
-sts = new AWS.STS(AWS.util.merge(config, config.sts))
-waf = new AWS.WAF(AWS.util.merge(config, config.waf))
-
 uniqueName = (prefix) ->
   if prefix
     prefix + '-' + AWS.util.date.getDate().getTime()
@@ -79,6 +40,57 @@ integrationTests = (fn) ->
     describe 'Integration tests', fn
 
 integrationTests ->
+  acm = new AWS.ACM(AWS.util.merge(config, config.acm))
+  apigateway = new AWS.APIGateway(AWS.util.merge(config, config.apigateway))
+  cloudformation = new AWS.CloudFormation(AWS.util.merge(config, config.cloudformation))
+  cloudfront = new AWS.CloudFront(AWS.util.merge(config, config.cloudfront))
+  cloudhsm = new AWS.CloudHSM(AWS.util.merge(config, config.cloudhsm))
+  cloudtrail = new AWS.CloudTrail(AWS.util.merge(config, config.cloudtrail))
+  cloudwatch = new AWS.CloudWatch(AWS.util.merge(config, config.cloudwatch))
+  cloudwatchlogs = new AWS.CloudWatchLogs(AWS.util.merge(config, config.cloudwatchlogs))
+  cloudwatchevents = new AWS.CloudWatchEvents(AWS.util.merge(config, config.cloudwatchevents))
+  cognitoidentity = new AWS.CognitoIdentity(AWS.util.merge(config, config.cognitoidentity))
+  configservice = new AWS.ConfigService(AWS.util.merge(config, config.configservice))
+  codecommit = new AWS.CodeCommit(AWS.util.merge(config, config.codecommit))
+  codepipeline = new AWS.CodePipeline(AWS.util.merge(config, config.codepipeline))
+  cognitosync = new AWS.CognitoSync(AWS.util.merge(config, config.cognitosync))
+  devicefarm = new AWS.DeviceFarm(AWS.util.merge(config, config.devicefarm))
+  directconnect = new AWS.DirectConnect(AWS.util.merge(config, config.directconnect))
+  dynamodb = new AWS.DynamoDB(AWS.util.merge(config, config.dynamodb))
+  dynamodbstreams = new AWS.DynamoDBStreams(AWS.util.merge(config, config.dynamodbstreams))
+  ec2 = new AWS.EC2(AWS.util.merge(config, config.ec2))
+  ecr = new AWS.ECR(AWS.util.merge(config, config.ecr))
+  ecs = new AWS.ECS(AWS.util.merge(config, config.ecs))
+  elasticache = new AWS.ElastiCache(AWS.util.merge(config, config.elasticache))
+  elasticbeanstalk = new AWS.ElasticBeanstalk(AWS.util.merge(config, config.elasticbeanstalk))
+  elastictranscoder = new AWS.ElasticTranscoder(AWS.util.merge(config, config.elastictranscoder))
+  elb = new AWS.ELB(AWS.util.merge(config, config.elb))
+  emr = new AWS.EMR(AWS.util.merge(config, config.emr))
+  firehose = new AWS.Firehose(AWS.util.merge(config, config.firehose))
+  gamelift = new AWS.GameLift(AWS.util.merge(config, config.gamelift))
+  config.inspector = config.inspector || {}
+  config.inspector.region = 'us-west-2'
+  inspector = new AWS.Inspector(AWS.util.merge(config, config.inspector))
+  iot = new AWS.Iot(AWS.util.merge(config, config.iot))
+  kinesis = new AWS.Kinesis(AWS.util.merge(config, config.kinesis))
+  kms = new AWS.KMS(AWS.util.merge(config, config.kms))
+  lambda = new AWS.Lambda(AWS.util.merge(config, config.lambda))
+  mobileanalytics = new AWS.MobileAnalytics(AWS.util.merge(config, config.mobileanalytics))
+  machinelearning = new AWS.MachineLearning(AWS.util.merge(config, config.machinelearning))
+  opsworks = new AWS.OpsWorks(AWS.util.merge(config, config.opsworks))
+  rds = new AWS.RDS(AWS.util.merge(config, config.rds))
+  redshift = new AWS.Redshift(AWS.util.merge(config, config.redshift))
+  route53 = new AWS.Route53(AWS.util.merge(config, config.route53))
+  route53domains = new AWS.Route53Domains(AWS.util.merge(config, config.route53domains))
+  s3 = new AWS.S3(AWS.util.merge(config, config.s3))
+  ses = new AWS.SES(AWS.util.merge(config, config.ses))
+  sns = new AWS.SNS(AWS.util.merge(config, config.sns))
+  sqs = new AWS.SQS(AWS.util.merge(config, config.sqs))
+  ssm = new AWS.SSM(AWS.util.merge(config, config.ssm))
+  storagegateway = new AWS.StorageGateway(AWS.util.merge(config, config.storagegateway))
+  sts = new AWS.STS(AWS.util.merge(config, config.sts))
+  waf = new AWS.WAF(AWS.util.merge(config, config.waf))
+
   describe 'Request.abort', ->
     it 'can abort a request', (done) ->
       req = s3.putObject Key: 'key', Body: 'body'
@@ -158,6 +170,21 @@ integrationTests ->
         noData(data)
         done()
 
+  describe 'AWS.CloudFormation', ->
+    it 'makes a request', (done) ->
+      cloudformation.listStacks {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.StackSummaries)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      params = 
+        StackName: 'fake-name'
+      cloudformation.getStackPolicy params, (err, data) ->
+        assertError(err, 'ValidationError')
+        noData(data)
+        done()
+
   describe 'AWS.CloudFront', ->
     it 'makes a request', (done) ->
       cloudfront.listDistributions {}, (err, data) ->
@@ -170,6 +197,19 @@ integrationTests ->
         Id: 'fake-distro'
       cloudfront.getDistribution params, (err, data) ->
         assertError(err, 'NoSuchDistribution')
+        noData(data)
+        done()
+
+  describe 'AWS.CloudHSM', ->
+    it 'makes a request', (done) ->
+      cloudhsm.listHsms {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.HsmList)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      cloudhsm.describeHsm {}, (err, data) ->
+        assertError(err, 'InvalidRequestException')
         noData(data)
         done()
 
@@ -201,6 +241,21 @@ integrationTests ->
       cloudwatch.setAlarmState params, (err, data) ->
         assertError(err, 'ValidationError')
         matchError(err, 'failed to satisfy constraint')
+        noData(data)
+        done()
+
+  describe 'AWS.CloudWatchEvents', ->
+    it 'makes a request', (done) ->
+      cloudwatchevents.listRules (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.Rules)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      params =
+        Name: 'fake-rule'
+      cloudwatchevents.describeRule params, (err, data) ->
+        assertError(err, 'ResourceNotFoundException')
         noData(data)
         done()
 
@@ -314,6 +369,22 @@ integrationTests ->
         noData(data)
         done()
 
+  describe 'AWS.DirectConnect', ->
+    it 'makes a request', (done) ->
+      directconnect.describeConnections (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.connections)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      params =
+        connectionId: 'dxcon-fakeconn'
+      directconnect.confirmConnection params, (err, data) ->
+        assertError(err, 'DirectConnectClientException')
+        matchError(err, 'ConfirmConnection failed. dxcon-fakeconn doesn\'t exist.')
+        noData(data)
+        done()
+
   describe 'AWS.DynamoDB', ->
     it 'writes and reads from a table', (done) ->
       key = uniqueName('test')
@@ -383,7 +454,6 @@ integrationTests ->
 
     it 'handles errors', (done) ->
       ecs.stopTask {task: 'xxxxxxxxxxx-xxxxxxxxxxxx-xxxxxxxxxxx'}, (err, data) ->
-        assertError(err, 'ClusterNotFoundException')
         noData(data)
         done()
 
@@ -400,6 +470,32 @@ integrationTests ->
         assertError(err, 'ResourceNotFoundException')
         done()
 
+  describe 'AWS.ElastiCache', ->
+    it 'makes a request', (done) ->
+      elasticache.describeSnapshots {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.Snapshots)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      elasticache.listAllowedNodeTypeModifications {}, (err, data) ->
+        assertError(err, 'InvalidParameterCombination')
+        noData(data)
+        done()
+
+  describe 'AWS.ElasticBeanstalk', ->
+    it 'makes a request', (done) ->
+      elasticbeanstalk.listAvailableSolutionStacks {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.SolutionStacks)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      elasticbeanstalk.describeEnvironmentHealth {}, (err, data) ->
+        assertError(err, 'MissingParameter')
+        noData(data)
+        done()
+
   describe 'AWS.ELB', ->
     it 'makes a request', (done) ->
       elb.describeLoadBalancers {}, (err, data) ->
@@ -410,6 +506,45 @@ integrationTests ->
     it 'handles errors', (done) ->
       elb.describeTags {LoadBalancerNames: ['fake-name']}, (err, data) ->
         assertError(err, 'LoadBalancerNotFound')
+        noData(data)
+        done()
+
+  describe 'AWS.EMR', ->
+    it 'makes a request', (done) ->
+      emr.listClusters {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.Clusters)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      emr.describeCluster {ClusterId: 'fake-id'}, (err, data) ->
+        assertError(err, 'InvalidRequestException')
+        noData(data)
+        done()
+
+  describe 'AWS.Firehose', ->
+    it 'makes a request', (done) ->
+      firehose.listDeliveryStreams {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.DeliveryStreamNames)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      firehose.describeDeliveryStream {DeliveryStreamName: 'fake-name'}, (err, data) ->
+        assertError(err, 'ResourceNotFoundException')
+        noData(data)
+        done()
+
+  describe 'AWS.GameLift', ->
+    it 'makes a request', (done) ->
+      gamelift.listBuilds {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.Builds)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      gamelift.describeAlias {AliasId: 'fake-id'}, (err, data) ->
+        assertError(err, 'InvalidRequestException')
         noData(data)
         done()
 
@@ -424,6 +559,19 @@ integrationTests ->
       inspector.stopAssessmentRun {assessmentRunArn: 'fake-arn'}, (err, data) ->
         noData(data)
         assertError(err, 'InvalidInputException')
+        done()
+
+  describe 'AWS.Iot', ->
+    it 'makes a request', (done) ->
+      iot.listPolicies (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.policies)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      iot.describeThing {thingName: 'fake-name'}, (err, data) ->
+        noData(data)
+        assertError(err, 'ResourceNotFoundException')
         done()
 
   describe 'AWS.Kinesis', ->
@@ -539,6 +687,19 @@ integrationTests ->
         assertError(err, 'InvalidParameterValue')
         done()
 
+  describe 'AWS.Redshift', ->
+    it 'makes a request', (done) ->
+      redshift.describeClusters (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.Clusters)).to.equal(true)
+        done()
+
+    it 'handles errors', (done) ->
+      redshift.describeResize {ClusterIdentifier: 'fake-id'}, (err, data) ->
+        noData(data)
+        assertError(err, 'ClusterNotFound')
+        done()
+
   describe 'AWS.Route53', ->
     it 'makes a request', (done) ->
       route53.listHostedZones (err, data) ->
@@ -642,6 +803,21 @@ integrationTests ->
             expect(progress[0].total).to.equal(body.size)
             expect(progress[0].loaded > 10).to.equal(true)
             s3.deleteObject(Key: key).send(done)
+
+  describe 'AWS.SES', ->
+    it 'makes a request', (done) ->
+      ses.listIdentities {}, (err, data) ->
+        noError(err)
+        expect(Array.isArray(data.Identities)).to.equal(true)
+        done()
+    it 'handles errors', (done) ->
+      params =
+        RuleSetName: 'fake-name'
+        RuleName: 'fake-name'
+      ses.describeReceiptRule params, (err, data) ->
+        assertError(err, 'RuleSetDoesNotExist')
+        noData(data)
+        done()
 
   describe 'AWS.SNS', ->
     it 'creates and deletes topics', (done) ->

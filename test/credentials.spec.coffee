@@ -88,8 +88,9 @@ describe 'AWS.Credentials', ->
 
 if AWS.util.isNode()
   describe 'AWS.EnvironmentCredentials', ->
-    beforeEach ->
+    beforeEach (done) ->
       process.env = {}
+      done()
 
     afterEach ->
       process.env = {}
@@ -424,6 +425,128 @@ if AWS.util.isNode()
             creds.refresh ->
               expect(spy.calls.length).to.equal(4)
 
+  describe 'AWS.ECSCredentials', ->
+    creds = null
+    responseData = {
+      AccessKeyId: 'KEY',
+      SecretAccessKey: 'SECRET',
+      Token: 'TOKEN',
+      Expiration: (new Date(0)).toISOString()
+    }
+
+    beforeEach ->
+      creds = new AWS.ECSCredentials(host: 'host')
+      process.env = {}
+
+    afterEach ->
+      process.env = {}
+
+    mockEndpoint = (expireTime) ->
+      helpers.spyOn(creds, 'request').andCallFake (path, cb) ->
+          expiration = expireTime.toISOString()
+          cb null, JSON.stringify(AWS.util.merge(responseData, {Expiration: expiration}))
+
+    describe 'constructor', ->
+      it 'allows passing of options', ->
+        expect(creds.host).to.equal('host')
+
+      it 'does not modify options object', ->
+        opts = {}
+        creds = new AWS.ECSCredentials(opts)
+        expect(opts).to.eql({})
+
+      it 'allows setting timeout', ->
+        opts = httpOptions: timeout: 5000
+        creds = new AWS.ECSCredentials(opts)
+        expect(creds.httpOptions.timeout).to.equal(5000)
+
+    describe 'getECSRelativeUri', ->
+      it 'returns undefined when process is not available', ->
+        process_copy = process
+        process = undefined
+        expect(creds.getECSRelativeUri()).to.equal(undefined)
+        process = process_copy
+
+      it 'returns undefined when relative URI environment variable not set', ->
+        expect(creds.getECSRelativeUri()).to.equal(undefined)
+
+      it 'returns relative URI when environment variable is set', ->
+        process.env['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = '/path'
+        expect(creds.getECSRelativeUri()).to.equal('/path')
+
+      it 'returns relative URI from prototype when environment variable is set', ->
+        process.env['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = '/path'
+        expect(AWS.ECSCredentials.prototype.getECSRelativeUri()).to.equal('/path')
+
+    describe 'credsFormatIsValid', ->
+      it 'returns false when data is missing required property', ->
+        incompleteData = {AccessKeyId: 'KEY', SecretAccessKey: 'SECRET', Token: 'TOKEN'}
+        expect(creds.credsFormatIsValid(incompleteData)).to.be.false
+
+      it 'returns true when data has all required properties', ->
+        expect(creds.credsFormatIsValid(responseData)).to.be.true
+
+    describe 'needsRefresh', ->
+      it 'can be expired based on expire time from URI endpoint', ->
+        process.env['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = '/path'
+        spy = mockEndpoint(new Date(0))
+        creds.refresh(->)
+        expect(spy.calls.length).to.equal(1)
+        expect(creds.needsRefresh()).to.equal(true)
+
+    describe 'refresh', ->
+      it 'loads credentials from specified relative URI', ->
+        callbackErr = null
+        process.env['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = '/path'
+        spy = mockEndpoint(new Date(AWS.util.date.getDate().getTime() + 100000))
+        creds.refresh((err) -> callbackErr = err)
+        expect(spy.calls.length).to.equal(1)
+        expect(callbackErr).to.be.null
+        expect(creds.accessKeyId).to.equal('KEY')
+        expect(creds.secretAccessKey).to.equal('SECRET')
+        expect(creds.sessionToken).to.equal('TOKEN')
+        expect(creds.needsRefresh()).to.equal(false)
+
+      it 'passes an error to the callback when environment variable not set', ->
+        callbackErr = null
+        spy = mockEndpoint(new Date(AWS.util.date.getDate().getTime() + 100000))
+        creds.refresh((err) -> callbackErr = err)
+        expect(spy.calls.length).to.equal(0)
+        expect(callbackErr).to.not.be.null
+
+      it 'retries up to specified maxRetries for timeout errors', (done) ->
+        process.env['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = '/path'
+        options = {maxRetries: 3}
+        creds = new AWS.ECSCredentials(options)
+        httpClient = AWS.HttpClient.getInstance()
+        spy = helpers.spyOn(httpClient, 'handleRequest').andCallFake (httpReq, httpOp, cb, errCb) ->
+          errCb({code: 'TimeoutError'})
+        creds.refresh (err) ->
+          expect(err).to.not.be.null
+          expect(err.code).to.equal('TimeoutError')
+          expect(spy.calls.length).to.equal(4)
+          done()
+
+      it 'makes only one request when multiple calls are made before first one finishes', (done) ->
+        concurrency = countdown = 10
+        process.env['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = '/path'
+        spy = helpers.spyOn(AWS.ECSCredentials.prototype, 'request').andCallFake (path, cb) ->
+          respond = ->
+            cb null, JSON.stringify(responseData)
+          process.nextTick(respond)
+        providers = []
+        callRefresh = (ind) ->
+          providers[ind] = new AWS.ECSCredentials(host: 'host')
+          providers[ind].refresh (err) ->
+            expect(err).to.equal(null)
+            expect(providers[ind].accessKeyId).to.equal('KEY')
+            countdown--
+            if countdown == 0
+              expect(spy.calls.length).to.equal(1)
+              done()
+        for x in [1..concurrency]
+          callRefresh(x - 1)
+
 describe 'AWS.TemporaryCredentials', ->
   creds = null
 
@@ -736,6 +859,20 @@ describe 'AWS.CognitoIdentityCredentials', ->
       expect(creds.identityId).not.to.exist
       expect(creds.params.IdentityId).not.to.exist
 
+  describe 'clearIdOnNotAuthorized', ->
+    
+    it 'should call clearCachedId if user is not authorized', ->
+      clearCache = helpers.spyOn(creds,'clearCachedId')
+      idErr = {code: 'NotAuthorizedException'}
+      creds.clearIdOnNotAuthorized(idErr)
+      expect(clearCache.calls.length).to.equal(1)
+      
+    it 'should not call clearCachedId if user is authorized', ->
+      clearCache = helpers.spyOn(creds,'clearCachedId')
+      idErr = {code: 'TEST'}
+      creds.clearIdOnNotAuthorized(idErr)
+      expect(clearCache.calls.length).to.equal(0)
+
   describe 'createClients', ->
     beforeEach -> setupCreds()
 
@@ -858,7 +995,18 @@ describe 'AWS.CognitoIdentityCredentials', ->
       expect(creds.cacheId.calls.length).to.equal(0)
       expect(creds.getStorage('id')).not.to.exist
 
-    it 'clears cache if getId fails', ->
+    it 'clears cache if getId fails for unauthorized user', ->
+      creds.setStorage('id', 'MYID')
+      helpers.mockResponses [
+        {data: {IdentityId: 'IDENTITY-ID'}, error: null},
+        {data: null, error: {message : 'INVALID SERVICE', code: 'NotAuthorizedException'} }
+      ]
+      helpers.spyOn(creds.webIdentityCredentials, 'refresh').andCallFake(->)
+      creds.refresh (err) -> expect(err.message).to.equal('INVALID SERVICE')
+      expect(creds.cacheId.calls.length).to.equal(0)
+      expect(creds.getStorage('id')).not.to.exist
+
+    it 'does not clear cache if getId fails for authorized user', ->
       creds.setStorage('id', 'MYID')
       helpers.mockResponses [
         {data: {IdentityId: 'IDENTITY-ID'}, error: null},
@@ -867,9 +1015,20 @@ describe 'AWS.CognitoIdentityCredentials', ->
       helpers.spyOn(creds.webIdentityCredentials, 'refresh').andCallFake(->)
       creds.refresh (err) -> expect(err.message).to.equal('INVALID SERVICE')
       expect(creds.cacheId.calls.length).to.equal(0)
+      expect(creds.getStorage('id')).to.exist
+
+    it 'clears cache if getOpenIdToken fails for unauthorized user', ->
+      creds.setStorage('id', 'MYID')
+      helpers.mockResponses [
+        {data: {IdentityId: 'IDENTITY-ID'}, error: null},
+        {data: null, error: {message : 'INVALID SERVICE', code: 'NotAuthorizedException'}}
+      ]
+      helpers.spyOn(creds.webIdentityCredentials, 'refresh').andCallFake(->)
+      creds.refresh (err) -> expect(err.message).to.equal('INVALID SERVICE')
+      expect(creds.cacheId.calls.length).to.equal(0)
       expect(creds.getStorage('id')).not.to.exist
 
-    it 'clears cache if getOpenIdToken fails', ->
+    it 'does not clear cache if getOpenIdToken fails for authorized user', ->
       creds.setStorage('id', 'MYID')
       helpers.mockResponses [
         {data: {IdentityId: 'IDENTITY-ID'}, error: null},
@@ -878,9 +1037,20 @@ describe 'AWS.CognitoIdentityCredentials', ->
       helpers.spyOn(creds.webIdentityCredentials, 'refresh').andCallFake(->)
       creds.refresh (err) -> expect(err.message).to.equal('INVALID SERVICE')
       expect(creds.cacheId.calls.length).to.equal(0)
+      expect(creds.getStorage('id')).to.equal('MYID')
+
+    it 'clears cache if getCredentialsForIdentity fails for unauthorized user', ->
+      delete creds.cognito.config.params.RoleArn
+      creds.setStorage('id', 'MYID')
+      helpers.mockResponses [
+        {data: {IdentityId: 'IDENTITY-ID'}, error: null},
+        {data: null, error: {message : 'INVALID SERVICE', code: 'NotAuthorizedException'}}
+      ]
+      creds.refresh (err) -> expect(err.message).to.equal('INVALID SERVICE')
+      expect(creds.cacheId.calls.length).to.equal(0)
       expect(creds.getStorage('id')).not.to.exist
 
-    it 'clears cache if getCredentialsForIdentity fails', ->
+    it 'does not clear cache if getCredentialsForIdentity fails for authorized user', ->
       delete creds.cognito.config.params.RoleArn
       creds.setStorage('id', 'MYID')
       helpers.mockResponses [
@@ -889,7 +1059,7 @@ describe 'AWS.CognitoIdentityCredentials', ->
       ]
       creds.refresh (err) -> expect(err.message).to.equal('INVALID SERVICE')
       expect(creds.cacheId.calls.length).to.equal(0)
-      expect(creds.getStorage('id')).not.to.exist
+      expect(creds.getStorage('id')).to.equal('MYID')
 
     it 'does try to load creds second time if service request failed', ->
       reqs = helpers.mockResponses [

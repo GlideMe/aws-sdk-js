@@ -24,8 +24,9 @@ describe 'AWS.Config', ->
 
   describe 'region', ->
     oldEnv = process.env
-    beforeEach ->
+    beforeEach (done) ->
       process.env = {}
+      done()
     afterEach ->
       process.env = oldEnv
 
@@ -98,6 +99,10 @@ describe 'AWS.Config', ->
     it 'defaults to false', ->
       expect(configure().useAccelerateEndpoint).to.equal(false)
 
+  describe 's3DisableBodySigning', ->
+    it 'defaults to true', ->
+      expect(configure().s3DisableBodySigning).to.equal(true)
+
   describe 'set', ->
     it 'should set a default value for a key', ->
       config = new AWS.Config()
@@ -141,11 +146,19 @@ describe 'AWS.Config', ->
       config = new AWS.Config()
       config.update(foo: 10)
       expect(config.foo).to.equal(undefined)
-
-    it 'should allow service identifiers to be set', ->
-      config = new AWS.Config()
-      config.update(s3: {endpoint: 'localhost'})
-      expect(config.s3).to.eql(endpoint: 'localhost')
+    
+    describe 'should allow', ->
+      allServices = require('../clients/all')
+      for own className, ctor of allServices
+        serviceIdentifier = className.toLowerCase()
+        ((id) ->
+          it id + ' to be set', ->
+            config = new AWS.Config()
+            params = {}
+            params[id] = {endpoint: 'localhost'}
+            config.update(params)
+            expect(config[id]).to.eql(endpoint: 'localhost')
+        )(serviceIdentifier)
 
     it 'allows unknown keys if allowUnknownKeys is set', ->
       config = new AWS.Config()
@@ -172,8 +185,9 @@ describe 'AWS.Config', ->
   describe 'getCredentials', ->
     spy = null
     config = null
-    beforeEach ->
+    beforeEach (done) ->
       spy = helpers.createSpy('getCredentials callback')
+      done()
 
     expectValid = (options, key) ->
       if options instanceof AWS.Config

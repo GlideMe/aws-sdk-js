@@ -68,9 +68,10 @@ _spyOn = (obj, methodName) ->
   spies.push(spy)
   spy
 
-# Disable setTimeout for tests
+# Disable setTimeout for tests, but keep original in case test needs to use it
 # Warning: this might cause unpredictable results
 # TODO: refactor this out.
+global.setTimeoutOrig = global.setTimeout
 global.setTimeout = (fn) -> fn()
 
 global.expect = require('chai').expect
@@ -84,7 +85,7 @@ matchXML = (xml1, xml2) ->
       results.push(r)
   expect(results[0]).to.eql(results[1])
 
-MockService = AWS.Service.defineService 'mockService',
+MockService = AWS.Service.defineService 'mock',
   serviceIdentifier: 'mock'
   initialize: (config) ->
     AWS.Service.prototype.initialize.call(this, config)

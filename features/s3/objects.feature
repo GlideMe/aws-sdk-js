@@ -110,7 +110,6 @@ Feature: Working with Objects in S3
     Then the HTTP response should have a content length of 16
     And the MD5 checksum of the response data should equal the generated checksum
 
-
   @presigned
   Scenario: Putting to a pre-signed URL
     Given I get a pre-signed URL to PUT the key "presigned"
@@ -125,6 +124,15 @@ Feature: Working with Objects in S3
     And I access the URL via HTTP PUT with data "NOT CHECKSUMMED"
     Then the HTTP response should contain "SignatureDoesNotMatch"
 
+  @presigned_post
+  Scenario: POSTing an object with a presigned form
+    Given I create a presigned form to POST the key "presignedPost" with the data "PRESIGNED POST CONTENTS"
+    And I POST the form
+    Then the object "presignedPost" should exist
+    When I get the object "presignedPost"
+    Then the object "presignedPost" should contain "PRESIGNED POST CONTENTS"
+    Then the HTTP response should have a content length of 23
+
   @streams
   Scenario: Streaming objects
     Given I put "STREAMING CONTENT" to the key "streaming_object"
@@ -133,7 +141,7 @@ Feature: Working with Objects in S3
     Then the streamed data should contain "STREAMING CONTENT"
     When I stream2 key "streaming_object"
     Then the streamed data should contain "STREAMING CONTENT"
-  
+
   @streams
   Scenario: Streaming empty objects
     Given I put an empty buffer to the key "empty_streaming_object"
@@ -164,12 +172,12 @@ Feature: Working with Objects in S3
   @progress
   Scenario: Progress events
     When I put a 2MB buffer to the key "progress_object" with progress events
-    Then more than 1 "httpUploadProgress" event should fire
+    Then more than 0 "httpUploadProgress" event should fire
     And the "total" value of the progress event should equal 2MB
     And the "loaded" value of the first progress event should be greater than 10 bytes
 
     When I read the key "progress_object" with progress events
-    Then more than 1 "httpDownloadProgress" event should fire
+    Then more than 0 "httpDownloadProgress" event should fire
     And the "total" value of the progress event should equal 2MB
     And the "loaded" value of the first progress event should be greater than 10 bytes
 

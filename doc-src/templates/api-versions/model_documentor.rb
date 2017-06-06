@@ -12,6 +12,15 @@ module Documentor
     end
     docs = docs.gsub(/\{(\S+)\}/, '`{\1}`')
     docs = docs.gsub(/\s+/, ' ').strip
+    ## The markdown to html converter incorrectly replaces underscores and asterisks in 'code' tags with 'em' tags.
+    ## html escape these symbols to get around this.
+    docs = docs.gsub(/<code>(.+?)<\/code>/m) do
+      ## strip out extraneous code blocks
+      text = $1.gsub('`','')
+      text = text.gsub('_', '&#95;')
+      text = text.gsub('*', '&#42;')
+      "<code>#{text}</code>"
+    end
     docs == '' ? nil : docs
   end
 
@@ -95,14 +104,18 @@ class MethodDocumentor
 
     @lines << "@param params [Object]"
     @lines += shapes(api, operation['input'], options).map {|line| "  " + line }
-
     if examples
       examples.each do |example|
-        @lines << "@example #{example['title']}"
-        @lines << ""
-        @lines << " /* #{example['description']} */"
-        @lines << ""
-        @lines << generate_shared_example(api, example, klass, method_name(operation_name)).split("\n").map {|line| "  " + line}
+        begin
+          sharedExample = generate_shared_example(api, example, klass, method_name(operation_name)).split("\n").map {|line| "  " + line}
+          @lines << "@example #{example['title']}"
+          @lines << ""
+          @lines << " /* #{example['description']} */"
+          @lines << ""
+          @lines << sharedExample
+        rescue => exception
+          puts "[warn]: Error encountered generating example for #{klass}.#{operation_name}: #{exception}"
+        end
       end
     end
 
@@ -141,6 +154,16 @@ class MethodDocumentor
     if operation['documentation_url']
       @lines << "@see #{operation['documentation_url']}"
       @lines << "  #{api['serviceAbbreviation']} Documentation for #{operation_name}"
+    end
+
+    ## Service Reference
+    if api['metadata']['uid']
+      @lines << '<div class="tags">'
+      @lines << '<p class="tag_title">Service Reference:</p>'
+      @lines << '<ul class="see">'
+      @lines << '<li><a href="/goto/WebAPI/' + api['metadata']['uid'] + '/' + operation_name + '">' + operation_name +  '</a></li>'
+      @lines << '</ul>'
+      @lines << '</div>'
     end
   end
 
@@ -200,7 +223,7 @@ class SharedExampleVisitor
     if operation_input
       input_shape_name = operation_input['shape']
       input_shape = @api['shapes'][input_shape_name]
-      input = visit(input_shape, @example['input'], "", [], @comments['input'])
+      input = visit(input_shape, @example['input'] || {}, "", [], @comments['input'])
     else
       input = "{}"
     end
@@ -214,7 +237,7 @@ class SharedExampleVisitor
     if operation_output
       output_shape_name = operation_output['shape']
       output_shape = @api['shapes'][output_shape_name]
-      if output = visit(output_shape, @example['output'], "  ", [], @comments['output'])
+      if output = visit(output_shape, @example['output'] || {}, "  ", [], @comments['output'])
         lines << "  /*"
         lines << "  data = #{output}"
         lines << "  */"
@@ -376,17 +399,22 @@ class ExampleShapeVisitor
   end
 
   def visit_map(node, required = false)
-    data = indent("someKey: " + traverse(node['value']))
+    data = indent("'<#{node['key']['shape']}>': " + traverse(node['value']))
     lines = ["{" + mark_rec_shape(node) + (required ? " /* required */" : "")]
     lines << data + ","
-    lines << "  /* anotherKey: ... */"
+    lines << "  /* '<#{node['key']['shape']}>': ... */"
     lines << "}"
     lines.join("\n")
   end
 
   def visit_string(node, required = false)
-    value = node['enum'] ? node['enum'].join(' | ') : 'STRING_VALUE'
-    "'#{value}'"
+    if node['jsonvalue']
+      "any /* This value will be JSON encoded on your behalf with JSON.stringify() */"
+    elsif node['enum']
+      node['enum'].join(' | ')
+    else
+      "'STRING_VALUE'"
+    end
   end
 
   def visit_integer(node, required = false)
@@ -523,6 +551,10 @@ doc_client
     if rules['enum']
       @lines << "#{prefix}   Possible values include:"
       @lines += rules['enum'].map{|v| "#{prefix}   * `#{v.inspect}`" }
+    end
+
+    if rules['idempotencyToken']
+      @lines << "#{prefix}   If a token is not provided, the SDK will use a version 4 UUID."
     end
 
   end

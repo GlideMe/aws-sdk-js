@@ -151,6 +151,22 @@
       ],
       "documentation":"<p>Creates a patch baseline.</p>"
     },
+    "CreateResourceDataSync":{
+      "name":"CreateResourceDataSync",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateResourceDataSyncRequest"},
+      "output":{"shape":"CreateResourceDataSyncResult"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceDataSyncCountExceededException"},
+        {"shape":"ResourceDataSyncAlreadyExistsException"},
+        {"shape":"ResourceDataSyncInvalidConfigurationException"}
+      ],
+      "documentation":"<p>Creates a resource data sync configuration to a single bucket in Amazon S3. This is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data to the Amazon S3 bucket. To check the status of the sync, use the <a href=\"API_ListResourceDataSync.html\">ListResourceDataSync</a> operation.</p> <p>By default, data is not encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy. To view an example of a restrictive Amazon S3 bucket policy for Resource Data Sync, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-inventory-configuring.html#sysman-inventory-datasync\">Configuring Resource Data Sync for Inventory</a>.</p>"
+    },
     "DeleteActivation":{
       "name":"DeleteActivation",
       "http":{
@@ -226,6 +242,19 @@
       ],
       "documentation":"<p>Delete a parameter from the system.</p>"
     },
+    "DeleteParameters":{
+      "name":"DeleteParameters",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteParametersRequest"},
+      "output":{"shape":"DeleteParametersResult"},
+      "errors":[
+        {"shape":"InternalServerError"}
+      ],
+      "documentation":"<p>Delete a list of parameters.</p>"
+    },
     "DeletePatchBaseline":{
       "name":"DeletePatchBaseline",
       "http":{
@@ -239,6 +268,20 @@
         {"shape":"InternalServerError"}
       ],
       "documentation":"<p>Deletes a patch baseline.</p>"
+    },
+    "DeleteResourceDataSync":{
+      "name":"DeleteResourceDataSync",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteResourceDataSyncRequest"},
+      "output":{"shape":"DeleteResourceDataSyncResult"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceDataSyncNotFoundException"}
+      ],
+      "documentation":"<p>Deletes a Resource Data Sync configuration. After the configuration is deleted, changes to inventory data on managed instances are no longer synced with the target Amazon S3 bucket. Deleting a sync configuration does not delete data in the target Amazon S3 bucket.</p>"
     },
     "DeregisterManagedInstance":{
       "name":"DeregisterManagedInstance",
@@ -410,9 +453,10 @@
       "errors":[
         {"shape":"InvalidResourceId"},
         {"shape":"DoesNotExistException"},
+        {"shape":"UnsupportedOperatingSystem"},
         {"shape":"InternalServerError"}
       ],
-      "documentation":"<p>Retrieves the current effective patches (the patch and the approval state) for the specified patch baseline.</p>"
+      "documentation":"<p>Retrieves the current effective patches (the patch and the approval state) for the specified patch baseline. Note that this API applies only to Windows patch baselines.</p>"
     },
     "DescribeInstanceAssociationsStatus":{
       "name":"DescribeInstanceAssociationsStatus",
@@ -583,6 +627,8 @@
       "output":{"shape":"DescribeParametersResult"},
       "errors":[
         {"shape":"InternalServerError"},
+        {"shape":"InvalidFilterKey"},
+        {"shape":"InvalidFilterOption"},
         {"shape":"InvalidFilterValue"},
         {"shape":"InvalidNextToken"}
       ],
@@ -670,7 +716,7 @@
       "errors":[
         {"shape":"InternalServerError"}
       ],
-      "documentation":"<p>Retrieves the default patch baseline.</p>"
+      "documentation":"<p>Retrieves the default patch baseline. Note that Systems Manager supports creating multiple default patch baselines. For example, you can create a default patch baseline for each operating system.</p>"
     },
     "GetDeployablePatchSnapshotForInstance":{
       "name":"GetDeployablePatchSnapshotForInstance",
@@ -681,9 +727,10 @@
       "input":{"shape":"GetDeployablePatchSnapshotForInstanceRequest"},
       "output":{"shape":"GetDeployablePatchSnapshotForInstanceResult"},
       "errors":[
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"UnsupportedOperatingSystem"}
       ],
-      "documentation":"<p>Retrieves the current snapshot for the patch baseline the instance uses. This API is primarily used by the AWS-ApplyPatchBaseline Systems Manager document. </p>"
+      "documentation":"<p>Retrieves the current snapshot for the patch baseline the instance uses. This API is primarily used by the AWS-RunPatchBaseline Systems Manager document. </p>"
     },
     "GetDocument":{
       "name":"GetDocument",
@@ -774,6 +821,21 @@
       ],
       "documentation":"<p>Retrieves the details about a specific task executed as part of a Maintenance Window execution.</p>"
     },
+    "GetParameter":{
+      "name":"GetParameter",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetParameterRequest"},
+      "output":{"shape":"GetParameterResult"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidKeyId"},
+        {"shape":"ParameterNotFound"}
+      ],
+      "documentation":"<p>Get information about a parameter by using the parameter name. </p>"
+    },
     "GetParameterHistory":{
       "name":"GetParameterHistory",
       "http":{
@@ -785,7 +847,8 @@
       "errors":[
         {"shape":"InternalServerError"},
         {"shape":"ParameterNotFound"},
-        {"shape":"InvalidNextToken"}
+        {"shape":"InvalidNextToken"},
+        {"shape":"InvalidKeyId"}
       ],
       "documentation":"<p>Query a list of all parameters used by the AWS account.</p>"
     },
@@ -798,9 +861,28 @@
       "input":{"shape":"GetParametersRequest"},
       "output":{"shape":"GetParametersResult"},
       "errors":[
+        {"shape":"InvalidKeyId"},
         {"shape":"InternalServerError"}
       ],
       "documentation":"<p>Get details of a parameter.</p>"
+    },
+    "GetParametersByPath":{
+      "name":"GetParametersByPath",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetParametersByPathRequest"},
+      "output":{"shape":"GetParametersByPathResult"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidFilterKey"},
+        {"shape":"InvalidFilterOption"},
+        {"shape":"InvalidFilterValue"},
+        {"shape":"InvalidKeyId"},
+        {"shape":"InvalidNextToken"}
+      ],
+      "documentation":"<p>Retrieve parameters in a specific hierarchy. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-working.html\">Working with Systems Manager Parameters</a>. </p>"
     },
     "GetPatchBaseline":{
       "name":"GetPatchBaseline",
@@ -925,6 +1007,20 @@
       ],
       "documentation":"<p>A list of inventory items returned by the request.</p>"
     },
+    "ListResourceDataSync":{
+      "name":"ListResourceDataSync",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListResourceDataSyncRequest"},
+      "output":{"shape":"ListResourceDataSyncResult"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidNextToken"}
+      ],
+      "documentation":"<p>Lists your resource data sync configurations. Includes information about the last time a sync attempted to start, the last sync status, and the last time a sync successfully completed.</p> <p>The number of sync configurations might be too large to return using a single call to <code>ListResourceDataSync</code>. You can limit the number of sync configurations returned by using the <code>MaxResults</code> parameter. To determine whether there are more sync configurations to list, check the value of <code>NextToken</code> in the output. If there are more sync configurations to list, you can request them by specifying the <code>NextToken</code> returned in the call to the parameter of a subsequent call. </p>"
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -992,9 +1088,13 @@
         {"shape":"ParameterLimitExceeded"},
         {"shape":"TooManyUpdates"},
         {"shape":"ParameterAlreadyExists"},
+        {"shape":"HierarchyLevelLimitExceededException"},
+        {"shape":"HierarchyTypeMismatchException"},
+        {"shape":"InvalidAllowedPatternException"},
+        {"shape":"ParameterPatternMismatchException"},
         {"shape":"UnsupportedParameterType"}
       ],
-      "documentation":"<p>Add one or more paramaters to the system.</p>"
+      "documentation":"<p>Add one or more parameters to the system.</p>"
     },
     "RegisterDefaultPatchBaseline":{
       "name":"RegisterDefaultPatchBaseline",
@@ -1095,7 +1195,7 @@
         {"shape":"InvalidRole"},
         {"shape":"InvalidNotificationConfig"}
       ],
-      "documentation":"<p>Executes commands on one or more remote instances.</p>"
+      "documentation":"<p>Executes commands on one or more managed instances.</p>"
     },
     "StartAutomationExecution":{
       "name":"StartAutomationExecution",
@@ -1350,6 +1450,11 @@
     "AgentErrorCode":{
       "type":"string",
       "max":10
+    },
+    "AllowedPattern":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "AlreadyExistsException":{
       "type":"structure",
@@ -1921,7 +2026,7 @@
         },
         "OutputS3Region":{
           "shape":"S3Region",
-          "documentation":"<p>The region where the Amazon Simple Storage Service (Amazon S3) output bucket is located. The default value is the region where Run Command is being called.</p>"
+          "documentation":"<p>(Deprecated) You can no longer specify this parameter. The system ignores it. Instead, Systems Manager automatically determines the Amazon S3 bucket region.</p>"
         },
         "OutputS3BucketName":{
           "shape":"S3BucketName",
@@ -1971,11 +2076,11 @@
       "members":{
         "key":{
           "shape":"CommandFilterKey",
-          "documentation":"<p>The name of the filter. For example, requested date and time.</p>"
+          "documentation":"<p>The name of the filter.</p>"
         },
         "value":{
           "shape":"CommandFilterValue",
-          "documentation":"<p>The filter value. For example: June 30, 2015.</p>"
+          "documentation":"<p>The filter value. </p>"
         }
       },
       "documentation":"<p>Describes a command filter.</p>"
@@ -2129,7 +2234,7 @@
         },
         "OutputS3Region":{
           "shape":"S3Region",
-          "documentation":"<p>The name of the region where the output is stored in Amazon S3.</p>"
+          "documentation":"<p>(Deprecated) You can no longer specify this parameter. The system ignores it. Instead, Systems Manager automatically determines the Amazon S3 bucket region.</p>"
         },
         "OutputS3BucketName":{
           "shape":"S3BucketName",
@@ -2416,6 +2521,10 @@
       "type":"structure",
       "required":["Name"],
       "members":{
+        "OperatingSystem":{
+          "shape":"OperatingSystem",
+          "documentation":"<p>Defines the operating system the patch baseline applies to. Supported operating systems include WINDOWS, AMAZON_LINUX, UBUNTU and REDHAT_ENTERPRISE_LINUX. The Default value is WINDOWS.</p>"
+        },
         "Name":{
           "shape":"BaselineName",
           "documentation":"<p>The name of the patch baseline.</p>"
@@ -2431,6 +2540,10 @@
         "ApprovedPatches":{
           "shape":"PatchIdList",
           "documentation":"<p>A list of explicitly approved patches for the baseline.</p>"
+        },
+        "ApprovedPatchesComplianceLevel":{
+          "shape":"PatchComplianceLevel",
+          "documentation":"<p>Defines the compliance level for approved patches. This means that if an approved patch is reported as missing, this is the severity of the compliance violation. Valid compliance severity levels include the following: CRITICAL, HIGH, MEDIUM, LOW, INFORMATIONAL, UNSPECIFIED. The default value is UNSPECIFIED.</p>"
         },
         "RejectedPatches":{
           "shape":"PatchIdList",
@@ -2454,6 +2567,28 @@
           "shape":"BaselineId",
           "documentation":"<p>The ID of the created patch baseline.</p>"
         }
+      }
+    },
+    "CreateResourceDataSyncRequest":{
+      "type":"structure",
+      "required":[
+        "SyncName",
+        "S3Destination"
+      ],
+      "members":{
+        "SyncName":{
+          "shape":"ResourceDataSyncName",
+          "documentation":"<p>A name for the configuration.</p>"
+        },
+        "S3Destination":{
+          "shape":"ResourceDataSyncS3Destination",
+          "documentation":"<p>Amazon S3 configuration details for the sync.</p>"
+        }
+      }
+    },
+    "CreateResourceDataSyncResult":{
+      "type":"structure",
+      "members":{
       }
     },
     "CreatedDate":{"type":"timestamp"},
@@ -2559,6 +2694,29 @@
       "members":{
       }
     },
+    "DeleteParametersRequest":{
+      "type":"structure",
+      "required":["Names"],
+      "members":{
+        "Names":{
+          "shape":"ParameterNameList",
+          "documentation":"<p>The names of the parameters to delete.</p>"
+        }
+      }
+    },
+    "DeleteParametersResult":{
+      "type":"structure",
+      "members":{
+        "DeletedParameters":{
+          "shape":"ParameterNameList",
+          "documentation":"<p>The names of the deleted parameters.</p>"
+        },
+        "InvalidParameters":{
+          "shape":"ParameterNameList",
+          "documentation":"<p>The names of parameters that weren't deleted because the parameters are not valid.</p>"
+        }
+      }
+    },
     "DeletePatchBaselineRequest":{
       "type":"structure",
       "required":["BaselineId"],
@@ -2576,6 +2734,21 @@
           "shape":"BaselineId",
           "documentation":"<p>The ID of the deleted patch baseline.</p>"
         }
+      }
+    },
+    "DeleteResourceDataSyncRequest":{
+      "type":"structure",
+      "required":["SyncName"],
+      "members":{
+        "SyncName":{
+          "shape":"ResourceDataSyncName",
+          "documentation":"<p>The name of the configuration to delete.</p>"
+        }
+      }
+    },
+    "DeleteResourceDataSyncResult":{
+      "type":"structure",
+      "members":{
       }
     },
     "DeregisterManagedInstanceRequest":{
@@ -2736,7 +2909,7 @@
         },
         "NextToken":{
           "shape":"NextToken",
-          "documentation":"<p> The token for the next set of items to return. Use this token to get the next set of results. </p>"
+          "documentation":"<p>The token for the next set of items to return. Use this token to get the next set of results. </p>"
         }
       }
     },
@@ -3337,6 +3510,10 @@
           "shape":"ParametersFilterList",
           "documentation":"<p>One or more filters. Use a filter to return a more specific list of results.</p>"
         },
+        "ParameterFilters":{
+          "shape":"ParameterStringFilterList",
+          "documentation":"<p>Filters to limit the request results.</p>"
+        },
         "MaxResults":{
           "shape":"MaxResults",
           "documentation":"<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
@@ -3438,6 +3615,10 @@
           "shape":"PatchBaselineMaxResults",
           "documentation":"<p>The maximum number of patch groups to return (per page).</p>",
           "box":true
+        },
+        "Filters":{
+          "shape":"PatchOrchestratorFilterList",
+          "documentation":"<p>One or more filters. Use a filter to return a more specific list of results.</p>"
         },
         "NextToken":{
           "shape":"NextToken",
@@ -3939,7 +4120,7 @@
         },
         "ExecutionStartDateTime":{
           "shape":"StringDateTime",
-          "documentation":"<p>The date and time the plugin started executing. Date and time are written in ISO 8601 format. For example, August 28, 2016 is represented as 2016-08-28. If the plugin has not started to execute, the string is empty.</p>"
+          "documentation":"<p>The date and time the plugin started executing. Date and time are written in ISO 8601 format. For example, June 7, 2017 is represented as 2017-06-7. The following sample AWS CLI command uses the <code>InvokedBefore</code> filter.</p> <p> <code>aws ssm list-commands --filters key=InvokedBefore,value=2017-06-07T00:00:00Z</code> </p> <p>If the plugin has not started to execute, the string is empty.</p>"
         },
         "ExecutionElapsedTime":{
           "shape":"StringDateTime",
@@ -3947,7 +4128,7 @@
         },
         "ExecutionEndDateTime":{
           "shape":"StringDateTime",
-          "documentation":"<p>The date and time the plugin was finished executing. Date and time are written in ISO 8601 format. For example, August 28, 2016 is represented as 2016-08-28. If the plugin has not started to execute, the string is empty.</p>"
+          "documentation":"<p>The date and time the plugin was finished executing. Date and time are written in ISO 8601 format. For example, June 7, 2017 is represented as 2017-06-7. The following sample AWS CLI command uses the <code>InvokedAfter</code> filter.</p> <p> <code>aws ssm list-commands --filters key=InvokedAfter,value=2017-06-07T00:00:00Z</code> </p> <p>If the plugin has not started to execute, the string is empty.</p>"
         },
         "Status":{
           "shape":"CommandInvocationStatus",
@@ -3978,6 +4159,10 @@
     "GetDefaultPatchBaselineRequest":{
       "type":"structure",
       "members":{
+        "OperatingSystem":{
+          "shape":"OperatingSystem",
+          "documentation":"<p>Returns the default patch baseline for the specified operating system.</p>"
+        }
       }
     },
     "GetDefaultPatchBaselineResult":{
@@ -3986,6 +4171,10 @@
         "BaselineId":{
           "shape":"BaselineId",
           "documentation":"<p>The ID of the default patch baseline.</p>"
+        },
+        "OperatingSystem":{
+          "shape":"OperatingSystem",
+          "documentation":"<p>The operating system for the returned patch baseline. </p>"
         }
       }
     },
@@ -4020,6 +4209,10 @@
         "SnapshotDownloadUrl":{
           "shape":"SnapshotDownloadUrl",
           "documentation":"<p>A pre-signed Amazon S3 URL that can be used to download the patch snapshot.</p>"
+        },
+        "Product":{
+          "shape":"Product",
+          "documentation":"<p>Returns the specific operating system (for example Windows Server 2012 or Amazon Linux 2015.09) on the instance for the specified patch snapshot.</p>"
         }
       }
     },
@@ -4330,6 +4523,81 @@
         }
       }
     },
+    "GetParameterRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{
+          "shape":"PSParameterName",
+          "documentation":"<p>The name of the parameter you want to query.</p>"
+        },
+        "WithDecryption":{
+          "shape":"Boolean",
+          "documentation":"<p>Return decrypted values for secure string parameters. This flag is ignored for String and StringList parameter types.</p>",
+          "box":true
+        }
+      }
+    },
+    "GetParameterResult":{
+      "type":"structure",
+      "members":{
+        "Parameter":{
+          "shape":"Parameter",
+          "documentation":"<p>Information about a parameter.</p>"
+        }
+      }
+    },
+    "GetParametersByPathMaxResults":{
+      "type":"integer",
+      "max":10,
+      "min":1
+    },
+    "GetParametersByPathRequest":{
+      "type":"structure",
+      "required":["Path"],
+      "members":{
+        "Path":{
+          "shape":"PSParameterName",
+          "documentation":"<p>The hierarchy for the parameter. Hierarchies start with a forward slash (/) and end with the parameter name. A hierarchy can have a maximum of five levels. Examples: /Environment/Test/DBString003</p> <p>/Finance/Prod/IAD/OS/WinServ2016/license15</p>"
+        },
+        "Recursive":{
+          "shape":"Boolean",
+          "documentation":"<p>Retrieve all parameters within a hierarchy.</p>",
+          "box":true
+        },
+        "ParameterFilters":{
+          "shape":"ParameterStringFilterList",
+          "documentation":"<p>Filters to limit the request results.</p>"
+        },
+        "WithDecryption":{
+          "shape":"Boolean",
+          "documentation":"<p>Retrieve all parameters in a hierarchy with their value decrypted.</p>",
+          "box":true
+        },
+        "MaxResults":{
+          "shape":"GetParametersByPathMaxResults",
+          "documentation":"<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
+          "box":true
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "documentation":"<p>A token to start the list. Use this token to get the next set of results. </p>"
+        }
+      }
+    },
+    "GetParametersByPathResult":{
+      "type":"structure",
+      "members":{
+        "Parameters":{
+          "shape":"ParameterList",
+          "documentation":"<p>A list of parameters found in the specified hierarchy.</p>"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "documentation":"<p>The token for the next set of items to return. Use this token to get the next set of results.</p>"
+        }
+      }
+    },
     "GetParametersRequest":{
       "type":"structure",
       "required":["Names"],
@@ -4365,6 +4633,10 @@
         "PatchGroup":{
           "shape":"PatchGroup",
           "documentation":"<p>The name of the patch group whose patch baseline should be retrieved.</p>"
+        },
+        "OperatingSystem":{
+          "shape":"OperatingSystem",
+          "documentation":"<p>Returns he operating system rule specified for patch groups using the patch baseline.</p>"
         }
       }
     },
@@ -4378,6 +4650,10 @@
         "PatchGroup":{
           "shape":"PatchGroup",
           "documentation":"<p>The name of the patch group.</p>"
+        },
+        "OperatingSystem":{
+          "shape":"OperatingSystem",
+          "documentation":"<p>The operating system rule specified for patch groups using the patch baseline.</p>"
         }
       }
     },
@@ -4402,6 +4678,10 @@
           "shape":"BaselineName",
           "documentation":"<p>The name of the patch baseline.</p>"
         },
+        "OperatingSystem":{
+          "shape":"OperatingSystem",
+          "documentation":"<p>Returns the operating system specified for the patch baseline.</p>"
+        },
         "GlobalFilters":{
           "shape":"PatchFilterGroup",
           "documentation":"<p>A set of global filters used to exclude patches from the baseline.</p>"
@@ -4413,6 +4693,10 @@
         "ApprovedPatches":{
           "shape":"PatchIdList",
           "documentation":"<p>A list of explicitly approved patches for the baseline.</p>"
+        },
+        "ApprovedPatchesComplianceLevel":{
+          "shape":"PatchComplianceLevel",
+          "documentation":"<p>Returns the specified compliance severity level for approved patches in the patch baseline.</p>"
         },
         "RejectedPatches":{
           "shape":"PatchIdList",
@@ -4435,6 +4719,28 @@
           "documentation":"<p>A description of the patch baseline.</p>"
         }
       }
+    },
+    "HierarchyLevelLimitExceededException":{
+      "type":"structure",
+      "members":{
+        "message":{
+          "shape":"String",
+          "documentation":"<p>A hierarchy can have a maximum of five levels. For example:</p> <p>/Finance/Prod/IAD/OS/WinServ2016/license15</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-working.html\">Working with Systems Manager Parameters</a>. </p>"
+        }
+      },
+      "documentation":"<p>A hierarchy can have a maximum of five levels. For example:</p> <p>/Finance/Prod/IAD/OS/WinServ2016/license15</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-working.html\">Working with Systems Manager Parameters</a>. </p>",
+      "exception":true
+    },
+    "HierarchyTypeMismatchException":{
+      "type":"structure",
+      "members":{
+        "message":{
+          "shape":"String",
+          "documentation":"<p>Parameter Store does not support changing a parameter type in a hierarchy. For example, you can't change a parameter from a String type to a SecureString type. You must create a new, unique parameter.</p>"
+        }
+      },
+      "documentation":"<p>Parameter Store does not support changing a parameter type in a hierarchy. For example, you can't change a parameter from a String type to a SecureString type. You must create a new, unique parameter.</p>",
+      "exception":true
     },
     "IPAddress":{
       "type":"string",
@@ -4806,11 +5112,11 @@
           "documentation":"<p>The number of patches from the patch baseline that aren't applicable for the instance and hence aren't installed on the instance.</p>"
         },
         "OperationStartTime":{
-          "shape":"PatchOperationStartTime",
+          "shape":"DateTime",
           "documentation":"<p>The time the most recent patching operation was started on the instance.</p>"
         },
         "OperationEndTime":{
-          "shape":"PatchOperationEndTime",
+          "shape":"DateTime",
           "documentation":"<p>The time the most recent patching operation completed on the instance.</p>"
         },
         "Operation":{
@@ -4909,6 +5215,17 @@
       "documentation":"<p>The activation ID is not valid. Verify the you entered the correct ActivationId or ActivationCode and try again.</p>",
       "exception":true
     },
+    "InvalidAllowedPatternException":{
+      "type":"structure",
+      "members":{
+        "message":{
+          "shape":"String",
+          "documentation":"<p>The request does not meet the regular expression requirement.</p>"
+        }
+      },
+      "documentation":"<p>The request does not meet the regular expression requirement.</p>",
+      "exception":true
+    },
     "InvalidAutomationExecutionParametersException":{
       "type":"structure",
       "members":{
@@ -4982,6 +5299,17 @@
       "members":{
       },
       "documentation":"<p>The specified key is not valid.</p>",
+      "exception":true
+    },
+    "InvalidFilterOption":{
+      "type":"structure",
+      "members":{
+        "message":{
+          "shape":"String",
+          "documentation":"<p>The specified filter option is not valid. Valid options are Equals and BeginsWith. For Path filter, valid options are Recursive and OneLevel.</p>"
+        }
+      },
+      "documentation":"<p>The specified filter option is not valid. Valid options are Equals and BeginsWith. For Path filter, valid options are Recursive and OneLevel.</p>",
       "exception":true
     },
     "InvalidFilterValue":{
@@ -5425,6 +5753,16 @@
       "type":"list",
       "member":{"shape":"TagKey"}
     },
+    "LastResourceDataSyncStatus":{
+      "type":"string",
+      "enum":[
+        "Successful",
+        "Failed",
+        "InProgress"
+      ]
+    },
+    "LastResourceDataSyncTime":{"type":"timestamp"},
+    "LastSuccessfulResourceDataSyncTime":{"type":"timestamp"},
     "ListAssociationsRequest":{
       "type":"structure",
       "members":{
@@ -5657,6 +5995,33 @@
         "NextToken":{
           "shape":"NextToken",
           "documentation":"<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>"
+        }
+      }
+    },
+    "ListResourceDataSyncRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "documentation":"<p>A token to start the list. Use this token to get the next set of results. </p>"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "documentation":"<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
+          "box":true
+        }
+      }
+    },
+    "ListResourceDataSyncResult":{
+      "type":"structure",
+      "members":{
+        "ResourceDataSyncItems":{
+          "shape":"ResourceDataSyncItemList",
+          "documentation":"<p>A list of your current Resource Data Sync configurations and their statuses.</p>"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "documentation":"<p>The token for the next set of items to return. Use this token to get the next set of results.</p>"
         }
       }
     },
@@ -6247,6 +6612,15 @@
         "Invocation"
       ]
     },
+    "OperatingSystem":{
+      "type":"string",
+      "enum":[
+        "WINDOWS",
+        "AMAZON_LINUX",
+        "UBUNTU",
+        "REDHAT_ENTERPRISE_LINUX"
+      ]
+    },
     "OwnerInformation":{
       "type":"string",
       "max":128,
@@ -6256,14 +6630,12 @@
     "PSParameterName":{
       "type":"string",
       "max":1024,
-      "min":1,
-      "pattern":"^(?!^([aA][wW][sS]|[sS][sS][mM]))(?=^[a-zA-Z0-9_.-]*$).*$"
+      "min":1
     },
     "PSParameterValue":{
       "type":"string",
       "max":4096,
-      "min":1,
-      "pattern":"^(?:(?!(\\{\\{.*\\}\\})).)*$"
+      "min":1
     },
     "Parameter":{
       "type":"structure",
@@ -6326,6 +6698,10 @@
         "Value":{
           "shape":"PSParameterValue",
           "documentation":"<p>The parameter value.</p>"
+        },
+        "AllowedPattern":{
+          "shape":"AllowedPattern",
+          "documentation":"<p>Parameter names can include the following letters and symbols.</p> <p>a-zA-Z0-9_.-</p>"
         }
       },
       "documentation":"<p>Information about parameter usage.</p>"
@@ -6378,6 +6754,10 @@
         "Description":{
           "shape":"ParameterDescription",
           "documentation":"<p>Description of the parameter actions.</p>"
+        },
+        "AllowedPattern":{
+          "shape":"AllowedPattern",
+          "documentation":"<p>A parameter name can include only the following letters and symbols.</p> <p>a-zA-Z0-9_.-</p>"
         }
       },
       "documentation":"<p>Metada includes information like the ARN of the last user and the date/time the parameter was last used.</p>"
@@ -6401,6 +6781,62 @@
       "documentation":"<p>The parameter could not be found. Verify the name and try again.</p>",
       "exception":true
     },
+    "ParameterPatternMismatchException":{
+      "type":"structure",
+      "members":{
+        "message":{
+          "shape":"String",
+          "documentation":"<p>The parameter name is not valid.</p>"
+        }
+      },
+      "documentation":"<p>The parameter name is not valid.</p>",
+      "exception":true
+    },
+    "ParameterStringFilter":{
+      "type":"structure",
+      "required":["Key"],
+      "members":{
+        "Key":{
+          "shape":"ParameterStringFilterKey",
+          "documentation":"<p>The name of the filter.</p>"
+        },
+        "Option":{
+          "shape":"ParameterStringQueryOption",
+          "documentation":"<p>Valid options are Equals and BeginsWith. For Path filter, valid options are Recursive and OneLevel.</p>"
+        },
+        "Values":{
+          "shape":"ParameterStringFilterValueList",
+          "documentation":"<p>The value you want to search for.</p>"
+        }
+      },
+      "documentation":"<p>One or more filters. Use a filter to return a more specific list of results.</p>"
+    },
+    "ParameterStringFilterKey":{
+      "type":"string",
+      "max":132,
+      "min":1,
+      "pattern":"tag:.+|Name|Type|KeyId|Path"
+    },
+    "ParameterStringFilterList":{
+      "type":"list",
+      "member":{"shape":"ParameterStringFilter"}
+    },
+    "ParameterStringFilterValue":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ParameterStringFilterValueList":{
+      "type":"list",
+      "member":{"shape":"ParameterStringFilterValue"},
+      "max":50,
+      "min":1
+    },
+    "ParameterStringQueryOption":{
+      "type":"string",
+      "max":10,
+      "min":1
+    },
     "ParameterType":{
       "type":"string",
       "enum":[
@@ -6421,7 +6857,10 @@
     },
     "ParametersFilter":{
       "type":"structure",
-      "required":["Values"],
+      "required":[
+        "Key",
+        "Values"
+      ],
       "members":{
         "Key":{
           "shape":"ParametersFilterKey",
@@ -6448,7 +6887,7 @@
     },
     "ParametersFilterValue":{
       "type":"string",
-      "max":100,
+      "max":1024,
       "min":1
     },
     "ParametersFilterValueList":{
@@ -6526,13 +6965,17 @@
           "shape":"BaselineName",
           "documentation":"<p>The name of the patch baseline.</p>"
         },
+        "OperatingSystem":{
+          "shape":"OperatingSystem",
+          "documentation":"<p>Defines the operating system the patch baseline applies to. Supported operating systems include WINDOWS, AMAZON_LINUX, UBUNTU and REDHAT_ENTERPRISE_LINUX. The Default value is WINDOWS. </p>"
+        },
         "BaselineDescription":{
           "shape":"BaselineDescription",
           "documentation":"<p>The description of the patch baseline.</p>"
         },
         "DefaultBaseline":{
           "shape":"DefaultBaseline",
-          "documentation":"<p>Whether this is the default baseline.</p>"
+          "documentation":"<p>Whether this is the default baseline. Note that Systems Manager supports creating multiple default patch baselines. For example, you can create a default patch baseline for each operating system.</p>"
         }
       },
       "documentation":"<p>Defines the basic information about a patch baseline.</p>"
@@ -6564,7 +7007,7 @@
         },
         "KBId":{
           "shape":"PatchKbNumber",
-          "documentation":"<p>The Microsoft Knowledge Base ID of the patch.</p>"
+          "documentation":"<p>The operating system-specific ID of the patch.</p>"
         },
         "Classification":{
           "shape":"PatchClassification",
@@ -6579,8 +7022,8 @@
           "documentation":"<p>The state of the patch on the instance (INSTALLED, INSTALLED_OTHER, MISSING, NOT_APPLICABLE or FAILED).</p>"
         },
         "InstalledTime":{
-          "shape":"PatchInstalledTime",
-          "documentation":"<p>The date/time the patch was installed on the instance.</p>"
+          "shape":"DateTime",
+          "documentation":"<p>The date/time the patch was installed on the instance. Note that not all operating systems provide this level of information.</p>"
         }
       },
       "documentation":"<p>Information about the state of a patch on a particular instance as it relates to the patch baseline used to patch the instance.</p>"
@@ -6597,6 +7040,17 @@
         "MISSING",
         "NOT_APPLICABLE",
         "FAILED"
+      ]
+    },
+    "PatchComplianceLevel":{
+      "type":"string",
+      "enum":[
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW",
+        "INFORMATIONAL",
+        "UNSPECIFIED"
       ]
     },
     "PatchComplianceMaxResults":{
@@ -6651,7 +7105,10 @@
         "PRODUCT",
         "CLASSIFICATION",
         "MSRC_SEVERITY",
-        "PATCH_ID"
+        "PATCH_ID",
+        "SECTION",
+        "PRIORITY",
+        "SEVERITY"
       ]
     },
     "PatchFilterList":{
@@ -6701,7 +7158,8 @@
     },
     "PatchId":{
       "type":"string",
-      "pattern":"(^KB[0-9]{1,7}$)|(^MS[0-9]{2}\\-[0-9]{3}$)"
+      "max":100,
+      "min":1
     },
     "PatchIdList":{
       "type":"list",
@@ -6711,7 +7169,6 @@
     },
     "PatchInstalledCount":{"type":"integer"},
     "PatchInstalledOtherCount":{"type":"integer"},
-    "PatchInstalledTime":{"type":"timestamp"},
     "PatchKbNumber":{"type":"string"},
     "PatchLanguage":{"type":"string"},
     "PatchList":{
@@ -6722,8 +7179,6 @@
     "PatchMsrcNumber":{"type":"string"},
     "PatchMsrcSeverity":{"type":"string"},
     "PatchNotApplicableCount":{"type":"integer"},
-    "PatchOperationEndTime":{"type":"timestamp"},
-    "PatchOperationStartTime":{"type":"timestamp"},
     "PatchOperationType":{
       "type":"string",
       "enum":[
@@ -6778,6 +7233,10 @@
           "shape":"PatchFilterGroup",
           "documentation":"<p>The patch filter group that defines the criteria for the rule.</p>"
         },
+        "ComplianceLevel":{
+          "shape":"PatchComplianceLevel",
+          "documentation":"<p>A compliance severity level for all approved patches in a patch baseline. Valid compliance severity levels include the following: Unspecified, Critical, High, Medium, Low, and Informational.</p>"
+        },
         "ApproveAfterDays":{
           "shape":"ApproveAfterDays",
           "documentation":"<p>The number of days after the release date of each patch matched by the rule the patch is marked as approved in the patch baseline.</p>",
@@ -6811,6 +7270,10 @@
           "shape":"PatchDeploymentStatus",
           "documentation":"<p>The approval status of a patch (APPROVED, PENDING_APPROVAL, EXPLICIT_APPROVED, EXPLICIT_REJECTED).</p>"
         },
+        "ComplianceLevel":{
+          "shape":"PatchComplianceLevel",
+          "documentation":"<p>The compliance severity level for a patch.</p>"
+        },
         "ApprovalDate":{
           "shape":"DateTime",
           "documentation":"<p>The date the patch was approved (or will be approved if the status is PENDING_APPROVAL).</p>"
@@ -6842,6 +7305,7 @@
         "locationName":"PlatformType"
       }
     },
+    "Product":{"type":"string"},
     "PutInventoryRequest":{
       "type":"structure",
       "required":[
@@ -6890,12 +7354,16 @@
         },
         "KeyId":{
           "shape":"ParameterKeyId",
-          "documentation":"<p>The parameter key ID that you want to add to the system.</p>"
+          "documentation":"<p>The KMS Key ID that you want to use to encrypt a parameter when you choose the SecureString data type. If you don't specify a key ID, the system uses the default key associated with your AWS account.</p>"
         },
         "Overwrite":{
           "shape":"Boolean",
           "documentation":"<p>Overwrite an existing parameter. If not specified, will default to \"false\".</p>",
           "box":true
+        },
+        "AllowedPattern":{
+          "shape":"AllowedPattern",
+          "documentation":"<p>A regular expression used to validate the parameter value. For example, for String types with values restricted to numbers, you can specify the following: AllowedPattern=^\\d+$ </p>"
         }
       }
     },
@@ -7099,6 +7567,124 @@
       "members":{
       }
     },
+    "ResourceDataSyncAlreadyExistsException":{
+      "type":"structure",
+      "members":{
+        "SyncName":{"shape":"ResourceDataSyncName"}
+      },
+      "documentation":"<p>A sync configuration with the same name already exists.</p>",
+      "exception":true
+    },
+    "ResourceDataSyncCountExceededException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "documentation":"<p>You have exceeded the allowed maximum sync configurations.</p>",
+      "exception":true
+    },
+    "ResourceDataSyncCreatedTime":{"type":"timestamp"},
+    "ResourceDataSyncInvalidConfigurationException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "documentation":"<p>The specified sync configuration is invalid.</p>",
+      "exception":true
+    },
+    "ResourceDataSyncItem":{
+      "type":"structure",
+      "members":{
+        "SyncName":{
+          "shape":"ResourceDataSyncName",
+          "documentation":"<p>The name of the Resource Data Sync.</p>"
+        },
+        "S3Destination":{
+          "shape":"ResourceDataSyncS3Destination",
+          "documentation":"<p>Configuration information for the target Amazon S3 bucket.</p>"
+        },
+        "LastSyncTime":{
+          "shape":"LastResourceDataSyncTime",
+          "documentation":"<p>The last time the configuration attempted to sync (UTC).</p>"
+        },
+        "LastSuccessfulSyncTime":{
+          "shape":"LastSuccessfulResourceDataSyncTime",
+          "documentation":"<p>The last time the sync operations returned a status of <code>SUCCESSFUL</code> (UTC).</p>"
+        },
+        "LastStatus":{
+          "shape":"LastResourceDataSyncStatus",
+          "documentation":"<p>The status reported by the last sync.</p>"
+        },
+        "SyncCreatedTime":{
+          "shape":"ResourceDataSyncCreatedTime",
+          "documentation":"<p>The date and time the configuration was created (UTC).</p>"
+        }
+      },
+      "documentation":"<p>Information about a Resource Data Sync configuration, including its current status and last successful sync.</p>"
+    },
+    "ResourceDataSyncItemList":{
+      "type":"list",
+      "member":{"shape":"ResourceDataSyncItem"}
+    },
+    "ResourceDataSyncName":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "ResourceDataSyncNotFoundException":{
+      "type":"structure",
+      "members":{
+        "SyncName":{"shape":"ResourceDataSyncName"}
+      },
+      "documentation":"<p>The specified sync name was not found.</p>",
+      "exception":true
+    },
+    "ResourceDataSyncS3BucketName":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ResourceDataSyncS3Destination":{
+      "type":"structure",
+      "required":[
+        "BucketName",
+        "SyncFormat",
+        "Region"
+      ],
+      "members":{
+        "BucketName":{
+          "shape":"ResourceDataSyncS3BucketName",
+          "documentation":"<p>The name of the Amazon S3 bucket where the aggregated data is stored.</p>"
+        },
+        "Prefix":{
+          "shape":"ResourceDataSyncS3Prefix",
+          "documentation":"<p>An Amazon S3 prefix for the bucket.</p>"
+        },
+        "SyncFormat":{
+          "shape":"ResourceDataSyncS3Format",
+          "documentation":"<p>A supported sync format. The following format is currently supported: JsonSerDe</p>"
+        },
+        "Region":{
+          "shape":"ResourceDataSyncS3Region",
+          "documentation":"<p>The AWS Region with the Amazon S3 bucket targeted by the Resource Data Sync.</p>"
+        }
+      },
+      "documentation":"<p>Information about the target Amazon S3 bucket for the Resource Data Sync.</p>"
+    },
+    "ResourceDataSyncS3Format":{
+      "type":"string",
+      "enum":["JsonSerDe"]
+    },
+    "ResourceDataSyncS3Prefix":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ResourceDataSyncS3Region":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "ResourceId":{"type":"string"},
     "ResourceInUseException":{
       "type":"structure",
@@ -7167,7 +7753,7 @@
       "members":{
         "OutputS3Region":{
           "shape":"S3Region",
-          "documentation":"<p>The Amazon S3 region where the association information is stored.</p>"
+          "documentation":"<p>(Deprecated) You can no longer specify this parameter. The system ignores it. Instead, Systems Manager automatically determines the Amazon S3 bucket region.</p>"
         },
         "OutputS3BucketName":{
           "shape":"S3BucketName",
@@ -7206,11 +7792,11 @@
       "members":{
         "InstanceIds":{
           "shape":"InstanceIdList",
-          "documentation":"<p>The instance IDs where the command should execute. You can specify a maximum of 50 IDs. If you prefer not to list individual instance IDs, you can instead send commands to a fleet of instances using the Targets parameter, which accepts EC2 tags.</p>"
+          "documentation":"<p>The instance IDs where the command should execute. You can specify a maximum of 50 IDs. If you prefer not to list individual instance IDs, you can instead send commands to a fleet of instances using the Targets parameter, which accepts EC2 tags. For more information about how to use Targets, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html\">Sending Commands to a Fleet</a>.</p>"
         },
         "Targets":{
           "shape":"Targets",
-          "documentation":"<p>(Optional) An array of search criteria that targets instances using a Key,Value combination that you specify. Targets is required if you don't provide one or more instance IDs in the call. For more information about how to use Targets, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"
+          "documentation":"<p>(Optional) An array of search criteria that targets instances using a Key,Value combination that you specify. Targets is required if you don't provide one or more instance IDs in the call. For more information about how to use Targets, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html\">Sending Commands to a Fleet</a>.</p>"
         },
         "DocumentName":{
           "shape":"DocumentARN",
@@ -7239,7 +7825,7 @@
         },
         "OutputS3Region":{
           "shape":"S3Region",
-          "documentation":"<p>(Optional) The region where the Amazon Simple Storage Service (Amazon S3) output bucket is located. The default value is the region where Run Command is being called.</p>"
+          "documentation":"<p>(Deprecated) You can no longer specify this parameter. The system ignores it. Instead, Systems Manager automatically determines the Amazon S3 bucket region.</p>"
         },
         "OutputS3BucketName":{
           "shape":"S3BucketName",
@@ -7251,11 +7837,11 @@
         },
         "MaxConcurrency":{
           "shape":"MaxConcurrency",
-          "documentation":"<p>(Optional) The maximum number of instances that are allowed to execute the command at the same time. You can specify a number such as 10 or a percentage such as 10%. The default value is 50. For more information about how to use MaxConcurrency, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"
+          "documentation":"<p>(Optional) The maximum number of instances that are allowed to execute the command at the same time. You can specify a number such as 10 or a percentage such as 10%. The default value is 50. For more information about how to use MaxConcurrency, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-velocity.html\">Using Concurrency Controls</a>.</p>"
         },
         "MaxErrors":{
           "shape":"MaxErrors",
-          "documentation":"<p>The maximum number of errors allowed without the command failing. When the command fails one more time beyond the value of MaxErrors, the systems stops sending the command to additional targets. You can specify a number like 10 or a percentage like 10%. The default value is 50. For more information about how to use MaxErrors, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"
+          "documentation":"<p>The maximum number of errors allowed without the command failing. When the command fails one more time beyond the value of MaxErrors, the systems stops sending the command to additional targets. You can specify a number like 10 or a percentage like 10%. The default value is 50. For more information about how to use MaxErrors, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-maxerrors.html\">Using Error Controls</a>.</p>"
         },
         "ServiceRoleArn":{
           "shape":"ServiceRole",
@@ -7461,14 +8047,14 @@
       "members":{
         "Key":{
           "shape":"TargetKey",
-          "documentation":"<p>User-defined criteria for sending commands that target instances that meet the criteria. Key can be tag:&lt;Amazon EC2 tag&gt; or InstanceIds. For more information about how to send commands that target instances using Key,Value parameters, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"
+          "documentation":"<p>User-defined criteria for sending commands that target instances that meet the criteria. Key can be tag:&lt;Amazon EC2 tag&gt; or InstanceIds. For more information about how to send commands that target instances using Key,Value parameters, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"
         },
         "Values":{
           "shape":"TargetValues",
-          "documentation":"<p>User-defined criteria that maps to Key. For example, if you specified tag:ServerRole, you could specify value:WebServer to execute a command on instances that include Amazon EC2 tags of ServerRole,WebServer. For more information about how to send commands that target instances using Key,Value parameters, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"
+          "documentation":"<p>User-defined criteria that maps to Key. For example, if you specified tag:ServerRole, you could specify value:WebServer to execute a command on instances that include Amazon EC2 tags of ServerRole,WebServer. For more information about how to send commands that target instances using Key,Value parameters, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"
         }
       },
-      "documentation":"<p>An array of search criteria that targets instances using a Key,Value combination that you specify. Targets is required if you don't provide one or more instance IDs in the call.</p>"
+      "documentation":"<p>An array of search criteria that targets instances using a Key,Value combination that you specify. <code>Targets</code> is required if you don't provide one or more instance IDs in the call.</p> <p/>"
     },
     "TargetCount":{"type":"integer"},
     "TargetKey":{
@@ -7524,6 +8110,14 @@
         "Message":{"shape":"String"}
       },
       "documentation":"<p>Inventory item type schema version has to match supported versions in the service. Check output of GetInventorySchema to see the available schema version for each type.</p>",
+      "exception":true
+    },
+    "UnsupportedOperatingSystem":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "documentation":"<p>The operating systems you specified is not supported, or the operation is not supported for the operating system. Valid operating systems include: Windows, AmazonLinux, RedhatEnterpriseLinux, and Ubuntu.</p>",
       "exception":true
     },
     "UnsupportedParameterType":{
@@ -7789,6 +8383,10 @@
           "shape":"PatchIdList",
           "documentation":"<p>A list of explicitly approved patches for the baseline.</p>"
         },
+        "ApprovedPatchesComplianceLevel":{
+          "shape":"PatchComplianceLevel",
+          "documentation":"<p>Assigns a new compliance severity level to an existing patch baseline.</p>"
+        },
         "RejectedPatches":{
           "shape":"PatchIdList",
           "documentation":"<p>A list of explicitly rejected patches for the baseline.</p>"
@@ -7810,6 +8408,10 @@
           "shape":"BaselineName",
           "documentation":"<p>The name of the patch baseline.</p>"
         },
+        "OperatingSystem":{
+          "shape":"OperatingSystem",
+          "documentation":"<p>The operating system rule used by the updated patch baseline.</p>"
+        },
         "GlobalFilters":{
           "shape":"PatchFilterGroup",
           "documentation":"<p>A set of global filters used to exclude patches from the baseline.</p>"
@@ -7821,6 +8423,10 @@
         "ApprovedPatches":{
           "shape":"PatchIdList",
           "documentation":"<p>A list of explicitly approved patches for the baseline.</p>"
+        },
+        "ApprovedPatchesComplianceLevel":{
+          "shape":"PatchComplianceLevel",
+          "documentation":"<p>The compliance severity level assigned to the patch baseline after the update completed.</p>"
         },
         "RejectedPatches":{
           "shape":"PatchIdList",
@@ -7846,5 +8452,5 @@
       "pattern":"^[0-9]{1,6}(\\.[0-9]{1,6}){2,3}$"
     }
   },
-  "documentation":"<fullname>Amazon EC2 Systems Manager</fullname> <p>Amazon EC2 Systems Manager is a collection of capabilities that helps you automate management tasks such as collecting system inventory, applying operating system (OS) patches, automating the creation of Amazon Machine Images (AMIs), and configuring operating systems (OSs) and applications at scale. Systems Manager lets you remotely and securely manage the configuration of your managed instances. A <i>managed instance</i> is any Amazon EC2 instance or on-premises machine in your hybrid environment that has been configured for Systems Manager.</p> <p>This reference is intended to be used with the <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/\">Amazon EC2 Systems Manager User Guide</a>.</p> <p>To get started, verify prerequisites and configure managed instances. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-prereqs.html\">Systems Manager Prerequisites</a>.</p>"
+  "documentation":"<fullname>Amazon EC2 Systems Manager</fullname> <p>Amazon EC2 Systems Manager is a collection of capabilities that helps you automate management tasks such as collecting system inventory, applying operating system (OS) patches, automating the creation of Amazon Machine Images (AMIs), and configuring operating systems (OSs) and applications at scale. Systems Manager lets you remotely and securely manage the configuration of your managed instances. A <i>managed instance</i> is any Amazon EC2 instance or on-premises machine in your hybrid environment that has been configured for Systems Manager.</p> <p>This reference is intended to be used with the <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/\">Amazon EC2 Systems Manager User Guide</a>.</p> <p>To get started, verify prerequisites and configure managed instances. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-setting-up.html\">Systems Manager Prerequisites</a>.</p>"
 }

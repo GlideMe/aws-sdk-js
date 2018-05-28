@@ -84,7 +84,7 @@ declare class ElasticBeanstalk extends Service {
    */
   createPlatformVersion(callback?: (err: AWSError, data: ElasticBeanstalk.Types.CreatePlatformVersionResult) => void): Request<ElasticBeanstalk.Types.CreatePlatformVersionResult, AWSError>;
   /**
-   * Creates the Amazon S3 storage location for the account. This location is used to store user log files.
+   * Creates a bucket in Amazon S3 to store application versions, logs, and other files used by Elastic Beanstalk environments. The Elastic Beanstalk console and EB CLI call this API the first time you create an environment in a region. If the storage location already exists, CreateStorageLocation still returns the bucket name but does not create a new bucket.
    */
   createStorageLocation(callback?: (err: AWSError, data: ElasticBeanstalk.Types.CreateStorageLocationResultMessage) => void): Request<ElasticBeanstalk.Types.CreateStorageLocationResultMessage, AWSError>;
   /**
@@ -127,6 +127,10 @@ declare class ElasticBeanstalk extends Service {
    * Deletes the specified version of a custom platform.
    */
   deletePlatformVersion(callback?: (err: AWSError, data: ElasticBeanstalk.Types.DeletePlatformVersionResult) => void): Request<ElasticBeanstalk.Types.DeletePlatformVersionResult, AWSError>;
+  /**
+   * Returns attributes related to AWS Elastic Beanstalk that are associated with the calling AWS account. The result currently has one set of attributes—resource quotas.
+   */
+  describeAccountAttributes(callback?: (err: AWSError, data: ElasticBeanstalk.Types.DescribeAccountAttributesResult) => void): Request<ElasticBeanstalk.Types.DescribeAccountAttributesResult, AWSError>;
   /**
    * Retrieve a list of application versions.
    */
@@ -236,6 +240,14 @@ declare class ElasticBeanstalk extends Service {
    */
   listPlatformVersions(callback?: (err: AWSError, data: ElasticBeanstalk.Types.ListPlatformVersionsResult) => void): Request<ElasticBeanstalk.Types.ListPlatformVersionsResult, AWSError>;
   /**
+   * Returns the tags applied to an AWS Elastic Beanstalk resource. The response contains a list of tag key-value pairs. Currently, Elastic Beanstalk only supports tagging of Elastic Beanstalk environments. For details about environment tagging, see Tagging Resources in Your Elastic Beanstalk Environment.
+   */
+  listTagsForResource(params: ElasticBeanstalk.Types.ListTagsForResourceMessage, callback?: (err: AWSError, data: ElasticBeanstalk.Types.ResourceTagsDescriptionMessage) => void): Request<ElasticBeanstalk.Types.ResourceTagsDescriptionMessage, AWSError>;
+  /**
+   * Returns the tags applied to an AWS Elastic Beanstalk resource. The response contains a list of tag key-value pairs. Currently, Elastic Beanstalk only supports tagging of Elastic Beanstalk environments. For details about environment tagging, see Tagging Resources in Your Elastic Beanstalk Environment.
+   */
+  listTagsForResource(callback?: (err: AWSError, data: ElasticBeanstalk.Types.ResourceTagsDescriptionMessage) => void): Request<ElasticBeanstalk.Types.ResourceTagsDescriptionMessage, AWSError>;
+  /**
    * Deletes and recreates all of the AWS resources (for example: the Auto Scaling group, load balancer, etc.) for a specified environment and forces a restart.
    */
   rebuildEnvironment(params: ElasticBeanstalk.Types.RebuildEnvironmentMessage, callback?: (err: AWSError, data: {}) => void): Request<{}, AWSError>;
@@ -324,6 +336,14 @@ declare class ElasticBeanstalk extends Service {
    */
   updateEnvironment(callback?: (err: AWSError, data: ElasticBeanstalk.Types.EnvironmentDescription) => void): Request<ElasticBeanstalk.Types.EnvironmentDescription, AWSError>;
   /**
+   * Update the list of tags applied to an AWS Elastic Beanstalk resource. Two lists can be passed: TagsToAdd for tags to add or update, and TagsToRemove. Currently, Elastic Beanstalk only supports tagging of Elastic Beanstalk environments. For details about environment tagging, see Tagging Resources in Your Elastic Beanstalk Environment. If you create a custom IAM user policy to control permission to this operation, specify one of the following two virtual actions (or both) instead of the API operation name:  elasticbeanstalk:AddTags  Controls permission to call UpdateTagsForResource and pass a list of tags to add in the TagsToAdd parameter.  elasticbeanstalk:RemoveTags  Controls permission to call UpdateTagsForResource and pass a list of tag keys to remove in the TagsToRemove parameter.   For details about creating a custom user policy, see Creating a Custom User Policy.
+   */
+  updateTagsForResource(params: ElasticBeanstalk.Types.UpdateTagsForResourceMessage, callback?: (err: AWSError, data: {}) => void): Request<{}, AWSError>;
+  /**
+   * Update the list of tags applied to an AWS Elastic Beanstalk resource. Two lists can be passed: TagsToAdd for tags to add or update, and TagsToRemove. Currently, Elastic Beanstalk only supports tagging of Elastic Beanstalk environments. For details about environment tagging, see Tagging Resources in Your Elastic Beanstalk Environment. If you create a custom IAM user policy to control permission to this operation, specify one of the following two virtual actions (or both) instead of the API operation name:  elasticbeanstalk:AddTags  Controls permission to call UpdateTagsForResource and pass a list of tags to add in the TagsToAdd parameter.  elasticbeanstalk:RemoveTags  Controls permission to call UpdateTagsForResource and pass a list of tag keys to remove in the TagsToRemove parameter.   For details about creating a custom user policy, see Creating a Custom User Policy.
+   */
+  updateTagsForResource(callback?: (err: AWSError, data: {}) => void): Request<{}, AWSError>;
+  /**
    * Takes a set of configuration settings and either a configuration template or environment, and determines whether those values are valid. This action returns a list of messages indicating any errors or warnings associated with the selection of option values.
    */
   validateConfigurationSettings(params: ElasticBeanstalk.Types.ValidateConfigurationSettingsMessage, callback?: (err: AWSError, data: ElasticBeanstalk.Types.ConfigurationSettingsValidationMessages) => void): Request<ElasticBeanstalk.Types.ConfigurationSettingsValidationMessages, AWSError>;
@@ -348,7 +368,12 @@ declare namespace ElasticBeanstalk {
   export type ActionHistoryStatus = "Completed"|"Failed"|"Unknown"|string;
   export type ActionStatus = "Scheduled"|"Pending"|"Running"|"Unknown"|string;
   export type ActionType = "InstanceRefresh"|"PlatformUpdate"|"Unknown"|string;
+  export type ApplicationArn = string;
   export interface ApplicationDescription {
+    /**
+     * The Amazon Resource Name (ARN) of the application.
+     */
+    ApplicationArn?: ApplicationArn;
     /**
      * The name of the application.
      */
@@ -431,7 +456,12 @@ declare namespace ElasticBeanstalk {
      */
     ResourceLifecycleConfig?: ApplicationResourceLifecycleConfig;
   }
+  export type ApplicationVersionArn = string;
   export interface ApplicationVersionDescription {
+    /**
+     * The Amazon Resource Name (ARN) of the application version.
+     */
+    ApplicationVersionArn?: ApplicationVersionArn;
     /**
      * The name of the application to which the application version belongs.
      */
@@ -482,7 +512,7 @@ declare namespace ElasticBeanstalk {
      */
     ApplicationVersions?: ApplicationVersionDescriptionList;
     /**
-     * For a paginated request, the token that you can pass in a subsequent request to get the next page.
+     * In a paginated request, the token that you can pass in a subsequent request to get the next response page.
      */
     NextToken?: Token;
   }
@@ -714,7 +744,7 @@ declare namespace ElasticBeanstalk {
      */
     SolutionStackName?: SolutionStackName;
     /**
-     * The ARN of the custom platform.
+     * The ARN of the platform.
      */
     PlatformArn?: PlatformArn;
     /**
@@ -728,7 +758,7 @@ declare namespace ElasticBeanstalk {
      */
     SolutionStackName?: SolutionStackName;
     /**
-     * The ARN of the custom platform.
+     * The ARN of the platform.
      */
     PlatformArn?: PlatformArn;
     /**
@@ -823,7 +853,7 @@ declare namespace ElasticBeanstalk {
      */
     AutoCreateApplication?: AutoCreateApplication;
     /**
-     * Preprocesses and validates the environment manifest and configuration files in the source bundle. Validating configuration files can identify issues prior to deploying the application version to an environment.
+     * Preprocesses and validates the environment manifest (env.yaml) and configuration files (*.config files in the .ebextensions folder) in the source bundle. Validating configuration files can identify issues prior to deploying the application version to an environment.  The Process option validates Elastic Beanstalk configuration files. It doesn't validate your application's configuration files, like proxy server or Docker configuration. 
      */
     Process?: ApplicationVersionProccess;
   }
@@ -841,7 +871,7 @@ declare namespace ElasticBeanstalk {
      */
     SolutionStackName?: SolutionStackName;
     /**
-     * The ARN of the custome platform.
+     * The ARN of the custom platform.
      */
     PlatformArn?: PlatformArn;
     /**
@@ -867,7 +897,7 @@ declare namespace ElasticBeanstalk {
      */
     ApplicationName: ApplicationName;
     /**
-     * A unique name for the deployment environment. Used in the application URL. Constraint: Must be from 4 to 40 characters in length. The name can contain only letters, numbers, and hyphens. It cannot start or end with a hyphen. This name must be unique in your account. If the specified name already exists, AWS Elastic Beanstalk returns an InvalidParameterValue error.  Default: If the CNAME parameter is not specified, the environment name becomes part of the CNAME, and therefore part of the visible URL for your application.
+     * A unique name for the deployment environment. Used in the application URL. Constraint: Must be from 4 to 40 characters in length. The name can contain only letters, numbers, and hyphens. It cannot start or end with a hyphen. This name must be unique within a region in your account. If the specified name already exists in the region, AWS Elastic Beanstalk returns an InvalidParameterValue error.  Default: If the CNAME parameter is not specified, the environment name becomes part of the CNAME, and therefore part of the visible URL for your application.
      */
     EnvironmentName?: EnvironmentName;
     /**
@@ -903,7 +933,7 @@ declare namespace ElasticBeanstalk {
      */
     SolutionStackName?: SolutionStackName;
     /**
-     * The ARN of the custom platform.
+     * The ARN of the platform.
      */
     PlatformArn?: PlatformArn;
     /**
@@ -1038,11 +1068,17 @@ declare namespace ElasticBeanstalk {
      */
     Status?: String;
     /**
-     * For in-progress deployments, the time that the deloyment started. For completed deployments, the time that the deployment ended.
+     * For in-progress deployments, the time that the deployment started. For completed deployments, the time that the deployment ended.
      */
     DeploymentTime?: DeploymentTimestamp;
   }
   export type DeploymentTimestamp = Date;
+  export interface DescribeAccountAttributesResult {
+    /**
+     * The Elastic Beanstalk resource quotas associated with the calling AWS account.
+     */
+    ResourceQuotas?: ResourceQuotas;
+  }
   export interface DescribeApplicationVersionsMessage {
     /**
      * Specify an application name to show only application versions for that application.
@@ -1053,11 +1089,11 @@ declare namespace ElasticBeanstalk {
      */
     VersionLabels?: VersionLabelsList;
     /**
-     * Specify a maximum number of application versions to paginate in the request.
+     * For a paginated request. Specify a maximum number of application versions to include in each response. If no MaxRecords is specified, all available application versions are retrieved in a single response.
      */
     MaxRecords?: MaxRecords;
     /**
-     * Specify a next token to retrieve the next page in a paginated request.
+     * For a paginated request. Specify a token from a previous response page to retrieve the next response page. All other parameter values must be identical to the ones specified in the initial request. If no NextToken is specified, the first page is retrieved.
      */
     NextToken?: Token;
   }
@@ -1238,6 +1274,14 @@ declare namespace ElasticBeanstalk {
      *  If specified when IncludeDeleted is set to true, then environments deleted after this date are displayed. 
      */
     IncludedDeletedBackTo?: IncludeDeletedBackTo;
+    /**
+     * For a paginated request. Specify a maximum number of environments to include in each response. If no MaxRecords is specified, all available environments are retrieved in a single response.
+     */
+    MaxRecords?: MaxRecords;
+    /**
+     * For a paginated request. Specify a token from a previous response page to retrieve the next response page. All other parameter values must be identical to the ones specified in the initial request. If no NextToken is specified, the first page is retrieved.
+     */
+    NextToken?: Token;
   }
   export interface DescribeEventsMessage {
     /**
@@ -1336,6 +1380,7 @@ declare namespace ElasticBeanstalk {
   export type Description = string;
   export type Ec2InstanceId = string;
   export type EndpointURL = string;
+  export type EnvironmentArn = string;
   export interface EnvironmentDescription {
     /**
      * The name of this environment.
@@ -1358,7 +1403,7 @@ declare namespace ElasticBeanstalk {
      */
     SolutionStackName?: SolutionStackName;
     /**
-     * The ARN of the custom platform.
+     * The ARN of the platform.
      */
     PlatformArn?: PlatformArn;
     /**
@@ -1413,6 +1458,10 @@ declare namespace ElasticBeanstalk {
      * A list of links to other environments in the same group.
      */
     EnvironmentLinks?: EnvironmentLinks;
+    /**
+     * The environment's Amazon Resource Name (ARN), which can be used in other API requests that require an ARN.
+     */
+    EnvironmentArn?: EnvironmentArn;
   }
   export type EnvironmentDescriptionsList = EnvironmentDescription[];
   export interface EnvironmentDescriptionsMessage {
@@ -1420,6 +1469,10 @@ declare namespace ElasticBeanstalk {
      *  Returns an EnvironmentDescription list. 
      */
     Environments?: EnvironmentDescriptionsList;
+    /**
+     * In a paginated request, the token that you can pass in a subsequent request to get the next response page.
+     */
+    NextToken?: Token;
   }
   export type EnvironmentHealth = "Green"|"Yellow"|"Red"|"Grey"|string;
   export type EnvironmentHealthAttribute = "Status"|"Color"|"Causes"|"ApplicationMetrics"|"InstancesHealth"|"All"|"HealthStatus"|"RefreshedAt"|string;
@@ -1544,7 +1597,7 @@ declare namespace ElasticBeanstalk {
      */
     EnvironmentName?: EnvironmentName;
     /**
-     * The ARN of the custom platform.
+     * The ARN of the platform.
      */
     PlatformArn?: PlatformArn;
     /**
@@ -1698,6 +1751,12 @@ declare namespace ElasticBeanstalk {
      * The starting index into the remaining list of platforms. if this value is not null, you can use it in a subsequent ListPlatformVersion call. 
      */
     NextToken?: Token;
+  }
+  export interface ListTagsForResourceMessage {
+    /**
+     * The Amazon Resource Name (ARN) of the resouce for which a tag list is requested. Must be the ARN of an Elastic Beanstalk environment.
+     */
+    ResourceArn: ResourceArn;
   }
   export interface Listener {
     /**
@@ -2055,8 +2114,47 @@ declare namespace ElasticBeanstalk {
     InfoType: EnvironmentInfoType;
   }
   export type RequestId = string;
+  export type ResourceArn = string;
   export type ResourceId = string;
   export type ResourceName = string;
+  export interface ResourceQuota {
+    /**
+     * The maximum number of instances of this Elastic Beanstalk resource type that an AWS account can use.
+     */
+    Maximum?: BoxedInt;
+  }
+  export interface ResourceQuotas {
+    /**
+     * The quota for applications in the AWS account.
+     */
+    ApplicationQuota?: ResourceQuota;
+    /**
+     * The quota for application versions in the AWS account.
+     */
+    ApplicationVersionQuota?: ResourceQuota;
+    /**
+     * The quota for environments in the AWS account.
+     */
+    EnvironmentQuota?: ResourceQuota;
+    /**
+     * The quota for configuration templates in the AWS account.
+     */
+    ConfigurationTemplateQuota?: ResourceQuota;
+    /**
+     * The quota for custom platforms in the AWS account.
+     */
+    CustomPlatformQuota?: ResourceQuota;
+  }
+  export interface ResourceTagsDescriptionMessage {
+    /**
+     * The Amazon Resource Name (ARN) of the resouce for which a tag list was requested.
+     */
+    ResourceArn?: ResourceArn;
+    /**
+     * A list of tag key-value pairs.
+     */
+    ResourceTags?: TagList;
+  }
   export interface RestartAppServerMessage {
     /**
      * The ID of the environment to restart the server for.  Condition: You must specify either this or an EnvironmentName, or both. If you do not specify either, AWS Elastic Beanstalk returns MissingRequiredParameter error. 
@@ -2243,6 +2341,8 @@ declare namespace ElasticBeanstalk {
     Value?: TagValue;
   }
   export type TagKey = string;
+  export type TagKeyList = TagKey[];
+  export type TagList = Tag[];
   export type TagValue = string;
   export type Tags = Tag[];
   export type TerminateEnvForce = boolean;
@@ -2382,6 +2482,20 @@ declare namespace ElasticBeanstalk {
      * A list of custom user-defined configuration options to remove from the configuration set for this environment.
      */
     OptionsToRemove?: OptionsSpecifierList;
+  }
+  export interface UpdateTagsForResourceMessage {
+    /**
+     * The Amazon Resource Name (ARN) of the resouce to be updated. Must be the ARN of an Elastic Beanstalk environment.
+     */
+    ResourceArn: ResourceArn;
+    /**
+     * A list of tags to add or update. If a key of an existing tag is added, the tag's value is updated.
+     */
+    TagsToAdd?: TagList;
+    /**
+     * A list of tag keys to remove. If a tag key doesn't exist, it is silently ignored.
+     */
+    TagsToRemove?: TagKeyList;
   }
   export type UserDefinedOption = boolean;
   export interface ValidateConfigurationSettingsMessage {

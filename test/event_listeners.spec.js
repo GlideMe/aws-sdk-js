@@ -7,6 +7,7 @@
   AWS = helpers.AWS;
 
   MockService = helpers.MockService;
+  MockServiceFromApi = helpers.MockServiceFromApi;
 
   describe('AWS.EventListeners', function() {
     var completeHandler, config, delays, errorHandler, makeRequest, oldMathRandom, oldSetTimeout, randomValues, retryHandler, service, successHandler, totalWaited;
@@ -66,6 +67,7 @@
         return request;
       }
     };
+    
     describe('validate', function() {
       it('takes the request object as a parameter', function() {
         var request, response;
@@ -135,6 +137,7 @@
         return delete service.isGlobalEndpoint;
       });
     });
+
     describe('build', function() {
       return it('takes the request object as a parameter', function() {
         var request, response;
@@ -148,6 +151,7 @@
         return expect(response.error.message).to.equal("ERROR");
       });
     });
+
     describe('afterBuild', function() {
       var fs, request, sendRequest;
       request = null;
@@ -213,6 +217,7 @@
         }
       });
     });
+
     describe('restart', function() {
       var request;
       request = null;
@@ -233,6 +238,7 @@
         return expect(request.httpRequest).not.to.eql(httpRequest);
       });
     });
+
     describe('sign', function() {
       it('takes the request object as a parameter', function() {
         var request, response;
@@ -272,6 +278,7 @@
         return expect(response.error).to.equal('mockservice');
       });
     });
+
     describe('send', function() {
       it('passes httpOptions from config', function() {
         var options;
@@ -314,8 +321,9 @@
         return done();
       });
     });
+
     describe('httpHeaders', function() {
-      return it('applies clock skew offset when correcClockSkew is true', function(done) {
+      return it('applies clock skew offset when correcClockSkew is true', function() {
         var offset, request, response, serverDate;
         service = new MockService({
           maxRetries: 3,
@@ -325,15 +333,14 @@
         helpers.mockHttpResponse(200, {
           date: serverDate.toString()
         }, '');
-        helpers.spyOn(AWS.util, 'isClockSkewed').andReturn(true);
+        helpers.spyOn(service, 'isClockSkewed').andReturn(true);
         request = makeRequest();
         response = request.send();
-        offset = Math.abs(AWS.config.systemClockOffset);
+        offset = Math.abs(service.config.systemClockOffset);
         expect(offset > 299000 && offset < 310000).to.equal(true);
-        AWS.config.systemClockOffset = 0;
-        return done();
       });
     });
+
     describe('httpData', function() {
       beforeEach(function() {
         return helpers.mockHttpResponse(200, {}, ['FOO', 'BAR', 'BAZ', 'QUX']);
@@ -409,6 +416,7 @@
         });
       });
     }
+
     describe('httpError', function() {
       it('rewrites ENOTFOUND error to include helpful message', function() {
         var request;
@@ -446,6 +454,7 @@
         return expect(sendHandler.calls.length).to.equal(service.config.maxRetries + 1);
       });
     });
+
     describe('retry', function() {
       it('retries a request with a set maximum retries', function() {
         var request, response, sendHandler;
@@ -634,7 +643,6 @@
         return it('retries clock skew errors', function() {
           var request, response;
           helpers.mockHttpResponse(400, {}, '');
-          AWS.config.isClockSkewed = true;
           service = new MockService({
             maxRetries: 3,
             correctClockSkew: true
@@ -653,7 +661,10 @@
       it('does not apply clock skew correction when correctClockSkew is false', function() {
         var request, response;
         helpers.mockHttpResponse(400, {}, '');
-        AWS.config.isClockSkewed = true;
+        service = new MockService({
+            maxRetries: 3,
+            correctClockSkew: false
+        });
         request = makeRequest();
         request.on('extractError', function(resp) {
           return resp.error = {
@@ -667,6 +678,10 @@
       it('does not retry other signature errors if clock is not skewed', function() {
         var request, response;
         helpers.mockHttpResponse(403, {}, '');
+        service = new MockService({
+            maxRetries: 3,
+            correctClockSkew: false
+        });
         request = makeRequest();
         request.on('extractError', function(resp) {
           return resp.error = {
@@ -704,6 +719,7 @@
         return expect(response.error.retryable).to.equal(false);
       });
     });
+
     describe('success', function() {
       return it('emits success on a successful response', function() {
         var response;
@@ -716,6 +732,7 @@
         return expect(response.retryCount).to.equal(0);
       });
     });
+
     describe('error', function() {
       it('emits error if error found and should not be retrying', function() {
         var response;
@@ -748,6 +765,7 @@
         return expect(completeHandler.calls.length).not.to.equal(0);
       });
     });
+
     describe('logging', function() {
       var data, logfn, logger, match;
       data = null;
@@ -784,7 +802,212 @@
         return expect(data).to.match(match);
       });
     });
-    return describe('terminal callback error handling', function() {
+
+    describe('logging sensitive information', function() {
+      var logger;
+      var data = null;
+      var apiJSON = null;
+      logfn = function(d) {
+        return data += d;
+      };
+      beforeEach(function() {
+        logger = {};
+        data = '';
+        apiJSON = {
+          operations: {
+            mockMethod: {
+              input: {
+                type: "structure",
+                members: {
+                  foo: {
+                    type: "string",
+                    sensitive: true
+                  }
+                }
+              },
+              output: {}
+            }
+          }
+        }
+      })
+
+      it('with sensitive trait in shape\'s own property', function() {
+        var api = new AWS.Model.Api(apiJSON);
+        var CustomMockService = MockServiceFromApi(api);
+        service = new CustomMockService({logger: logger});
+        helpers.mockHttpResponse(200, {}, []);
+        logger.log = logfn;
+        var request = service.makeRequest('mockMethod', {
+          foo: 'secret_key_id'
+        });
+        request.send();
+        expect(data.indexOf('secret_key_id')).to.equal(-1);
+        expect(JSON.stringify(request.params).indexOf('secret_key_id') >= 0).to.equal(true);
+      });
+
+      it('from input shape of structure and with un-inlined shape', function() {
+        var api = new AWS.Model.Api({
+          operations: {
+            mockMethod: {
+              input: {
+                type: "structure",
+                members: {
+                  foo: {
+                    shape: "S1"
+                  },
+                  baz: {
+                    type: 'structure',
+                    members: {
+                      bar: {}
+                    }
+                  }
+                }
+              },
+              output: {}
+            }
+          },
+          shapes: {
+            S1: {
+              type: 'blob',
+              sensitive: true
+            }
+          }
+        })
+        var CustomMockService = MockServiceFromApi(api);
+        service = new CustomMockService({logger: logger});
+        helpers.mockHttpResponse(200, {}, []);
+        logger.log = logfn;
+        service.makeRequest('mockMethod', {
+          foo: 'secret_key_id',
+          baz: {
+            bar: 'should log'
+          },
+          qux: 'nonsense'
+        }).send();
+        expect(data.indexOf('secret_key_id')).to.equal(-1);
+        expect(data.indexOf('bar: \'should log\'') >= 0).to.equal(true);
+        expect(data.indexOf('qux: \'nonsense\'') >= 0).to.equal(true);
+      });
+
+      it('from input shape of list', function() {
+        apiJSON.operations.mockMethod.input.members.foo = {
+          type: 'list',
+          member: {
+            sensitive: true
+          }
+        }
+        var api = new AWS.Model.Api(apiJSON);
+        var CustomMockService = MockServiceFromApi(api);
+        service = new CustomMockService({logger: logger});
+        helpers.mockHttpResponse(200, {}, []);
+        logger.log = logfn;
+        service.makeRequest('mockMethod', {
+          foo: ['secret_key_id', 'secret_access_key']
+        }).send();
+        expect(data.indexOf('secret_key_id')).to.equal(-1);
+        expect(data.indexOf('secret_access_key')).to.equal(-1);
+      });
+
+      it('from input shape of map', function() {
+        apiJSON.operations.mockMethod.input.members.foo = {
+          type: 'map',
+          key: {
+            type: 'string'
+          },
+          value: {
+            type: 'string',
+            sensitive: true
+          }
+        }
+        var api = new AWS.Model.Api(apiJSON);
+        var CustomMockService = MockServiceFromApi(api);
+        service = new CustomMockService({logger: logger});
+        helpers.mockHttpResponse(200, {}, []);
+        logger.log = logfn;
+        service.makeRequest('mockMethod', {
+          foo: {
+            key0: 'secret_key_id',
+            key1: 'secret_key_id'
+          }
+        }).send();
+        expect(data.indexOf('secret_key_id')).to.equal(-1);
+      });
+
+      it('with recursive input shape', function() {
+        apiJSON.operations.mockMethod.input.members.foo = {
+          type: 'map',
+          key: {
+            type: 'string'
+          },
+          value: {
+            type: 'list',
+            member: {
+              type: 'structure',
+              members: {
+                bar: {sensitive: true}
+              }
+            }
+          }
+        }
+        var api = new AWS.Model.Api(apiJSON);
+        var CustomMockService = MockServiceFromApi(api);
+        service = new CustomMockService({logger: logger});
+        helpers.mockHttpResponse(200, {}, []);
+        logger.log = logfn;
+        service.makeRequest('mockMethod', {
+          foo: {
+            key0: [{bar: 'secret_key_id'}, {bar: 'secret_access_key'}]
+          }
+        }).send();
+        expect(data.indexOf('secret_key_id')).to.equal(-1);
+        expect(data.indexOf('secret_access_key')).to.equal(-1);
+      })
+
+      it('from input shape of scalars', function() {
+        var allShapeTypes = ['boolean', 'timestamp', 'float','integer', 'string', 'base64', 'binary'];
+        Array.prototype.forEach.call(allShapeTypes, function(shapeType){
+          apiJSON.operations.mockMethod.input.members.foo = {
+            type: shapeType,
+            sensitive: true
+          };
+          var api = new AWS.Model.Api(apiJSON);
+          var CustomMockService = MockServiceFromApi(api);
+          service = new CustomMockService({logger: logger});
+          helpers.mockHttpResponse(200, {}, []);
+          logger.log = logfn;
+          service.makeRequest('mockMethod', {
+            foo: '1234567'
+          }).send();
+          expect(data.indexOf('1234567')).to.equal(-1);
+        })
+      });
+
+      it('from input of undefined', function() {
+        apiJSON.operations.mockMethod.input.members.foo = {
+          type: 'list',
+          member: {
+            type: 'structure',
+            members: {
+              bar: {},
+              baz: {}
+            }
+          }
+        };
+        var api = new AWS.Model.Api(apiJSON);
+        var CustomMockService = MockServiceFromApi(api);
+        service = new CustomMockService({logger: logger});
+        helpers.mockHttpResponse(200, {}, []);
+        logger.log = logfn;
+        service.makeRequest('mockMethod', {
+          foo: [undefined, {bar: 'bar'}]
+        }).send();
+        expect(data.indexOf('bar: \'bar\'') >= 0).to.equal(true);
+        expect(data.indexOf('undefined') >= 0).to.equal(true);
+        expect(data.indexOf('{}')).to.equal(-1);
+      })
+    });
+
+    describe('terminal callback error handling', function() {
       describe('without domains', function() {
         it('emits uncaughtException', function() {
           helpers.mockResponse({

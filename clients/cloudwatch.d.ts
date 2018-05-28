@@ -76,11 +76,19 @@ declare class CloudWatch extends Service {
    */
   getDashboard(callback?: (err: AWSError, data: CloudWatch.Types.GetDashboardOutput) => void): Request<CloudWatch.Types.GetDashboardOutput, AWSError>;
   /**
-   * Gets statistics for the specified metric. Amazon CloudWatch retains metric data as follows:   Data points with a period of 60 seconds (1-minute) are available for 15 days   Data points with a period of 300 seconds (5-minute) are available for 63 days   Data points with a period of 3600 seconds (1 hour) are available for 455 days (15 months)   CloudWatch started retaining 5-minute and 1-hour metric data as of July 9, 2016. The maximum number of data points returned from a single call is 1,440. If you request more than 1,440 data points, CloudWatch returns an error. To reduce the number of data points, you can narrow the specified time range and make multiple requests across adjacent time ranges, or you can increase the specified period. A period can be as short as one minute (60 seconds). Data points are not returned in chronological order. CloudWatch aggregates data points based on the length of the period that you specify. For example, if you request statistics with a one-hour period, CloudWatch aggregates all data points with time stamps that fall within each one-hour period. Therefore, the number of values aggregated by CloudWatch is larger than the number of data points returned. CloudWatch needs raw data points to calculate percentile statistics. If you publish data using a statistic set instead, you can only retrieve percentile statistics for this data if one of the following conditions is true:   The SampleCount value of the statistic set is 1.   The Min and the Max values of the statistic set are equal.   For a list of metrics and dimensions supported by AWS services, see the Amazon CloudWatch Metrics and Dimensions Reference in the Amazon CloudWatch User Guide.
+   * You can use the GetMetricData API to retrieve as many as 100 different metrics in a single request, with a total of as many as 100,800 datapoints. You can also optionally perform math expressions on the values of the returned statistics, to create new time series that represent new insights into your data. For example, using Lambda metrics, you could divide the Errors metric by the Invocations metric to get an error rate time series. For more information about metric math expressions, see Metric Math Syntax and Functions in the Amazon CloudWatch User Guide. Calls to the GetMetricData API have a different pricing structure than calls to GetMetricStatistics. For more information about pricing, see Amazon CloudWatch Pricing.
+   */
+  getMetricData(params: CloudWatch.Types.GetMetricDataInput, callback?: (err: AWSError, data: CloudWatch.Types.GetMetricDataOutput) => void): Request<CloudWatch.Types.GetMetricDataOutput, AWSError>;
+  /**
+   * You can use the GetMetricData API to retrieve as many as 100 different metrics in a single request, with a total of as many as 100,800 datapoints. You can also optionally perform math expressions on the values of the returned statistics, to create new time series that represent new insights into your data. For example, using Lambda metrics, you could divide the Errors metric by the Invocations metric to get an error rate time series. For more information about metric math expressions, see Metric Math Syntax and Functions in the Amazon CloudWatch User Guide. Calls to the GetMetricData API have a different pricing structure than calls to GetMetricStatistics. For more information about pricing, see Amazon CloudWatch Pricing.
+   */
+  getMetricData(callback?: (err: AWSError, data: CloudWatch.Types.GetMetricDataOutput) => void): Request<CloudWatch.Types.GetMetricDataOutput, AWSError>;
+  /**
+   * Gets statistics for the specified metric. The maximum number of data points returned from a single call is 1,440. If you request more than 1,440 data points, CloudWatch returns an error. To reduce the number of data points, you can narrow the specified time range and make multiple requests across adjacent time ranges, or you can increase the specified period. Data points are not returned in chronological order. CloudWatch aggregates data points based on the length of the period that you specify. For example, if you request statistics with a one-hour period, CloudWatch aggregates all data points with time stamps that fall within each one-hour period. Therefore, the number of values aggregated by CloudWatch is larger than the number of data points returned. CloudWatch needs raw data points to calculate percentile statistics. If you publish data using a statistic set instead, you can only retrieve percentile statistics for this data if one of the following conditions is true:   The SampleCount value of the statistic set is 1.   The Min and the Max values of the statistic set are equal.   Amazon CloudWatch retains metric data as follows:   Data points with a period of less than 60 seconds are available for 3 hours. These data points are high-resolution metrics and are available only for custom metrics that have been defined with a StorageResolution of 1.   Data points with a period of 60 seconds (1-minute) are available for 15 days.   Data points with a period of 300 seconds (5-minute) are available for 63 days.   Data points with a period of 3600 seconds (1 hour) are available for 455 days (15 months).   Data points that are initially published with a shorter period are aggregated together for long-term storage. For example, if you collect data using a period of 1 minute, the data remains available for 15 days with 1-minute resolution. After 15 days, this data is still available, but is aggregated and retrievable only with a resolution of 5 minutes. After 63 days, the data is further aggregated and is available with a resolution of 1 hour. CloudWatch started retaining 5-minute and 1-hour metric data as of July 9, 2016. For information about metrics and dimensions supported by AWS services, see the Amazon CloudWatch Metrics and Dimensions Reference in the Amazon CloudWatch User Guide.
    */
   getMetricStatistics(params: CloudWatch.Types.GetMetricStatisticsInput, callback?: (err: AWSError, data: CloudWatch.Types.GetMetricStatisticsOutput) => void): Request<CloudWatch.Types.GetMetricStatisticsOutput, AWSError>;
   /**
-   * Gets statistics for the specified metric. Amazon CloudWatch retains metric data as follows:   Data points with a period of 60 seconds (1-minute) are available for 15 days   Data points with a period of 300 seconds (5-minute) are available for 63 days   Data points with a period of 3600 seconds (1 hour) are available for 455 days (15 months)   CloudWatch started retaining 5-minute and 1-hour metric data as of July 9, 2016. The maximum number of data points returned from a single call is 1,440. If you request more than 1,440 data points, CloudWatch returns an error. To reduce the number of data points, you can narrow the specified time range and make multiple requests across adjacent time ranges, or you can increase the specified period. A period can be as short as one minute (60 seconds). Data points are not returned in chronological order. CloudWatch aggregates data points based on the length of the period that you specify. For example, if you request statistics with a one-hour period, CloudWatch aggregates all data points with time stamps that fall within each one-hour period. Therefore, the number of values aggregated by CloudWatch is larger than the number of data points returned. CloudWatch needs raw data points to calculate percentile statistics. If you publish data using a statistic set instead, you can only retrieve percentile statistics for this data if one of the following conditions is true:   The SampleCount value of the statistic set is 1.   The Min and the Max values of the statistic set are equal.   For a list of metrics and dimensions supported by AWS services, see the Amazon CloudWatch Metrics and Dimensions Reference in the Amazon CloudWatch User Guide.
+   * Gets statistics for the specified metric. The maximum number of data points returned from a single call is 1,440. If you request more than 1,440 data points, CloudWatch returns an error. To reduce the number of data points, you can narrow the specified time range and make multiple requests across adjacent time ranges, or you can increase the specified period. Data points are not returned in chronological order. CloudWatch aggregates data points based on the length of the period that you specify. For example, if you request statistics with a one-hour period, CloudWatch aggregates all data points with time stamps that fall within each one-hour period. Therefore, the number of values aggregated by CloudWatch is larger than the number of data points returned. CloudWatch needs raw data points to calculate percentile statistics. If you publish data using a statistic set instead, you can only retrieve percentile statistics for this data if one of the following conditions is true:   The SampleCount value of the statistic set is 1.   The Min and the Max values of the statistic set are equal.   Amazon CloudWatch retains metric data as follows:   Data points with a period of less than 60 seconds are available for 3 hours. These data points are high-resolution metrics and are available only for custom metrics that have been defined with a StorageResolution of 1.   Data points with a period of 60 seconds (1-minute) are available for 15 days.   Data points with a period of 300 seconds (5-minute) are available for 63 days.   Data points with a period of 3600 seconds (1 hour) are available for 455 days (15 months).   Data points that are initially published with a shorter period are aggregated together for long-term storage. For example, if you collect data using a period of 1 minute, the data remains available for 15 days with 1-minute resolution. After 15 days, this data is still available, but is aggregated and retrievable only with a resolution of 5 minutes. After 63 days, the data is further aggregated and is available with a resolution of 1 hour. CloudWatch started retaining 5-minute and 1-hour metric data as of July 9, 2016. For information about metrics and dimensions supported by AWS services, see the Amazon CloudWatch Metrics and Dimensions Reference in the Amazon CloudWatch User Guide.
    */
   getMetricStatistics(callback?: (err: AWSError, data: CloudWatch.Types.GetMetricStatisticsOutput) => void): Request<CloudWatch.Types.GetMetricStatisticsOutput, AWSError>;
   /**
@@ -100,19 +108,19 @@ declare class CloudWatch extends Service {
    */
   listMetrics(callback?: (err: AWSError, data: CloudWatch.Types.ListMetricsOutput) => void): Request<CloudWatch.Types.ListMetricsOutput, AWSError>;
   /**
-   * Creates a dashboard if it does not already exist, or updates an existing dashboard. If you update a dashboard, the entire contents are replaced with what you specify here. You can have up to 500 dashboards per account. All dashboards in your account are global, not region-specific. To copy an existing dashboard, use GetDashboard, and then use the data returned within DashboardBody as the template for the new dashboard when you call PutDashboard to create the copy.
+   * Creates a dashboard if it does not already exist, or updates an existing dashboard. If you update a dashboard, the entire contents are replaced with what you specify here. You can have up to 500 dashboards per account. All dashboards in your account are global, not region-specific. A simple way to create a dashboard using PutDashboard is to copy an existing dashboard. To copy an existing dashboard using the console, you can load the dashboard and then use the View/edit source command in the Actions menu to display the JSON block for that dashboard. Another way to copy a dashboard is to use GetDashboard, and then use the data returned within DashboardBody as the template for the new dashboard when you call PutDashboard. When you create a dashboard with PutDashboard, a good practice is to add a text widget at the top of the dashboard with a message that the dashboard was created by script and should not be changed in the console. This message could also point console users to the location of the DashboardBody script or the CloudFormation template used to create the dashboard.
    */
   putDashboard(params: CloudWatch.Types.PutDashboardInput, callback?: (err: AWSError, data: CloudWatch.Types.PutDashboardOutput) => void): Request<CloudWatch.Types.PutDashboardOutput, AWSError>;
   /**
-   * Creates a dashboard if it does not already exist, or updates an existing dashboard. If you update a dashboard, the entire contents are replaced with what you specify here. You can have up to 500 dashboards per account. All dashboards in your account are global, not region-specific. To copy an existing dashboard, use GetDashboard, and then use the data returned within DashboardBody as the template for the new dashboard when you call PutDashboard to create the copy.
+   * Creates a dashboard if it does not already exist, or updates an existing dashboard. If you update a dashboard, the entire contents are replaced with what you specify here. You can have up to 500 dashboards per account. All dashboards in your account are global, not region-specific. A simple way to create a dashboard using PutDashboard is to copy an existing dashboard. To copy an existing dashboard using the console, you can load the dashboard and then use the View/edit source command in the Actions menu to display the JSON block for that dashboard. Another way to copy a dashboard is to use GetDashboard, and then use the data returned within DashboardBody as the template for the new dashboard when you call PutDashboard. When you create a dashboard with PutDashboard, a good practice is to add a text widget at the top of the dashboard with a message that the dashboard was created by script and should not be changed in the console. This message could also point console users to the location of the DashboardBody script or the CloudFormation template used to create the dashboard.
    */
   putDashboard(callback?: (err: AWSError, data: CloudWatch.Types.PutDashboardOutput) => void): Request<CloudWatch.Types.PutDashboardOutput, AWSError>;
   /**
-   * Creates or updates an alarm and associates it with the specified metric. Optionally, this operation can associate one or more Amazon SNS resources with the alarm. When this operation creates an alarm, the alarm state is immediately set to INSUFFICIENT_DATA. The alarm is evaluated and its state is set appropriately. Any actions associated with the state are then executed. When you update an existing alarm, its state is left unchanged, but the update completely overwrites the previous configuration of the alarm. If you are an IAM user, you must have Amazon EC2 permissions for some operations:    ec2:DescribeInstanceStatus and ec2:DescribeInstances for all alarms on EC2 instance status metrics    ec2:StopInstances for alarms with stop actions    ec2:TerminateInstances for alarms with terminate actions    ec2:DescribeInstanceRecoveryAttribute and ec2:RecoverInstances for alarms with recover actions   If you have read/write permissions for Amazon CloudWatch but not for Amazon EC2, you can still create an alarm, but the stop or terminate actions are not performed. However, if you are later granted the required permissions, the alarm actions that you created earlier are performed. If you are using an IAM role (for example, an EC2 instance profile), you cannot stop or terminate the instance using alarm actions. However, you can still see the alarm state and perform any other actions such as Amazon SNS notifications or Auto Scaling policies. If you are using temporary security credentials granted using AWS STS, you cannot stop or terminate an EC2 instance using alarm actions. You must create at least one stop, terminate, or reboot alarm using either the Amazon EC2 or CloudWatch consoles to create the EC2ActionsAccess IAM role. After this IAM role is created, you can create stop, terminate, or reboot alarms using a command-line interface or API.
+   * Creates or updates an alarm and associates it with the specified metric. Optionally, this operation can associate one or more Amazon SNS resources with the alarm. When this operation creates an alarm, the alarm state is immediately set to INSUFFICIENT_DATA. The alarm is evaluated and its state is set appropriately. Any actions associated with the state are then executed. When you update an existing alarm, its state is left unchanged, but the update completely overwrites the previous configuration of the alarm. If you are an IAM user, you must have Amazon EC2 permissions for some operations:    iam:CreateServiceLinkedRole for all alarms with EC2 actions    ec2:DescribeInstanceStatus and ec2:DescribeInstances for all alarms on EC2 instance status metrics    ec2:StopInstances for alarms with stop actions    ec2:TerminateInstances for alarms with terminate actions    ec2:DescribeInstanceRecoveryAttribute and ec2:RecoverInstances for alarms with recover actions   If you have read/write permissions for Amazon CloudWatch but not for Amazon EC2, you can still create an alarm, but the stop or terminate actions are not performed. However, if you are later granted the required permissions, the alarm actions that you created earlier are performed. If you are using an IAM role (for example, an EC2 instance profile), you cannot stop or terminate the instance using alarm actions. However, you can still see the alarm state and perform any other actions such as Amazon SNS notifications or Auto Scaling policies. If you are using temporary security credentials granted using AWS STS, you cannot stop or terminate an EC2 instance using alarm actions. You must create at least one stop, terminate, or reboot alarm using either the Amazon EC2 or CloudWatch consoles to create the EC2ActionsAccess IAM role. After this IAM role is created, you can create stop, terminate, or reboot alarms using a command-line interface or API.
    */
   putMetricAlarm(params: CloudWatch.Types.PutMetricAlarmInput, callback?: (err: AWSError, data: {}) => void): Request<{}, AWSError>;
   /**
-   * Creates or updates an alarm and associates it with the specified metric. Optionally, this operation can associate one or more Amazon SNS resources with the alarm. When this operation creates an alarm, the alarm state is immediately set to INSUFFICIENT_DATA. The alarm is evaluated and its state is set appropriately. Any actions associated with the state are then executed. When you update an existing alarm, its state is left unchanged, but the update completely overwrites the previous configuration of the alarm. If you are an IAM user, you must have Amazon EC2 permissions for some operations:    ec2:DescribeInstanceStatus and ec2:DescribeInstances for all alarms on EC2 instance status metrics    ec2:StopInstances for alarms with stop actions    ec2:TerminateInstances for alarms with terminate actions    ec2:DescribeInstanceRecoveryAttribute and ec2:RecoverInstances for alarms with recover actions   If you have read/write permissions for Amazon CloudWatch but not for Amazon EC2, you can still create an alarm, but the stop or terminate actions are not performed. However, if you are later granted the required permissions, the alarm actions that you created earlier are performed. If you are using an IAM role (for example, an EC2 instance profile), you cannot stop or terminate the instance using alarm actions. However, you can still see the alarm state and perform any other actions such as Amazon SNS notifications or Auto Scaling policies. If you are using temporary security credentials granted using AWS STS, you cannot stop or terminate an EC2 instance using alarm actions. You must create at least one stop, terminate, or reboot alarm using either the Amazon EC2 or CloudWatch consoles to create the EC2ActionsAccess IAM role. After this IAM role is created, you can create stop, terminate, or reboot alarms using a command-line interface or API.
+   * Creates or updates an alarm and associates it with the specified metric. Optionally, this operation can associate one or more Amazon SNS resources with the alarm. When this operation creates an alarm, the alarm state is immediately set to INSUFFICIENT_DATA. The alarm is evaluated and its state is set appropriately. Any actions associated with the state are then executed. When you update an existing alarm, its state is left unchanged, but the update completely overwrites the previous configuration of the alarm. If you are an IAM user, you must have Amazon EC2 permissions for some operations:    iam:CreateServiceLinkedRole for all alarms with EC2 actions    ec2:DescribeInstanceStatus and ec2:DescribeInstances for all alarms on EC2 instance status metrics    ec2:StopInstances for alarms with stop actions    ec2:TerminateInstances for alarms with terminate actions    ec2:DescribeInstanceRecoveryAttribute and ec2:RecoverInstances for alarms with recover actions   If you have read/write permissions for Amazon CloudWatch but not for Amazon EC2, you can still create an alarm, but the stop or terminate actions are not performed. However, if you are later granted the required permissions, the alarm actions that you created earlier are performed. If you are using an IAM role (for example, an EC2 instance profile), you cannot stop or terminate the instance using alarm actions. However, you can still see the alarm state and perform any other actions such as Amazon SNS notifications or Auto Scaling policies. If you are using temporary security credentials granted using AWS STS, you cannot stop or terminate an EC2 instance using alarm actions. You must create at least one stop, terminate, or reboot alarm using either the Amazon EC2 or CloudWatch consoles to create the EC2ActionsAccess IAM role. After this IAM role is created, you can create stop, terminate, or reboot alarms using a command-line interface or API.
    */
   putMetricAlarm(callback?: (err: AWSError, data: {}) => void): Request<{}, AWSError>;
   /**
@@ -246,7 +254,9 @@ declare namespace CloudWatch {
   }
   export type DatapointValue = number;
   export type DatapointValueMap = {[key: string]: DatapointValue};
+  export type DatapointValues = DatapointValue[];
   export type Datapoints = Datapoint[];
+  export type DatapointsToAlarm = number;
   export interface DeleteAlarmsInput {
     /**
      * The alarms to be deleted.
@@ -255,9 +265,9 @@ declare namespace CloudWatch {
   }
   export interface DeleteDashboardsInput {
     /**
-     * The dashboards to be deleted.
+     * The dashboards to be deleted. This parameter is required.
      */
-    DashboardNames?: DashboardNames;
+    DashboardNames: DashboardNames;
   }
   export interface DeleteDashboardsOutput {
   }
@@ -415,7 +425,7 @@ declare namespace CloudWatch {
     /**
      * The name of the dashboard to be described.
      */
-    DashboardName?: DashboardName;
+    DashboardName: DashboardName;
   }
   export interface GetDashboardOutput {
     /**
@@ -431,6 +441,43 @@ declare namespace CloudWatch {
      */
     DashboardName?: DashboardName;
   }
+  export interface GetMetricDataInput {
+    /**
+     * The metric queries to be returned. A single GetMetricData call can include as many as 100 MetricDataQuery structures. Each of these structures can specify either a metric to retrieve, or a math expression to perform on retrieved data. 
+     */
+    MetricDataQueries: MetricDataQueries;
+    /**
+     * The time stamp indicating the earliest data to be returned.
+     */
+    StartTime: Timestamp;
+    /**
+     * The time stamp indicating the latest data to be returned.
+     */
+    EndTime: Timestamp;
+    /**
+     * Include this value, if it was returned by the previous call, to get the next set of data points.
+     */
+    NextToken?: NextToken;
+    /**
+     * The order in which data points should be returned. TimestampDescending returns the newest data first and paginates when the MaxDatapoints limit is reached. TimestampAscending returns the oldest data first and paginates when the MaxDatapoints limit is reached.
+     */
+    ScanBy?: ScanBy;
+    /**
+     * The maximum number of data points the request should return before paginating. If you omit this, the default of 100,800 is used.
+     */
+    MaxDatapoints?: GetMetricDataMaxDatapoints;
+  }
+  export type GetMetricDataMaxDatapoints = number;
+  export interface GetMetricDataOutput {
+    /**
+     * The metrics that are returned, including the metric name, namespace, and dimensions.
+     */
+    MetricDataResults?: MetricDataResults;
+    /**
+     * A token that marks the next batch of returned results.
+     */
+    NextToken?: NextToken;
+  }
   export interface GetMetricStatisticsInput {
     /**
      * The namespace of the metric, with or without spaces.
@@ -445,7 +492,7 @@ declare namespace CloudWatch {
      */
     Dimensions?: Dimensions;
     /**
-     * The time stamp that determines the first data point to return. Start times are evaluated relative to the time that CloudWatch receives the request. The value specified is inclusive; results include data points with the specified time stamp. The time stamp must be in ISO 8601 UTC format (for example, 2016-10-03T23:00:00Z). CloudWatch rounds the specified time stamp as follows:   Start time less than 15 days ago - Round down to the nearest whole minute. For example, 12:32:34 is rounded down to 12:32:00.   Start time between 15 and 63 days ago - Round down to the nearest 5-minute clock interval. For example, 12:32:34 is rounded down to 12:30:00.   Start time greater than 63 days ago - Round down to the nearest 1-hour clock interval. For example, 12:32:34 is rounded down to 12:00:00.  
+     * The time stamp that determines the first data point to return. Start times are evaluated relative to the time that CloudWatch receives the request. The value specified is inclusive; results include data points with the specified time stamp. The time stamp must be in ISO 8601 UTC format (for example, 2016-10-03T23:00:00Z). CloudWatch rounds the specified time stamp as follows:   Start time less than 15 days ago - Round down to the nearest whole minute. For example, 12:32:34 is rounded down to 12:32:00.   Start time between 15 and 63 days ago - Round down to the nearest 5-minute clock interval. For example, 12:32:34 is rounded down to 12:30:00.   Start time greater than 63 days ago - Round down to the nearest 1-hour clock interval. For example, 12:32:34 is rounded down to 12:00:00.   If you set Period to 5, 10, or 30, the start time of your request is rounded down to the nearest time that corresponds to even 5-, 10-, or 30-second divisions of a minute. For example, if you make a query at (HH:mm:ss) 01:05:23 for the previous 10-second period, the start time of your request is rounded down and you receive data from 01:05:10 to 01:05:20. If you make a query at 15:07:17 for the previous 5 minutes of data, using a period of 5 seconds, you receive data timestamped between 15:02:15 and 15:07:15. 
      */
     StartTime: Timestamp;
     /**
@@ -453,7 +500,7 @@ declare namespace CloudWatch {
      */
     EndTime: Timestamp;
     /**
-     * The granularity, in seconds, of the returned data points. A period can be as short as one minute (60 seconds) and must be a multiple of 60.  If the StartTime parameter specifies a time stamp that is greater than 15 days ago, you must specify the period as follows or no data points in that time range is returned:   Start time between 15 and 63 days ago - Use a multiple of 300 seconds (5 minutes).   Start time greater than 63 days ago - Use a multiple of 3600 seconds (1 hour).  
+     * The granularity, in seconds, of the returned data points. For metrics with regular resolution, a period can be as short as one minute (60 seconds) and must be a multiple of 60. For high-resolution metrics that are collected at intervals of less than one minute, the period can be 1, 5, 10, 30, 60, or any multiple of 60. High-resolution metrics are those metrics stored by a PutMetricData call that includes a StorageResolution of 1 second. If the StartTime parameter specifies a time stamp that is greater than 3 hours ago, you must specify the period as follows or no data points in that time range is returned:   Start time between 3 hours and 15 days ago - Use a multiple of 60 seconds (1 minute).   Start time between 15 and 63 days ago - Use a multiple of 300 seconds (5 minutes).   Start time greater than 63 days ago - Use a multiple of 3600 seconds (1 hour).  
      */
     Period: Period;
     /**
@@ -465,7 +512,7 @@ declare namespace CloudWatch {
      */
     ExtendedStatistics?: ExtendedStatistics;
     /**
-     * The unit for a given metric. Metrics may be reported in multiple units. Not supplying a unit results in all units being returned. If the metric only ever reports one unit, specifying a unit has no effect.
+     * The unit for a given metric. Metrics may be reported in multiple units. Not supplying a unit results in all units being returned. If you specify only a unit that the metric does not report, the results of the call are null.
      */
     Unit?: StandardUnit;
   }
@@ -533,6 +580,18 @@ declare namespace CloudWatch {
   }
   export type MaxRecords = number;
   export type Message = string;
+  export interface MessageData {
+    /**
+     * The error code or status code associated with the message.
+     */
+    Code?: MessageDataCode;
+    /**
+     * The message text.
+     */
+    Value?: MessageDataValue;
+  }
+  export type MessageDataCode = string;
+  export type MessageDataValue = string;
   export interface Metric {
     /**
      * The namespace of the metric.
@@ -629,6 +688,10 @@ declare namespace CloudWatch {
      */
     EvaluationPeriods?: EvaluationPeriods;
     /**
+     * The number of datapoints that must be breaching to trigger the alarm.
+     */
+    DatapointsToAlarm?: DatapointsToAlarm;
+    /**
      * The value to compare with the specified statistic.
      */
     Threshold?: Threshold;
@@ -641,12 +704,63 @@ declare namespace CloudWatch {
      */
     TreatMissingData?: TreatMissingData;
     /**
-     * Used only for alarms based on percentiles. If ignore, the alarm state does not change during periods with too few data points to be statistically significant. If evaluate or this parameter is not used, the alarm will always be evaluated and possibly change state no matter how many data points are available.
+     * Used only for alarms based on percentiles. If ignore, the alarm state does not change during periods with too few data points to be statistically significant. If evaluate or this parameter is not used, the alarm is always evaluated and possibly changes state no matter how many data points are available.
      */
     EvaluateLowSampleCountPercentile?: EvaluateLowSampleCountPercentile;
   }
   export type MetricAlarms = MetricAlarm[];
   export type MetricData = MetricDatum[];
+  export type MetricDataQueries = MetricDataQuery[];
+  export interface MetricDataQuery {
+    /**
+     * A short name used to tie this structure to the results in the response. This name must be unique within a single call to GetMetricData. If you are performing math expressions on this set of data, this name represents that data and can serve as a variable in the mathematical expression. The valid characters are letters, numbers, and underscore. The first character must be a lowercase letter.
+     */
+    Id: MetricId;
+    /**
+     * The metric to be returned, along with statistics, period, and units. Use this parameter only if this structure is performing a data retrieval and not performing a math expression on the returned data. Within one MetricDataQuery structure, you must specify either Expression or MetricStat but not both.
+     */
+    MetricStat?: MetricStat;
+    /**
+     * The math expression to be performed on the returned data, if this structure is performing a math expression. For more information about metric math expressions, see Metric Math Syntax and Functions in the Amazon CloudWatch User Guide. Within one MetricDataQuery structure, you must specify either Expression or MetricStat but not both.
+     */
+    Expression?: MetricExpression;
+    /**
+     * A human-readable label for this metric or expression. This is especially useful if this is an expression, so that you know what the value represents. If the metric or expression is shown in a CloudWatch dashboard widget, the label is shown. If Label is omitted, CloudWatch generates a default.
+     */
+    Label?: MetricLabel;
+    /**
+     * Indicates whether to return the time stamps and raw data values of this metric. If you are performing this call just to do math expressions and do not also need the raw data returned, you can specify False. If you omit this, the default of True is used.
+     */
+    ReturnData?: ReturnData;
+  }
+  export interface MetricDataResult {
+    /**
+     * The short name you specified to represent this metric.
+     */
+    Id?: MetricId;
+    /**
+     * The human-readable label associated with the data.
+     */
+    Label?: MetricLabel;
+    /**
+     * The time stamps for the data points, formatted in Unix timestamp format. The number of time stamps always matches the number of values and the value for Timestamps[x] is Values[x].
+     */
+    Timestamps?: Timestamps;
+    /**
+     * The data points for the metric corresponding to Timestamps. The number of values always matches the number of time stamps and the time stamp for Values[x] is Timestamps[x].
+     */
+    Values?: DatapointValues;
+    /**
+     * The status of the returned data. Complete indicates that all data points in the requested time range were returned. PartialData means that an incomplete set of data points were returned. You can use the NextToken value that was returned and repeat your request to get more data points. NextToken is not returned if you are performing a math expression. InternalError indicates that an error occurred. Retry your request using NextToken, if present.
+     */
+    StatusCode?: StatusCode;
+    /**
+     * A list of messages with additional information about the data returned.
+     */
+    Messages?: MetricDataResultMessages;
+  }
+  export type MetricDataResultMessages = MessageData[];
+  export type MetricDataResults = MetricDataResult[];
   export interface MetricDatum {
     /**
      * The name of the metric.
@@ -672,23 +786,46 @@ declare namespace CloudWatch {
      * The unit of the metric.
      */
     Unit?: StandardUnit;
+    /**
+     * Valid values are 1 and 60. Setting this to 1 specifies this metric as a high-resolution metric, so that CloudWatch stores the metric with sub-minute resolution down to one second. Setting this to 60 specifies this metric as a regular-resolution metric, which CloudWatch stores at 1-minute resolution. Currently, high resolution is available only for custom metrics. For more information about high-resolution metrics, see High-Resolution Metrics in the Amazon CloudWatch User Guide.  This field is optional, if you do not specify it the default of 60 is used.
+     */
     StorageResolution?: StorageResolution;
   }
+  export type MetricExpression = string;
+  export type MetricId = string;
   export type MetricLabel = string;
   export type MetricName = string;
+  export interface MetricStat {
+    /**
+     * The metric to return, including the metric name, namespace, and dimensions.
+     */
+    Metric: Metric;
+    /**
+     * The period to use when retrieving the metric.
+     */
+    Period: Period;
+    /**
+     * The statistic to return. It can include any CloudWatch statistic or extended statistic.
+     */
+    Stat: Stat;
+    /**
+     * The unit to use for the returned data points.
+     */
+    Unit?: StandardUnit;
+  }
   export type Metrics = Metric[];
   export type Namespace = string;
   export type NextToken = string;
   export type Period = number;
   export interface PutDashboardInput {
     /**
-     * The name of the dashboard. If a dashboard with this name already exists, this call modifies that dashboard, replacing its current contents. Otherwise, a new dashboard is created. The maximum length is 255, and valid characters are A-Z, a-z, 0-9, ".", "-", and "_".
+     * The name of the dashboard. If a dashboard with this name already exists, this call modifies that dashboard, replacing its current contents. Otherwise, a new dashboard is created. The maximum length is 255, and valid characters are A-Z, a-z, 0-9, "-", and "_". This parameter is required.
      */
-    DashboardName?: DashboardName;
+    DashboardName: DashboardName;
     /**
-     * The detailed information about the dashboard in JSON format, including the widgets to include and their location on the dashboard. For more information about the syntax, see CloudWatch-Dashboard-Body-Structure.
+     * The detailed information about the dashboard in JSON format, including the widgets to include and their location on the dashboard. This parameter is required. For more information about the syntax, see CloudWatch-Dashboard-Body-Structure.
      */
-    DashboardBody?: DashboardBody;
+    DashboardBody: DashboardBody;
   }
   export interface PutDashboardOutput {
     /**
@@ -710,15 +847,15 @@ declare namespace CloudWatch {
      */
     ActionsEnabled?: ActionsEnabled;
     /**
-     * The actions to execute when this alarm transitions to an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:region:ec2:stop | arn:aws:automate:region:ec2:terminate | arn:aws:automate:region:ec2:recover Valid Values (for use with IAM roles): arn:aws:swf:us-east-1:{customer-account}:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:us-east-1:{customer-account}:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:us-east-1:{customer-account}:action/actions/AWS_EC2.InstanceId.Reboot/1.0
+     * The actions to execute when this alarm transitions to an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:region:ec2:stop | arn:aws:automate:region:ec2:terminate | arn:aws:automate:region:ec2:recover | arn:aws:sns:region:account-id:sns-topic-name | arn:aws:autoscaling:region:account-id:scalingPolicy:policy-id autoScalingGroupName/group-friendly-name:policyName/policy-friendly-name  Valid Values (for use with IAM roles): arn:aws:swf:region:{account-id}:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:region:{account-id}:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:region:{account-id}:action/actions/AWS_EC2.InstanceId.Reboot/1.0
      */
     OKActions?: ResourceList;
     /**
-     * The actions to execute when this alarm transitions to the ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:region:ec2:stop | arn:aws:automate:region:ec2:terminate | arn:aws:automate:region:ec2:recover Valid Values (for use with IAM roles): arn:aws:swf:us-east-1:{customer-account}:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:us-east-1:{customer-account}:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:us-east-1:{customer-account}:action/actions/AWS_EC2.InstanceId.Reboot/1.0
+     * The actions to execute when this alarm transitions to the ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:region:ec2:stop | arn:aws:automate:region:ec2:terminate | arn:aws:automate:region:ec2:recover | arn:aws:sns:region:account-id:sns-topic-name | arn:aws:autoscaling:region:account-id:scalingPolicy:policy-id autoScalingGroupName/group-friendly-name:policyName/policy-friendly-name  Valid Values (for use with IAM roles): arn:aws:swf:region:{account-id}:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:region:{account-id}:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:region:{account-id}:action/actions/AWS_EC2.InstanceId.Reboot/1.0
      */
     AlarmActions?: ResourceList;
     /**
-     * The actions to execute when this alarm transitions to the INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:region:ec2:stop | arn:aws:automate:region:ec2:terminate | arn:aws:automate:region:ec2:recover Valid Values (for use with IAM roles): arn:aws:swf:us-east-1:{customer-account}:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:us-east-1:{customer-account}:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:us-east-1:{customer-account}:action/actions/AWS_EC2.InstanceId.Reboot/1.0
+     * The actions to execute when this alarm transitions to the INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:region:ec2:stop | arn:aws:automate:region:ec2:terminate | arn:aws:automate:region:ec2:recover | arn:aws:sns:region:account-id:sns-topic-name | arn:aws:autoscaling:region:account-id:scalingPolicy:policy-id autoScalingGroupName/group-friendly-name:policyName/policy-friendly-name  Valid Values (for use with IAM roles): arn:aws:swf:region:{account-id}:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:region:{account-id}:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:region:{account-id}:action/actions/AWS_EC2.InstanceId.Reboot/1.0
      */
     InsufficientDataActions?: ResourceList;
     /**
@@ -730,11 +867,11 @@ declare namespace CloudWatch {
      */
     Namespace: Namespace;
     /**
-     * The statistic for the metric associated with the alarm, other than percentile. For percentile statistics, use ExtendedStatistic.
+     * The statistic for the metric associated with the alarm, other than percentile. For percentile statistics, use ExtendedStatistic. When you call PutMetricAlarm, you must specify either Statistic or ExtendedStatistic, but not both.
      */
     Statistic?: Statistic;
     /**
-     * The percentile statistic for the metric associated with the alarm. Specify a value between p0.0 and p100.
+     * The percentile statistic for the metric associated with the alarm. Specify a value between p0.0 and p100. When you call PutMetricAlarm, you must specify either Statistic or ExtendedStatistic, but not both.
      */
     ExtendedStatistic?: ExtendedStatistic;
     /**
@@ -742,7 +879,7 @@ declare namespace CloudWatch {
      */
     Dimensions?: Dimensions;
     /**
-     * The period, in seconds, over which the specified statistic is applied. An alarm's total current evaluation period can be no longer than one day, so this number multiplied by EvaluationPeriods must be 86,400 or less.
+     * The period, in seconds, over which the specified statistic is applied. Valid values are 10, 30, and any multiple of 60. Be sure to specify 10 or 30 only for metrics that are stored by a PutMetricData call with a StorageResolution of 1. If you specify a period of 10 or 30 for a metric that does not have sub-minute resolution, the alarm still attempts to gather data at the period rate that you specify. In this case, it does not receive data for the attempts that do not correspond to a one-minute data resolution, and the alarm may often lapse into INSUFFICENT_DATA status. Specifying 10 or 30 also sets this alarm as a high-resolution alarm, which has a higher charge than other alarms. For more information about pricing, see Amazon CloudWatch Pricing. An alarm's total current evaluation period can be no longer than one day, so Period multiplied by EvaluationPeriods cannot be more than 86,400 seconds.
      */
     Period: Period;
     /**
@@ -750,9 +887,13 @@ declare namespace CloudWatch {
      */
     Unit?: StandardUnit;
     /**
-     * The number of periods over which data is compared to the specified threshold. An alarm's total current evaluation period can be no longer than one day, so this number multiplied by Period must be 86,400 or less.
+     * The number of periods over which data is compared to the specified threshold. If you are setting an alarm which requires that a number of consecutive data points be breaching to trigger the alarm, this value specifies that number. If you are setting an "M out of N" alarm, this value is the N. An alarm's total current evaluation period can be no longer than one day, so this number multiplied by Period cannot be more than 86,400 seconds.
      */
     EvaluationPeriods: EvaluationPeriods;
+    /**
+     * The number of datapoints that must be breaching to trigger the alarm. This is used only if you are setting an "M out of N" alarm. In that case, this value is the M. For more information, see Evaluating an Alarm in the Amazon CloudWatch User Guide.
+     */
+    DatapointsToAlarm?: DatapointsToAlarm;
     /**
      * The value against which the specified statistic is compared.
      */
@@ -782,6 +923,8 @@ declare namespace CloudWatch {
   }
   export type ResourceList = ResourceName[];
   export type ResourceName = string;
+  export type ReturnData = boolean;
+  export type ScanBy = "TimestampDescending"|"TimestampAscending"|string;
   export interface SetAlarmStateInput {
     /**
      * The name for the alarm. This name must be unique within the AWS account. The maximum length is 255 characters.
@@ -802,6 +945,7 @@ declare namespace CloudWatch {
   }
   export type Size = number;
   export type StandardUnit = "Seconds"|"Microseconds"|"Milliseconds"|"Bytes"|"Kilobytes"|"Megabytes"|"Gigabytes"|"Terabytes"|"Bits"|"Kilobits"|"Megabits"|"Gigabits"|"Terabits"|"Percent"|"Count"|"Bytes/Second"|"Kilobytes/Second"|"Megabytes/Second"|"Gigabytes/Second"|"Terabytes/Second"|"Bits/Second"|"Kilobits/Second"|"Megabits/Second"|"Gigabits/Second"|"Terabits/Second"|"Count/Second"|"None"|string;
+  export type Stat = string;
   export type StateReason = string;
   export type StateReasonData = string;
   export type StateValue = "OK"|"ALARM"|"INSUFFICIENT_DATA"|string;
@@ -825,9 +969,11 @@ declare namespace CloudWatch {
     Maximum: DatapointValue;
   }
   export type Statistics = Statistic[];
+  export type StatusCode = "Complete"|"InternalError"|"PartialData"|string;
   export type StorageResolution = number;
   export type Threshold = number;
   export type Timestamp = Date;
+  export type Timestamps = Timestamp[];
   export type TreatMissingData = string;
   /**
    * A string in YYYY-MM-DD format that represents the latest possible API version that can be used in this service. Specify 'latest' to use the latest possible version.

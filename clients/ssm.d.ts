@@ -12,11 +12,11 @@ declare class SSM extends Service {
   constructor(options?: SSM.Types.ClientConfiguration)
   config: Config & SSM.Types.ClientConfiguration;
   /**
-   * Adds or overwrites one or more tags for the specified resource. Tags are metadata that you assign to your managed instances, Maintenance Windows, or Parameter Store parameters. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. For example, you could define a set of tags for your account's managed instances that helps you track each instance's owner and stack level. For example: Key=Owner and Value=DbAdmin, SysAdmin, or Dev. Or Key=Stack and Value=Production, Pre-Production, or Test. Each resource can have a maximum of 10 tags.  We recommend that you devise a set of tag keys that meets your needs for each resource type. Using a consistent set of tag keys makes it easier for you to manage your resources. You can search and filter the resources based on the tags you add. Tags don't have any semantic meaning to Amazon EC2 and are interpreted strictly as a string of characters.  For more information about tags, see Tagging Your Amazon EC2 Resources in the Amazon EC2 User Guide.
+   * Adds or overwrites one or more tags for the specified resource. Tags are metadata that you can assign to your documents, managed instances, Maintenance Windows, Parameter Store parameters, and patch baselines. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. For example, you could define a set of tags for your account's managed instances that helps you track each instance's owner and stack level. For example: Key=Owner and Value=DbAdmin, SysAdmin, or Dev. Or Key=Stack and Value=Production, Pre-Production, or Test. Each resource can have a maximum of 50 tags.  We recommend that you devise a set of tag keys that meets your needs for each resource type. Using a consistent set of tag keys makes it easier for you to manage your resources. You can search and filter the resources based on the tags you add. Tags don't have any semantic meaning to Amazon EC2 and are interpreted strictly as a string of characters.  For more information about tags, see Tagging Your Amazon EC2 Resources in the Amazon EC2 User Guide.
    */
   addTagsToResource(params: SSM.Types.AddTagsToResourceRequest, callback?: (err: AWSError, data: SSM.Types.AddTagsToResourceResult) => void): Request<SSM.Types.AddTagsToResourceResult, AWSError>;
   /**
-   * Adds or overwrites one or more tags for the specified resource. Tags are metadata that you assign to your managed instances, Maintenance Windows, or Parameter Store parameters. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. For example, you could define a set of tags for your account's managed instances that helps you track each instance's owner and stack level. For example: Key=Owner and Value=DbAdmin, SysAdmin, or Dev. Or Key=Stack and Value=Production, Pre-Production, or Test. Each resource can have a maximum of 10 tags.  We recommend that you devise a set of tag keys that meets your needs for each resource type. Using a consistent set of tag keys makes it easier for you to manage your resources. You can search and filter the resources based on the tags you add. Tags don't have any semantic meaning to Amazon EC2 and are interpreted strictly as a string of characters.  For more information about tags, see Tagging Your Amazon EC2 Resources in the Amazon EC2 User Guide.
+   * Adds or overwrites one or more tags for the specified resource. Tags are metadata that you can assign to your documents, managed instances, Maintenance Windows, Parameter Store parameters, and patch baselines. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. For example, you could define a set of tags for your account's managed instances that helps you track each instance's owner and stack level. For example: Key=Owner and Value=DbAdmin, SysAdmin, or Dev. Or Key=Stack and Value=Production, Pre-Production, or Test. Each resource can have a maximum of 50 tags.  We recommend that you devise a set of tag keys that meets your needs for each resource type. Using a consistent set of tag keys makes it easier for you to manage your resources. You can search and filter the resources based on the tags you add. Tags don't have any semantic meaning to Amazon EC2 and are interpreted strictly as a string of characters.  For more information about tags, see Tagging Your Amazon EC2 Resources in the Amazon EC2 User Guide.
    */
   addTagsToResource(callback?: (err: AWSError, data: SSM.Types.AddTagsToResourceResult) => void): Request<SSM.Types.AddTagsToResourceResult, AWSError>;
   /**
@@ -68,19 +68,19 @@ declare class SSM extends Service {
    */
   createMaintenanceWindow(callback?: (err: AWSError, data: SSM.Types.CreateMaintenanceWindowResult) => void): Request<SSM.Types.CreateMaintenanceWindowResult, AWSError>;
   /**
-   * Creates a patch baseline.
+   * Creates a patch baseline.  For information about valid key and value pairs in PatchFilters for each supported operating system type, see PatchFilter. 
    */
   createPatchBaseline(params: SSM.Types.CreatePatchBaselineRequest, callback?: (err: AWSError, data: SSM.Types.CreatePatchBaselineResult) => void): Request<SSM.Types.CreatePatchBaselineResult, AWSError>;
   /**
-   * Creates a patch baseline.
+   * Creates a patch baseline.  For information about valid key and value pairs in PatchFilters for each supported operating system type, see PatchFilter. 
    */
   createPatchBaseline(callback?: (err: AWSError, data: SSM.Types.CreatePatchBaselineResult) => void): Request<SSM.Types.CreatePatchBaselineResult, AWSError>;
   /**
-   * Creates a resource data sync configuration to a single bucket in Amazon S3. This is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data to the Amazon S3 bucket. To check the status of the sync, use the ListResourceDataSync operation. By default, data is not encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy. To view an example of a restrictive Amazon S3 bucket policy for Resource Data Sync, see Configuring Resource Data Sync for Inventory.
+   * Creates a resource data sync configuration to a single bucket in Amazon S3. This is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data to the Amazon S3 bucket. To check the status of the sync, use the ListResourceDataSync. By default, data is not encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy. To view an example of a restrictive Amazon S3 bucket policy for Resource Data Sync, see Configuring Resource Data Sync for Inventory.
    */
   createResourceDataSync(params: SSM.Types.CreateResourceDataSyncRequest, callback?: (err: AWSError, data: SSM.Types.CreateResourceDataSyncResult) => void): Request<SSM.Types.CreateResourceDataSyncResult, AWSError>;
   /**
-   * Creates a resource data sync configuration to a single bucket in Amazon S3. This is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data to the Amazon S3 bucket. To check the status of the sync, use the ListResourceDataSync operation. By default, data is not encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy. To view an example of a restrictive Amazon S3 bucket policy for Resource Data Sync, see Configuring Resource Data Sync for Inventory.
+   * Creates a resource data sync configuration to a single bucket in Amazon S3. This is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data to the Amazon S3 bucket. To check the status of the sync, use the ListResourceDataSync. By default, data is not encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy. To view an example of a restrictive Amazon S3 bucket policy for Resource Data Sync, see Configuring Resource Data Sync for Inventory.
    */
   createResourceDataSync(callback?: (err: AWSError, data: SSM.Types.CreateResourceDataSyncResult) => void): Request<SSM.Types.CreateResourceDataSyncResult, AWSError>;
   /**
@@ -108,6 +108,14 @@ declare class SSM extends Service {
    */
   deleteDocument(callback?: (err: AWSError, data: SSM.Types.DeleteDocumentResult) => void): Request<SSM.Types.DeleteDocumentResult, AWSError>;
   /**
+   * Delete a custom inventory type, or the data associated with a custom Inventory type. Deleting a custom inventory type is also referred to as deleting a custom inventory schema.
+   */
+  deleteInventory(params: SSM.Types.DeleteInventoryRequest, callback?: (err: AWSError, data: SSM.Types.DeleteInventoryResult) => void): Request<SSM.Types.DeleteInventoryResult, AWSError>;
+  /**
+   * Delete a custom inventory type, or the data associated with a custom Inventory type. Deleting a custom inventory type is also referred to as deleting a custom inventory schema.
+   */
+  deleteInventory(callback?: (err: AWSError, data: SSM.Types.DeleteInventoryResult) => void): Request<SSM.Types.DeleteInventoryResult, AWSError>;
+  /**
    * Deletes a Maintenance Window.
    */
   deleteMaintenanceWindow(params: SSM.Types.DeleteMaintenanceWindowRequest, callback?: (err: AWSError, data: SSM.Types.DeleteMaintenanceWindowResult) => void): Request<SSM.Types.DeleteMaintenanceWindowResult, AWSError>;
@@ -124,11 +132,11 @@ declare class SSM extends Service {
    */
   deleteParameter(callback?: (err: AWSError, data: SSM.Types.DeleteParameterResult) => void): Request<SSM.Types.DeleteParameterResult, AWSError>;
   /**
-   * Delete a list of parameters.
+   * Delete a list of parameters. This API is used to delete parameters by using the Amazon EC2 console.
    */
   deleteParameters(params: SSM.Types.DeleteParametersRequest, callback?: (err: AWSError, data: SSM.Types.DeleteParametersResult) => void): Request<SSM.Types.DeleteParametersResult, AWSError>;
   /**
-   * Delete a list of parameters.
+   * Delete a list of parameters. This API is used to delete parameters by using the Amazon EC2 console.
    */
   deleteParameters(callback?: (err: AWSError, data: SSM.Types.DeleteParametersResult) => void): Request<SSM.Types.DeleteParametersResult, AWSError>;
   /**
@@ -188,11 +196,11 @@ declare class SSM extends Service {
    */
   describeActivations(callback?: (err: AWSError, data: SSM.Types.DescribeActivationsResult) => void): Request<SSM.Types.DescribeActivationsResult, AWSError>;
   /**
-   * Describes the associations for the specified Systems Manager document or instance.
+   * Describes the association for the specified target or instance. If you created the association by using the Targets parameter, then you must retrieve the association by using the association ID. If you created the association by specifying an instance ID and a Systems Manager document, then you retrieve the association by specifying the document name and the instance ID. 
    */
   describeAssociation(params: SSM.Types.DescribeAssociationRequest, callback?: (err: AWSError, data: SSM.Types.DescribeAssociationResult) => void): Request<SSM.Types.DescribeAssociationResult, AWSError>;
   /**
-   * Describes the associations for the specified Systems Manager document or instance.
+   * Describes the association for the specified target or instance. If you created the association by using the Targets parameter, then you must retrieve the association by using the association ID. If you created the association by specifying an instance ID and a Systems Manager document, then you retrieve the association by specifying the document name and the instance ID. 
    */
   describeAssociation(callback?: (err: AWSError, data: SSM.Types.DescribeAssociationResult) => void): Request<SSM.Types.DescribeAssociationResult, AWSError>;
   /**
@@ -204,6 +212,14 @@ declare class SSM extends Service {
    */
   describeAutomationExecutions(callback?: (err: AWSError, data: SSM.Types.DescribeAutomationExecutionsResult) => void): Request<SSM.Types.DescribeAutomationExecutionsResult, AWSError>;
   /**
+   * Information about all active and terminated step executions in an Automation workflow.
+   */
+  describeAutomationStepExecutions(params: SSM.Types.DescribeAutomationStepExecutionsRequest, callback?: (err: AWSError, data: SSM.Types.DescribeAutomationStepExecutionsResult) => void): Request<SSM.Types.DescribeAutomationStepExecutionsResult, AWSError>;
+  /**
+   * Information about all active and terminated step executions in an Automation workflow.
+   */
+  describeAutomationStepExecutions(callback?: (err: AWSError, data: SSM.Types.DescribeAutomationStepExecutionsResult) => void): Request<SSM.Types.DescribeAutomationStepExecutionsResult, AWSError>;
+  /**
    * Lists all patches that could possibly be included in a patch baseline.
    */
   describeAvailablePatches(params: SSM.Types.DescribeAvailablePatchesRequest, callback?: (err: AWSError, data: SSM.Types.DescribeAvailablePatchesResult) => void): Request<SSM.Types.DescribeAvailablePatchesResult, AWSError>;
@@ -212,11 +228,11 @@ declare class SSM extends Service {
    */
   describeAvailablePatches(callback?: (err: AWSError, data: SSM.Types.DescribeAvailablePatchesResult) => void): Request<SSM.Types.DescribeAvailablePatchesResult, AWSError>;
   /**
-   * Describes the specified SSM document.
+   * Describes the specified Systems Manager document.
    */
   describeDocument(params: SSM.Types.DescribeDocumentRequest, callback?: (err: AWSError, data: SSM.Types.DescribeDocumentResult) => void): Request<SSM.Types.DescribeDocumentResult, AWSError>;
   /**
-   * Describes the specified SSM document.
+   * Describes the specified Systems Manager document.
    */
   describeDocument(callback?: (err: AWSError, data: SSM.Types.DescribeDocumentResult) => void): Request<SSM.Types.DescribeDocumentResult, AWSError>;
   /**
@@ -284,6 +300,14 @@ declare class SSM extends Service {
    */
   describeInstancePatches(callback?: (err: AWSError, data: SSM.Types.DescribeInstancePatchesResult) => void): Request<SSM.Types.DescribeInstancePatchesResult, AWSError>;
   /**
+   * Describes a specific delete inventory operation.
+   */
+  describeInventoryDeletions(params: SSM.Types.DescribeInventoryDeletionsRequest, callback?: (err: AWSError, data: SSM.Types.DescribeInventoryDeletionsResult) => void): Request<SSM.Types.DescribeInventoryDeletionsResult, AWSError>;
+  /**
+   * Describes a specific delete inventory operation.
+   */
+  describeInventoryDeletions(callback?: (err: AWSError, data: SSM.Types.DescribeInventoryDeletionsResult) => void): Request<SSM.Types.DescribeInventoryDeletionsResult, AWSError>;
+  /**
    * Retrieves the individual task executions (one per target) for a particular task executed as part of a Maintenance Window execution.
    */
   describeMaintenanceWindowExecutionTaskInvocations(params: SSM.Types.DescribeMaintenanceWindowExecutionTaskInvocationsRequest, callback?: (err: AWSError, data: SSM.Types.DescribeMaintenanceWindowExecutionTaskInvocationsResult) => void): Request<SSM.Types.DescribeMaintenanceWindowExecutionTaskInvocationsResult, AWSError>;
@@ -300,11 +324,11 @@ declare class SSM extends Service {
    */
   describeMaintenanceWindowExecutionTasks(callback?: (err: AWSError, data: SSM.Types.DescribeMaintenanceWindowExecutionTasksResult) => void): Request<SSM.Types.DescribeMaintenanceWindowExecutionTasksResult, AWSError>;
   /**
-   * Lists the executions of a Maintenance Window (meaning, information about when the Maintenance Window was scheduled to be active and information about tasks registered and run with the Maintenance Window).
+   * Lists the executions of a Maintenance Window. This includes information about when the Maintenance Window was scheduled to be active, and information about tasks registered and run with the Maintenance Window.
    */
   describeMaintenanceWindowExecutions(params: SSM.Types.DescribeMaintenanceWindowExecutionsRequest, callback?: (err: AWSError, data: SSM.Types.DescribeMaintenanceWindowExecutionsResult) => void): Request<SSM.Types.DescribeMaintenanceWindowExecutionsResult, AWSError>;
   /**
-   * Lists the executions of a Maintenance Window (meaning, information about when the Maintenance Window was scheduled to be active and information about tasks registered and run with the Maintenance Window).
+   * Lists the executions of a Maintenance Window. This includes information about when the Maintenance Window was scheduled to be active, and information about tasks registered and run with the Maintenance Window.
    */
   describeMaintenanceWindowExecutions(callback?: (err: AWSError, data: SSM.Types.DescribeMaintenanceWindowExecutionsResult) => void): Request<SSM.Types.DescribeMaintenanceWindowExecutionsResult, AWSError>;
   /**
@@ -332,11 +356,11 @@ declare class SSM extends Service {
    */
   describeMaintenanceWindows(callback?: (err: AWSError, data: SSM.Types.DescribeMaintenanceWindowsResult) => void): Request<SSM.Types.DescribeMaintenanceWindowsResult, AWSError>;
   /**
-   * Get information about a parameter.
+   * Get information about a parameter. Request results are returned on a best-effort basis. If you specify MaxResults in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of MaxResults. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a NextToken. You can specify the NextToken in a subsequent call to get the next set of results.
    */
   describeParameters(params: SSM.Types.DescribeParametersRequest, callback?: (err: AWSError, data: SSM.Types.DescribeParametersResult) => void): Request<SSM.Types.DescribeParametersResult, AWSError>;
   /**
-   * Get information about a parameter.
+   * Get information about a parameter. Request results are returned on a best-effort basis. If you specify MaxResults in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of MaxResults. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a NextToken. You can specify the NextToken in a subsequent call to get the next set of results.
    */
   describeParameters(callback?: (err: AWSError, data: SSM.Types.DescribeParametersResult) => void): Request<SSM.Types.DescribeParametersResult, AWSError>;
   /**
@@ -380,11 +404,11 @@ declare class SSM extends Service {
    */
   getCommandInvocation(callback?: (err: AWSError, data: SSM.Types.GetCommandInvocationResult) => void): Request<SSM.Types.GetCommandInvocationResult, AWSError>;
   /**
-   * Retrieves the default patch baseline. Note that Systems Manager supports creating multiple default patch baselines. For example, you can create a default patch baseline for each operating system.
+   * Retrieves the default patch baseline. Note that Systems Manager supports creating multiple default patch baselines. For example, you can create a default patch baseline for each operating system. If you do not specify an operating system value, the default patch baseline for Windows is returned.
    */
   getDefaultPatchBaseline(params: SSM.Types.GetDefaultPatchBaselineRequest, callback?: (err: AWSError, data: SSM.Types.GetDefaultPatchBaselineResult) => void): Request<SSM.Types.GetDefaultPatchBaselineResult, AWSError>;
   /**
-   * Retrieves the default patch baseline. Note that Systems Manager supports creating multiple default patch baselines. For example, you can create a default patch baseline for each operating system.
+   * Retrieves the default patch baseline. Note that Systems Manager supports creating multiple default patch baselines. For example, you can create a default patch baseline for each operating system. If you do not specify an operating system value, the default patch baseline for Windows is returned.
    */
   getDefaultPatchBaseline(callback?: (err: AWSError, data: SSM.Types.GetDefaultPatchBaselineResult) => void): Request<SSM.Types.GetDefaultPatchBaselineResult, AWSError>;
   /**
@@ -396,11 +420,11 @@ declare class SSM extends Service {
    */
   getDeployablePatchSnapshotForInstance(callback?: (err: AWSError, data: SSM.Types.GetDeployablePatchSnapshotForInstanceResult) => void): Request<SSM.Types.GetDeployablePatchSnapshotForInstanceResult, AWSError>;
   /**
-   * Gets the contents of the specified SSM document.
+   * Gets the contents of the specified Systems Manager document.
    */
   getDocument(params: SSM.Types.GetDocumentRequest, callback?: (err: AWSError, data: SSM.Types.GetDocumentResult) => void): Request<SSM.Types.GetDocumentResult, AWSError>;
   /**
-   * Gets the contents of the specified SSM document.
+   * Gets the contents of the specified Systems Manager document.
    */
   getDocument(callback?: (err: AWSError, data: SSM.Types.GetDocumentResult) => void): Request<SSM.Types.GetDocumentResult, AWSError>;
   /**
@@ -444,6 +468,22 @@ declare class SSM extends Service {
    */
   getMaintenanceWindowExecutionTask(callback?: (err: AWSError, data: SSM.Types.GetMaintenanceWindowExecutionTaskResult) => void): Request<SSM.Types.GetMaintenanceWindowExecutionTaskResult, AWSError>;
   /**
+   * Retrieves a task invocation. A task invocation is a specific task executing on a specific target. Maintenance Windows report status for all invocations. 
+   */
+  getMaintenanceWindowExecutionTaskInvocation(params: SSM.Types.GetMaintenanceWindowExecutionTaskInvocationRequest, callback?: (err: AWSError, data: SSM.Types.GetMaintenanceWindowExecutionTaskInvocationResult) => void): Request<SSM.Types.GetMaintenanceWindowExecutionTaskInvocationResult, AWSError>;
+  /**
+   * Retrieves a task invocation. A task invocation is a specific task executing on a specific target. Maintenance Windows report status for all invocations. 
+   */
+  getMaintenanceWindowExecutionTaskInvocation(callback?: (err: AWSError, data: SSM.Types.GetMaintenanceWindowExecutionTaskInvocationResult) => void): Request<SSM.Types.GetMaintenanceWindowExecutionTaskInvocationResult, AWSError>;
+  /**
+   * Lists the tasks in a Maintenance Window.
+   */
+  getMaintenanceWindowTask(params: SSM.Types.GetMaintenanceWindowTaskRequest, callback?: (err: AWSError, data: SSM.Types.GetMaintenanceWindowTaskResult) => void): Request<SSM.Types.GetMaintenanceWindowTaskResult, AWSError>;
+  /**
+   * Lists the tasks in a Maintenance Window.
+   */
+  getMaintenanceWindowTask(callback?: (err: AWSError, data: SSM.Types.GetMaintenanceWindowTaskResult) => void): Request<SSM.Types.GetMaintenanceWindowTaskResult, AWSError>;
+  /**
    * Get information about a parameter by using the parameter name. 
    */
   getParameter(params: SSM.Types.GetParameterRequest, callback?: (err: AWSError, data: SSM.Types.GetParameterResult) => void): Request<SSM.Types.GetParameterResult, AWSError>;
@@ -468,11 +508,11 @@ declare class SSM extends Service {
    */
   getParameters(callback?: (err: AWSError, data: SSM.Types.GetParametersResult) => void): Request<SSM.Types.GetParametersResult, AWSError>;
   /**
-   * Retrieve parameters in a specific hierarchy. For more information, see Working with Systems Manager Parameters. 
+   * Retrieve parameters in a specific hierarchy. For more information, see Working with Systems Manager Parameters.  Request results are returned on a best-effort basis. If you specify MaxResults in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of MaxResults. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a NextToken. You can specify the NextToken in a subsequent call to get the next set of results.  This API action doesn't support filtering by tags.  
    */
   getParametersByPath(params: SSM.Types.GetParametersByPathRequest, callback?: (err: AWSError, data: SSM.Types.GetParametersByPathResult) => void): Request<SSM.Types.GetParametersByPathResult, AWSError>;
   /**
-   * Retrieve parameters in a specific hierarchy. For more information, see Working with Systems Manager Parameters. 
+   * Retrieve parameters in a specific hierarchy. For more information, see Working with Systems Manager Parameters.  Request results are returned on a best-effort basis. If you specify MaxResults in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of MaxResults. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a NextToken. You can specify the NextToken in a subsequent call to get the next set of results.  This API action doesn't support filtering by tags.  
    */
   getParametersByPath(callback?: (err: AWSError, data: SSM.Types.GetParametersByPathResult) => void): Request<SSM.Types.GetParametersByPathResult, AWSError>;
   /**
@@ -491,6 +531,14 @@ declare class SSM extends Service {
    * Retrieves the patch baseline that should be used for the specified patch group.
    */
   getPatchBaselineForPatchGroup(callback?: (err: AWSError, data: SSM.Types.GetPatchBaselineForPatchGroupResult) => void): Request<SSM.Types.GetPatchBaselineForPatchGroupResult, AWSError>;
+  /**
+   * Retrieves all versions of an association for a specific association ID.
+   */
+  listAssociationVersions(params: SSM.Types.ListAssociationVersionsRequest, callback?: (err: AWSError, data: SSM.Types.ListAssociationVersionsResult) => void): Request<SSM.Types.ListAssociationVersionsResult, AWSError>;
+  /**
+   * Retrieves all versions of an association for a specific association ID.
+   */
+  listAssociationVersions(callback?: (err: AWSError, data: SSM.Types.ListAssociationVersionsResult) => void): Request<SSM.Types.ListAssociationVersionsResult, AWSError>;
   /**
    * Lists the associations for the specified Systems Manager document or instance.
    */
@@ -516,6 +564,22 @@ declare class SSM extends Service {
    */
   listCommands(callback?: (err: AWSError, data: SSM.Types.ListCommandsResult) => void): Request<SSM.Types.ListCommandsResult, AWSError>;
   /**
+   * For a specified resource ID, this API action returns a list of compliance statuses for different resource types. Currently, you can only specify one resource ID per call. List results depend on the criteria specified in the filter. 
+   */
+  listComplianceItems(params: SSM.Types.ListComplianceItemsRequest, callback?: (err: AWSError, data: SSM.Types.ListComplianceItemsResult) => void): Request<SSM.Types.ListComplianceItemsResult, AWSError>;
+  /**
+   * For a specified resource ID, this API action returns a list of compliance statuses for different resource types. Currently, you can only specify one resource ID per call. List results depend on the criteria specified in the filter. 
+   */
+  listComplianceItems(callback?: (err: AWSError, data: SSM.Types.ListComplianceItemsResult) => void): Request<SSM.Types.ListComplianceItemsResult, AWSError>;
+  /**
+   * Returns a summary count of compliant and non-compliant resources for a compliance type. For example, this call can return State Manager associations, patches, or custom compliance types according to the filter criteria that you specify. 
+   */
+  listComplianceSummaries(params: SSM.Types.ListComplianceSummariesRequest, callback?: (err: AWSError, data: SSM.Types.ListComplianceSummariesResult) => void): Request<SSM.Types.ListComplianceSummariesResult, AWSError>;
+  /**
+   * Returns a summary count of compliant and non-compliant resources for a compliance type. For example, this call can return State Manager associations, patches, or custom compliance types according to the filter criteria that you specify. 
+   */
+  listComplianceSummaries(callback?: (err: AWSError, data: SSM.Types.ListComplianceSummariesResult) => void): Request<SSM.Types.ListComplianceSummariesResult, AWSError>;
+  /**
    * List all versions for a document.
    */
   listDocumentVersions(params: SSM.Types.ListDocumentVersionsRequest, callback?: (err: AWSError, data: SSM.Types.ListDocumentVersionsResult) => void): Request<SSM.Types.ListDocumentVersionsResult, AWSError>;
@@ -524,11 +588,11 @@ declare class SSM extends Service {
    */
   listDocumentVersions(callback?: (err: AWSError, data: SSM.Types.ListDocumentVersionsResult) => void): Request<SSM.Types.ListDocumentVersionsResult, AWSError>;
   /**
-   * Describes one or more of your SSM documents.
+   * Describes one or more of your Systems Manager documents.
    */
   listDocuments(params: SSM.Types.ListDocumentsRequest, callback?: (err: AWSError, data: SSM.Types.ListDocumentsResult) => void): Request<SSM.Types.ListDocumentsResult, AWSError>;
   /**
-   * Describes one or more of your SSM documents.
+   * Describes one or more of your Systems Manager documents.
    */
   listDocuments(callback?: (err: AWSError, data: SSM.Types.ListDocumentsResult) => void): Request<SSM.Types.ListDocumentsResult, AWSError>;
   /**
@@ -539,6 +603,14 @@ declare class SSM extends Service {
    * A list of inventory items returned by the request.
    */
   listInventoryEntries(callback?: (err: AWSError, data: SSM.Types.ListInventoryEntriesResult) => void): Request<SSM.Types.ListInventoryEntriesResult, AWSError>;
+  /**
+   * Returns a resource-level summary count. The summary includes information about compliant and non-compliant statuses and detailed compliance-item severity counts, according to the filter criteria you specify.
+   */
+  listResourceComplianceSummaries(params: SSM.Types.ListResourceComplianceSummariesRequest, callback?: (err: AWSError, data: SSM.Types.ListResourceComplianceSummariesResult) => void): Request<SSM.Types.ListResourceComplianceSummariesResult, AWSError>;
+  /**
+   * Returns a resource-level summary count. The summary includes information about compliant and non-compliant statuses and detailed compliance-item severity counts, according to the filter criteria you specify.
+   */
+  listResourceComplianceSummaries(callback?: (err: AWSError, data: SSM.Types.ListResourceComplianceSummariesResult) => void): Request<SSM.Types.ListResourceComplianceSummariesResult, AWSError>;
   /**
    * Lists your resource data sync configurations. Includes information about the last time a sync attempted to start, the last sync status, and the last time a sync successfully completed. The number of sync configurations might be too large to return using a single call to ListResourceDataSync. You can limit the number of sync configurations returned by using the MaxResults parameter. To determine whether there are more sync configurations to list, check the value of NextToken in the output. If there are more sync configurations to list, you can request them by specifying the NextToken returned in the call to the parameter of a subsequent call. 
    */
@@ -564,6 +636,14 @@ declare class SSM extends Service {
    */
   modifyDocumentPermission(callback?: (err: AWSError, data: SSM.Types.ModifyDocumentPermissionResponse) => void): Request<SSM.Types.ModifyDocumentPermissionResponse, AWSError>;
   /**
+   * Registers a compliance type and other compliance details on a designated resource. This action lets you register custom compliance details with a resource. This call overwrites existing compliance information on the resource, so you must provide a full list of compliance items each time that you send the request. ComplianceType can be one of the following:   ExecutionId: The execution ID when the patch, association, or custom compliance item was applied.   ExecutionType: Specify patch, association, or Custom:string.   ExecutionTime. The time the patch, association, or custom compliance item was applied to the instance.   Id: The patch, association, or custom compliance ID.   Title: A title.   Status: The status of the compliance item. For example, approved for patches, or Failed for associations.   Severity: A patch severity. For example, critical.   DocumentName: A SSM document name. For example, AWS-RunPatchBaseline.   DocumentVersion: An SSM document version number. For example, 4.   Classification: A patch classification. For example, security updates.   PatchBaselineId: A patch baseline ID.   PatchSeverity: A patch severity. For example, Critical.   PatchState: A patch state. For example, InstancesWithFailedPatches.   PatchGroup: The name of a patch group.   InstalledTime: The time the association, patch, or custom compliance item was applied to the resource. Specify the time by using the following format: yyyy-MM-dd'T'HH:mm:ss'Z'  
+   */
+  putComplianceItems(params: SSM.Types.PutComplianceItemsRequest, callback?: (err: AWSError, data: SSM.Types.PutComplianceItemsResult) => void): Request<SSM.Types.PutComplianceItemsResult, AWSError>;
+  /**
+   * Registers a compliance type and other compliance details on a designated resource. This action lets you register custom compliance details with a resource. This call overwrites existing compliance information on the resource, so you must provide a full list of compliance items each time that you send the request. ComplianceType can be one of the following:   ExecutionId: The execution ID when the patch, association, or custom compliance item was applied.   ExecutionType: Specify patch, association, or Custom:string.   ExecutionTime. The time the patch, association, or custom compliance item was applied to the instance.   Id: The patch, association, or custom compliance ID.   Title: A title.   Status: The status of the compliance item. For example, approved for patches, or Failed for associations.   Severity: A patch severity. For example, critical.   DocumentName: A SSM document name. For example, AWS-RunPatchBaseline.   DocumentVersion: An SSM document version number. For example, 4.   Classification: A patch classification. For example, security updates.   PatchBaselineId: A patch baseline ID.   PatchSeverity: A patch severity. For example, Critical.   PatchState: A patch state. For example, InstancesWithFailedPatches.   PatchGroup: The name of a patch group.   InstalledTime: The time the association, patch, or custom compliance item was applied to the resource. Specify the time by using the following format: yyyy-MM-dd'T'HH:mm:ss'Z'  
+   */
+  putComplianceItems(callback?: (err: AWSError, data: SSM.Types.PutComplianceItemsResult) => void): Request<SSM.Types.PutComplianceItemsResult, AWSError>;
+  /**
    * Bulk update custom inventory items on one more instance. The request adds an inventory item, if it doesn't already exist, or updates an inventory item, if it does exist.
    */
   putInventory(params: SSM.Types.PutInventoryRequest, callback?: (err: AWSError, data: SSM.Types.PutInventoryResult) => void): Request<SSM.Types.PutInventoryResult, AWSError>;
@@ -572,11 +652,11 @@ declare class SSM extends Service {
    */
   putInventory(callback?: (err: AWSError, data: SSM.Types.PutInventoryResult) => void): Request<SSM.Types.PutInventoryResult, AWSError>;
   /**
-   * Add one or more parameters to the system.
+   * Add a parameter to the system.
    */
   putParameter(params: SSM.Types.PutParameterRequest, callback?: (err: AWSError, data: SSM.Types.PutParameterResult) => void): Request<SSM.Types.PutParameterResult, AWSError>;
   /**
-   * Add one or more parameters to the system.
+   * Add a parameter to the system.
    */
   putParameter(callback?: (err: AWSError, data: SSM.Types.PutParameterResult) => void): Request<SSM.Types.PutParameterResult, AWSError>;
   /**
@@ -620,6 +700,14 @@ declare class SSM extends Service {
    */
   removeTagsFromResource(callback?: (err: AWSError, data: SSM.Types.RemoveTagsFromResourceResult) => void): Request<SSM.Types.RemoveTagsFromResourceResult, AWSError>;
   /**
+   * Sends a signal to an Automation execution to change the current behavior or status of the execution. 
+   */
+  sendAutomationSignal(params: SSM.Types.SendAutomationSignalRequest, callback?: (err: AWSError, data: SSM.Types.SendAutomationSignalResult) => void): Request<SSM.Types.SendAutomationSignalResult, AWSError>;
+  /**
+   * Sends a signal to an Automation execution to change the current behavior or status of the execution. 
+   */
+  sendAutomationSignal(callback?: (err: AWSError, data: SSM.Types.SendAutomationSignalResult) => void): Request<SSM.Types.SendAutomationSignalResult, AWSError>;
+  /**
    * Executes commands on one or more managed instances.
    */
   sendCommand(params: SSM.Types.SendCommandRequest, callback?: (err: AWSError, data: SSM.Types.SendCommandResult) => void): Request<SSM.Types.SendCommandResult, AWSError>;
@@ -644,11 +732,11 @@ declare class SSM extends Service {
    */
   stopAutomationExecution(callback?: (err: AWSError, data: SSM.Types.StopAutomationExecutionResult) => void): Request<SSM.Types.StopAutomationExecutionResult, AWSError>;
   /**
-   * Updates an association. You can only update the document version, schedule, parameters, and Amazon S3 output of an association.
+   * Updates an association. You can update the association name and version, the document version, schedule, parameters, and Amazon S3 output.
    */
   updateAssociation(params: SSM.Types.UpdateAssociationRequest, callback?: (err: AWSError, data: SSM.Types.UpdateAssociationResult) => void): Request<SSM.Types.UpdateAssociationResult, AWSError>;
   /**
-   * Updates an association. You can only update the document version, schedule, parameters, and Amazon S3 output of an association.
+   * Updates an association. You can update the association name and version, the document version, schedule, parameters, and Amazon S3 output.
    */
   updateAssociation(callback?: (err: AWSError, data: SSM.Types.UpdateAssociationResult) => void): Request<SSM.Types.UpdateAssociationResult, AWSError>;
   /**
@@ -684,6 +772,22 @@ declare class SSM extends Service {
    */
   updateMaintenanceWindow(callback?: (err: AWSError, data: SSM.Types.UpdateMaintenanceWindowResult) => void): Request<SSM.Types.UpdateMaintenanceWindowResult, AWSError>;
   /**
+   * Modifies the target of an existing Maintenance Window. You can't change the target type, but you can change the following: The target from being an ID target to a Tag target, or a Tag target to an ID target. IDs for an ID target. Tags for a Tag target. Owner. Name. Description. If a parameter is null, then the corresponding field is not modified.
+   */
+  updateMaintenanceWindowTarget(params: SSM.Types.UpdateMaintenanceWindowTargetRequest, callback?: (err: AWSError, data: SSM.Types.UpdateMaintenanceWindowTargetResult) => void): Request<SSM.Types.UpdateMaintenanceWindowTargetResult, AWSError>;
+  /**
+   * Modifies the target of an existing Maintenance Window. You can't change the target type, but you can change the following: The target from being an ID target to a Tag target, or a Tag target to an ID target. IDs for an ID target. Tags for a Tag target. Owner. Name. Description. If a parameter is null, then the corresponding field is not modified.
+   */
+  updateMaintenanceWindowTarget(callback?: (err: AWSError, data: SSM.Types.UpdateMaintenanceWindowTargetResult) => void): Request<SSM.Types.UpdateMaintenanceWindowTargetResult, AWSError>;
+  /**
+   * Modifies a task assigned to a Maintenance Window. You can't change the task type, but you can change the following values:   TaskARN. For example, you can change a RUN_COMMAND task from AWS-RunPowerShellScript to AWS-RunShellScript.   ServiceRoleArn   TaskInvocationParameters   Priority   MaxConcurrency   MaxErrors   If a parameter is null, then the corresponding field is not modified. Also, if you set Replace to true, then all fields required by the RegisterTaskWithMaintenanceWindow action are required for this request. Optional fields that aren't specified are set to null.
+   */
+  updateMaintenanceWindowTask(params: SSM.Types.UpdateMaintenanceWindowTaskRequest, callback?: (err: AWSError, data: SSM.Types.UpdateMaintenanceWindowTaskResult) => void): Request<SSM.Types.UpdateMaintenanceWindowTaskResult, AWSError>;
+  /**
+   * Modifies a task assigned to a Maintenance Window. You can't change the task type, but you can change the following values:   TaskARN. For example, you can change a RUN_COMMAND task from AWS-RunPowerShellScript to AWS-RunShellScript.   ServiceRoleArn   TaskInvocationParameters   Priority   MaxConcurrency   MaxErrors   If a parameter is null, then the corresponding field is not modified. Also, if you set Replace to true, then all fields required by the RegisterTaskWithMaintenanceWindow action are required for this request. Optional fields that aren't specified are set to null.
+   */
+  updateMaintenanceWindowTask(callback?: (err: AWSError, data: SSM.Types.UpdateMaintenanceWindowTaskResult) => void): Request<SSM.Types.UpdateMaintenanceWindowTaskResult, AWSError>;
+  /**
    * Assigns or changes an Amazon Identity and Access Management (IAM) role to the managed instance.
    */
   updateManagedInstanceRole(params: SSM.Types.UpdateManagedInstanceRoleRequest, callback?: (err: AWSError, data: SSM.Types.UpdateManagedInstanceRoleResult) => void): Request<SSM.Types.UpdateManagedInstanceRoleResult, AWSError>;
@@ -692,11 +796,11 @@ declare class SSM extends Service {
    */
   updateManagedInstanceRole(callback?: (err: AWSError, data: SSM.Types.UpdateManagedInstanceRoleResult) => void): Request<SSM.Types.UpdateManagedInstanceRoleResult, AWSError>;
   /**
-   * Modifies an existing patch baseline. Fields not specified in the request are left unchanged.
+   * Modifies an existing patch baseline. Fields not specified in the request are left unchanged.  For information about valid key and value pairs in PatchFilters for each supported operating system type, see PatchFilter. 
    */
   updatePatchBaseline(params: SSM.Types.UpdatePatchBaselineRequest, callback?: (err: AWSError, data: SSM.Types.UpdatePatchBaselineResult) => void): Request<SSM.Types.UpdatePatchBaselineResult, AWSError>;
   /**
-   * Modifies an existing patch baseline. Fields not specified in the request are left unchanged.
+   * Modifies an existing patch baseline. Fields not specified in the request are left unchanged.  For information about valid key and value pairs in PatchFilters for each supported operating system type, see PatchFilter. 
    */
   updatePatchBaseline(callback?: (err: AWSError, data: SSM.Types.UpdatePatchBaselineResult) => void): Request<SSM.Types.UpdatePatchBaselineResult, AWSError>;
 }
@@ -747,26 +851,27 @@ declare namespace SSM {
   export type ActivationList = Activation[];
   export interface AddTagsToResourceRequest {
     /**
-     * Specifies the type of resource you are tagging.
+     * Specifies the type of resource you are tagging.  The ManagedInstance type for this API action is for on-premises managed instances. You must specify the the name of the managed instance in the following format: mi-ID_number. For example, mi-1a2b3c4d5e6f. 
      */
     ResourceType: ResourceTypeForTagging;
     /**
-     * The resource ID you want to tag.
+     * The resource ID you want to tag. Use the ID of the resource. Here are some examples: ManagedInstance: mi-012345abcde MaintenanceWindow: mw-012345abcde PatchBaseline: pb-012345abcde For the Document and Parameter values, use the name of the resource.  The ManagedInstance type for this API action is only for on-premises managed instances. You must specify the the name of the managed instance in the following format: mi-ID_number. For example, mi-1a2b3c4d5e6f. 
      */
     ResourceId: ResourceId;
     /**
-     *  One or more tags. The value parameter is required, but if you don't want the tag to have a value, specify the parameter with no value, and we set the value to an empty string. 
+     *  One or more tags. The value parameter is required, but if you don't want the tag to have a value, specify the parameter with no value, and we set the value to an empty string.   Do not enter personally identifiable information in this field. 
      */
     Tags: TagList;
   }
   export interface AddTagsToResourceResult {
   }
   export type AgentErrorCode = string;
+  export type AggregatorSchemaOnly = boolean;
   export type AllowedPattern = string;
   export type ApproveAfterDays = number;
   export interface Association {
     /**
-     * The name of the SSM document.
+     * The name of the Systems Manager document.
      */
     Name?: DocumentName;
     /**
@@ -777,6 +882,10 @@ declare namespace SSM {
      * The ID created by the system when you create an association. An association is a binding between a document and a set of targets with a schedule.
      */
     AssociationId?: AssociationId;
+    /**
+     * The association version.
+     */
+    AssociationVersion?: AssociationVersion;
     /**
      * The version of the document used in the association.
      */
@@ -797,16 +906,24 @@ declare namespace SSM {
      * A cron expression that specifies a schedule when the association runs.
      */
     ScheduleExpression?: ScheduleExpression;
+    /**
+     * The association name.
+     */
+    AssociationName?: AssociationName;
   }
   export interface AssociationDescription {
     /**
-     * The name of the SSM document.
+     * The name of the Systems Manager document.
      */
     Name?: DocumentName;
     /**
      * The ID of the instance.
      */
     InstanceId?: InstanceId;
+    /**
+     * The association version.
+     */
+    AssociationVersion?: AssociationVersion;
     /**
      * The date when the association was made.
      */
@@ -855,6 +972,10 @@ declare namespace SSM {
      * The last date on which the association was successfully run.
      */
     LastSuccessfulExecutionDate?: DateTime;
+    /**
+     * The association name.
+     */
+    AssociationName?: AssociationName;
   }
   export type AssociationDescriptionList = AssociationDescription[];
   export interface AssociationFilter {
@@ -867,11 +988,12 @@ declare namespace SSM {
      */
     value: AssociationFilterValue;
   }
-  export type AssociationFilterKey = "InstanceId"|"Name"|"AssociationId"|"AssociationStatusName"|"LastExecutedBefore"|"LastExecutedAfter"|string;
+  export type AssociationFilterKey = "InstanceId"|"Name"|"AssociationId"|"AssociationStatusName"|"LastExecutedBefore"|"LastExecutedAfter"|"AssociationName"|string;
   export type AssociationFilterList = AssociationFilter[];
   export type AssociationFilterValue = string;
   export type AssociationId = string;
   export type AssociationList = Association[];
+  export type AssociationName = string;
   export interface AssociationOverview {
     /**
      * The status of the association. Status can be: Pending, Success, or Failed.
@@ -906,6 +1028,50 @@ declare namespace SSM {
   }
   export type AssociationStatusAggregatedCount = {[key: string]: InstanceCount};
   export type AssociationStatusName = "Pending"|"Success"|"Failed"|string;
+  export type AssociationVersion = string;
+  export interface AssociationVersionInfo {
+    /**
+     * The ID created by the system when the association was created.
+     */
+    AssociationId?: AssociationId;
+    /**
+     * The association version.
+     */
+    AssociationVersion?: AssociationVersion;
+    /**
+     * The date the association version was created.
+     */
+    CreatedDate?: DateTime;
+    /**
+     * The name specified when the association was created.
+     */
+    Name?: DocumentName;
+    /**
+     * The version of a Systems Manager document used when the association version was created.
+     */
+    DocumentVersion?: DocumentVersion;
+    /**
+     * Parameters specified when the association version was created.
+     */
+    Parameters?: Parameters;
+    /**
+     * The targets specified for the association when the association version was created. 
+     */
+    Targets?: Targets;
+    /**
+     * The cron or rate schedule specified for the association when the association version was created.
+     */
+    ScheduleExpression?: ScheduleExpression;
+    /**
+     * The location in Amazon S3 specified for the association when the association version was created.
+     */
+    OutputLocation?: InstanceAssociationOutputLocation;
+    /**
+     * The name specified for the association version when the association version was created.
+     */
+    AssociationName?: AssociationName;
+  }
+  export type AssociationVersionList = AssociationVersionInfo[];
   export type AttributeName = string;
   export type AttributeValue = string;
   export type AutomationActionName = string;
@@ -939,6 +1105,10 @@ declare namespace SSM {
      */
     StepExecutions?: StepExecutionList;
     /**
+     * A boolean value that indicates if the response contains the full list of the Automation step executions. If true, use the DescribeAutomationStepExecutions API action to get the full list of step executions.
+     */
+    StepExecutionsTruncated?: Boolean;
+    /**
      * The key-value map of execution parameters, which were supplied when calling StartAutomationExecution.
      */
     Parameters?: AutomationParameterMap;
@@ -950,10 +1120,54 @@ declare namespace SSM {
      * A message describing why an execution has failed, if the status is set to Failed.
      */
     FailureMessage?: String;
+    /**
+     * The automation execution mode.
+     */
+    Mode?: ExecutionMode;
+    /**
+     * The AutomationExecutionId of the parent automation.
+     */
+    ParentAutomationExecutionId?: AutomationExecutionId;
+    /**
+     * The Amazon Resource Name (ARN) of the user who executed the automation.
+     */
+    ExecutedBy?: String;
+    /**
+     * The name of the currently executing step.
+     */
+    CurrentStepName?: String;
+    /**
+     * The action of the currently executing step.
+     */
+    CurrentAction?: String;
+    /**
+     * The parameter name.
+     */
+    TargetParameterName?: AutomationParameterKey;
+    /**
+     * The specified targets.
+     */
+    Targets?: Targets;
+    /**
+     * A list of resolved targets in the rate control execution.
+     */
+    ResolvedTargets?: ResolvedTargets;
+    /**
+     * The MaxConcurrency value specified by the user when the execution started.
+     */
+    MaxConcurrency?: MaxConcurrency;
+    /**
+     * The MaxErrors value specified by the user when the execution started.
+     */
+    MaxErrors?: MaxErrors;
+    /**
+     * The target of the execution.
+     */
+    Target?: String;
   }
   export interface AutomationExecutionFilter {
     /**
-     * The aspect of the Automation execution information that should be limited.
+     * One or more keys to limit the results. Valid filter keys include the following: DocumentNamePrefix, ExecutionStatus, ExecutionId, ParentExecutionId, CurrentAction, StartTimeBefore, StartTimeAfter.
      */
     Key: AutomationExecutionFilterKey;
     /**
@@ -961,7 +1175,7 @@ declare namespace SSM {
      */
     Values: AutomationExecutionFilterValueList;
   }
-  export type AutomationExecutionFilterKey = "DocumentNamePrefix"|"ExecutionStatus"|string;
+  export type AutomationExecutionFilterKey = "DocumentNamePrefix"|"ExecutionStatus"|"ExecutionId"|"ParentExecutionId"|"CurrentAction"|"StartTimeBefore"|"StartTimeAfter"|string;
   export type AutomationExecutionFilterList = AutomationExecutionFilter[];
   export type AutomationExecutionFilterValue = string;
   export type AutomationExecutionFilterValueList = AutomationExecutionFilterValue[];
@@ -1003,9 +1217,53 @@ declare namespace SSM {
      * The list of execution outputs as defined in the Automation document.
      */
     Outputs?: AutomationParameterMap;
+    /**
+     * The Automation execution mode.
+     */
+    Mode?: ExecutionMode;
+    /**
+     * The ExecutionId of the parent Automation.
+     */
+    ParentAutomationExecutionId?: AutomationExecutionId;
+    /**
+     * The name of the currently executing step.
+     */
+    CurrentStepName?: String;
+    /**
+     * The action of the currently executing step.
+     */
+    CurrentAction?: String;
+    /**
+     * The list of execution outputs as defined in the Automation document.
+     */
+    FailureMessage?: String;
+    /**
+     * The list of execution outputs as defined in the Automation document.
+     */
+    TargetParameterName?: AutomationParameterKey;
+    /**
+     * The targets defined by the user when starting the Automation.
+     */
+    Targets?: Targets;
+    /**
+     * A list of targets that resolved during the execution.
+     */
+    ResolvedTargets?: ResolvedTargets;
+    /**
+     * The MaxConcurrency value specified by the user when starting the Automation.
+     */
+    MaxConcurrency?: MaxConcurrency;
+    /**
+     * The MaxErrors value specified by the user when starting the Automation.
+     */
+    MaxErrors?: MaxErrors;
+    /**
+     * The list of execution outputs as defined in the Automation document.
+     */
+    Target?: String;
   }
   export type AutomationExecutionMetadataList = AutomationExecutionMetadata[];
-  export type AutomationExecutionStatus = "Pending"|"InProgress"|"Success"|"TimedOut"|"Cancelled"|"Failed"|string;
+  export type AutomationExecutionStatus = "Pending"|"InProgress"|"Waiting"|"Success"|"TimedOut"|"Cancelling"|"Cancelled"|"Failed"|string;
   export type AutomationParameterKey = string;
   export type AutomationParameterMap = {[key: string]: AutomationParameterValueList};
   export type AutomationParameterValue = string;
@@ -1038,11 +1296,15 @@ declare namespace SSM {
      */
     DocumentName?: DocumentName;
     /**
+     * The SSM document version.
+     */
+    DocumentVersion?: DocumentVersion;
+    /**
      * User-specified information about the command, such as a brief description of what the command should do.
      */
     Comment?: Comment;
     /**
-     * If this time is reached and the command has not already started executing, it will not execute. Calculated based on the ExpiresAfter user input provided as part of the SendCommand API.
+     * If this time is reached and the command has not already started executing, it will not run. Calculated based on the ExpiresAfter user input provided as part of the SendCommand API.
      */
     ExpiresAfter?: DateTime;
     /**
@@ -1086,7 +1348,7 @@ declare namespace SSM {
      */
     MaxConcurrency?: MaxConcurrency;
     /**
-     * The maximum number of errors allowed before the system stops sending the command to additional targets. You can specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 50. For more information about how to use MaxErrors, see Executing a Command Using Systems Manager Run Command.
+     * The maximum number of errors allowed before the system stops sending the command to additional targets. You can specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 0. For more information about how to use MaxErrors, see Executing a Command Using Systems Manager Run Command.
      */
     MaxErrors?: MaxErrors;
     /**
@@ -1145,6 +1407,10 @@ declare namespace SSM {
      * The document name that was requested for execution.
      */
     DocumentName?: DocumentName;
+    /**
+     * The SSM document version.
+     */
+    DocumentVersion?: DocumentVersion;
     /**
      * The time and date the request was sent to this instance.
      */
@@ -1240,14 +1506,148 @@ declare namespace SSM {
   export type CommandStatus = "Pending"|"InProgress"|"Success"|"Cancelled"|"Failed"|"TimedOut"|"Cancelling"|string;
   export type Comment = string;
   export type CompletedCount = number;
+  export type ComplianceExecutionId = string;
+  export interface ComplianceExecutionSummary {
+    /**
+     * The time the execution ran as a datetime object that is saved in the following format: yyyy-MM-dd'T'HH:mm:ss'Z'.
+     */
+    ExecutionTime: DateTime;
+    /**
+     * An ID created by the system when PutComplianceItems was called. For example, CommandID is a valid execution ID. You can use this ID in subsequent calls.
+     */
+    ExecutionId?: ComplianceExecutionId;
+    /**
+     * The type of execution. For example, Command is a valid execution type.
+     */
+    ExecutionType?: ComplianceExecutionType;
+  }
+  export type ComplianceExecutionType = string;
+  export type ComplianceFilterValue = string;
+  export interface ComplianceItem {
+    /**
+     * The compliance type. For example, Association (for a State Manager association), Patch, or Custom:string are all valid compliance types.
+     */
+    ComplianceType?: ComplianceTypeName;
+    /**
+     * The type of resource. ManagedInstance is currently the only supported resource type.
+     */
+    ResourceType?: ComplianceResourceType;
+    /**
+     * An ID for the resource. For a managed instance, this is the instance ID.
+     */
+    ResourceId?: ComplianceResourceId;
+    /**
+     * An ID for the compliance item. For example, if the compliance item is a Windows patch, the ID could be the number of the KB article; for example: KB4010320.
+     */
+    Id?: ComplianceItemId;
+    /**
+     * A title for the compliance item. For example, if the compliance item is a Windows patch, the title could be the title of the KB article for the patch; for example: Security Update for Active Directory Federation Services.
+     */
+    Title?: ComplianceItemTitle;
+    /**
+     * The status of the compliance item. An item is either COMPLIANT or NON_COMPLIANT.
+     */
+    Status?: ComplianceStatus;
+    /**
+     * The severity of the compliance status. Severity can be one of the following: Critical, High, Medium, Low, Informational, Unspecified.
+     */
+    Severity?: ComplianceSeverity;
+    /**
+     * A summary for the compliance item. The summary includes an execution ID, the execution type (for example, command), and the execution time.
+     */
+    ExecutionSummary?: ComplianceExecutionSummary;
+    /**
+     * A "Key": "Value" tag combination for the compliance item.
+     */
+    Details?: ComplianceItemDetails;
+  }
+  export type ComplianceItemContentHash = string;
+  export type ComplianceItemDetails = {[key: string]: AttributeValue};
+  export interface ComplianceItemEntry {
+    /**
+     * The compliance item ID. For example, if the compliance item is a Windows patch, the ID could be the number of the KB article.
+     */
+    Id?: ComplianceItemId;
+    /**
+     * The title of the compliance item. For example, if the compliance item is a Windows patch, the title could be the title of the KB article for the patch; for example: Security Update for Active Directory Federation Services. 
+     */
+    Title?: ComplianceItemTitle;
+    /**
+     * The severity of the compliance status. Severity can be one of the following: Critical, High, Medium, Low, Informational, Unspecified.
+     */
+    Severity: ComplianceSeverity;
+    /**
+     * The status of the compliance item. An item is either COMPLIANT or NON_COMPLIANT.
+     */
+    Status: ComplianceStatus;
+    /**
+     * A "Key": "Value" tag combination for the compliance item.
+     */
+    Details?: ComplianceItemDetails;
+  }
+  export type ComplianceItemEntryList = ComplianceItemEntry[];
+  export type ComplianceItemId = string;
+  export type ComplianceItemList = ComplianceItem[];
+  export type ComplianceItemTitle = string;
+  export type ComplianceQueryOperatorType = "EQUAL"|"NOT_EQUAL"|"BEGIN_WITH"|"LESS_THAN"|"GREATER_THAN"|string;
+  export type ComplianceResourceId = string;
+  export type ComplianceResourceIdList = ComplianceResourceId[];
+  export type ComplianceResourceType = string;
+  export type ComplianceResourceTypeList = ComplianceResourceType[];
+  export type ComplianceSeverity = "CRITICAL"|"HIGH"|"MEDIUM"|"LOW"|"INFORMATIONAL"|"UNSPECIFIED"|string;
+  export type ComplianceStatus = "COMPLIANT"|"NON_COMPLIANT"|string;
+  export interface ComplianceStringFilter {
+    /**
+     * The name of the filter.
+     */
+    Key?: ComplianceStringFilterKey;
+    /**
+     * The value for which to search.
+     */
+    Values?: ComplianceStringFilterValueList;
+    /**
+     * The type of comparison that should be performed for the value: Equal, NotEqual, BeginWith, LessThan, or GreaterThan.
+     */
+    Type?: ComplianceQueryOperatorType;
+  }
+  export type ComplianceStringFilterKey = string;
+  export type ComplianceStringFilterList = ComplianceStringFilter[];
+  export type ComplianceStringFilterValueList = ComplianceFilterValue[];
+  export type ComplianceSummaryCount = number;
+  export interface ComplianceSummaryItem {
+    /**
+     * The type of compliance item. For example, the compliance type can be Association, Patch, or Custom:string.
+     */
+    ComplianceType?: ComplianceTypeName;
+    /**
+     * A list of COMPLIANT items for the specified compliance type.
+     */
+    CompliantSummary?: CompliantSummary;
+    /**
+     * A list of NON_COMPLIANT items for the specified compliance type.
+     */
+    NonCompliantSummary?: NonCompliantSummary;
+  }
+  export type ComplianceSummaryItemList = ComplianceSummaryItem[];
+  export type ComplianceTypeName = string;
+  export interface CompliantSummary {
+    /**
+     * The total number of resources that are compliant.
+     */
+    CompliantCount?: ComplianceSummaryCount;
+    /**
+     * A summary of the compliance severity by compliance type.
+     */
+    SeveritySummary?: SeveritySummary;
+  }
   export type ComputerName = string;
   export interface CreateActivationRequest {
     /**
-     * A userdefined description of the resource that you want to register with Amazon EC2. 
+     * A user-defined description of the resource that you want to register with Amazon EC2.   Do not enter personally identifiable information in this field. 
      */
     Description?: ActivationDescription;
     /**
-     * The name of the registered, managed instance as it will appear in the Amazon EC2 console or when you use the AWS command line tools to list EC2 resources.
+     * The name of the registered, managed instance as it will appear in the Amazon EC2 console or when you use the AWS command line tools to list EC2 resources.  Do not enter personally identifiable information in this field. 
      */
     DefaultInstanceName?: DefaultInstanceName;
     /**
@@ -1309,6 +1709,10 @@ declare namespace SSM {
      * An Amazon S3 bucket where you want to store the results of this request.
      */
     OutputLocation?: InstanceAssociationOutputLocation;
+    /**
+     * Specify a descriptive name for the association.
+     */
+    AssociationName?: AssociationName;
   }
   export interface CreateAssociationBatchResult {
     /**
@@ -1349,6 +1753,10 @@ declare namespace SSM {
      * An Amazon S3 bucket where you want to store the output details of the request.
      */
     OutputLocation?: InstanceAssociationOutputLocation;
+    /**
+     * Specify a descriptive name for the association.
+     */
+    AssociationName?: AssociationName;
   }
   export interface CreateAssociationResult {
     /**
@@ -1358,17 +1766,25 @@ declare namespace SSM {
   }
   export interface CreateDocumentRequest {
     /**
-     * A valid JSON string.
+     * A valid JSON or YAML string.
      */
     Content: DocumentContent;
     /**
-     * A name for the Systems Manager document.
+     * A name for the Systems Manager document.  Do not use the following to begin the names of documents you create. They are reserved by AWS for use as document prefixes:    aws     amazon     amzn    
      */
     Name: DocumentName;
     /**
      * The type of document to create. Valid document types include: Policy, Automation, and Command.
      */
     DocumentType?: DocumentType;
+    /**
+     * Specify the document format for the request. The document format can be either JSON or YAML. JSON is the default format.
+     */
+    DocumentFormat?: DocumentFormat;
+    /**
+     * Specify a target type to define the kinds of resources the document can run on. For example, to run a document on EC2 instances, specify the following value: /AWS::EC2::Instance. If you specify a value of '/' the document can run on all types of resources. If you don't specify a value, the document can't run on any resources. For a list of valid resource types, see AWS Resource Types Reference in the AWS CloudFormation User Guide. 
+     */
+    TargetType?: TargetType;
   }
   export interface CreateDocumentResult {
     /**
@@ -1382,6 +1798,10 @@ declare namespace SSM {
      */
     Name: MaintenanceWindowName;
     /**
+     * An optional description for the Maintenance Window. We recommend specifying a description to help you organize your Maintenance Windows. 
+     */
+    Description?: MaintenanceWindowDescription;
+    /**
      * The schedule of the Maintenance Window in the form of a cron or rate expression.
      */
     Schedule: MaintenanceWindowSchedule;
@@ -1394,7 +1814,7 @@ declare namespace SSM {
      */
     Cutoff: MaintenanceWindowCutoff;
     /**
-     * Whether targets must be registered with the Maintenance Window before tasks can be defined for those targets.
+     * Enables a Maintenance Window task to execute on managed instances, even if you have not registered those instances as targets. If enabled, then you must specify the unregistered instances (by instance ID) when you register a task with the Maintenance Window  If you don't enable this option, then you must specify previously-registered targets when you register a task with the Maintenance Window. 
      */
     AllowUnassociatedTargets: MaintenanceWindowAllowUnassociatedTargets;
     /**
@@ -1410,7 +1830,7 @@ declare namespace SSM {
   }
   export interface CreatePatchBaselineRequest {
     /**
-     * Defines the operating system the patch baseline applies to. Supported operating systems include WINDOWS, AMAZON_LINUX, UBUNTU and REDHAT_ENTERPRISE_LINUX. The Default value is WINDOWS.
+     * Defines the operating system the patch baseline applies to. The Default value is WINDOWS.
      */
     OperatingSystem?: OperatingSystem;
     /**
@@ -1426,21 +1846,29 @@ declare namespace SSM {
      */
     ApprovalRules?: PatchRuleGroup;
     /**
-     * A list of explicitly approved patches for the baseline.
+     * A list of explicitly approved patches for the baseline. For information about accepted formats for lists of approved patches and rejected patches, see Package Name Formats for Approved and Rejected Patch Lists in the AWS Systems Manager User Guide.
      */
     ApprovedPatches?: PatchIdList;
     /**
-     * Defines the compliance level for approved patches. This means that if an approved patch is reported as missing, this is the severity of the compliance violation. Valid compliance severity levels include the following: CRITICAL, HIGH, MEDIUM, LOW, INFORMATIONAL, UNSPECIFIED. The default value is UNSPECIFIED.
+     * Defines the compliance level for approved patches. This means that if an approved patch is reported as missing, this is the severity of the compliance violation. The default value is UNSPECIFIED.
      */
     ApprovedPatchesComplianceLevel?: PatchComplianceLevel;
     /**
-     * A list of explicitly rejected patches for the baseline.
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the instances. The default value is 'false'. Applies to Linux instances only.
+     */
+    ApprovedPatchesEnableNonSecurity?: Boolean;
+    /**
+     * A list of explicitly rejected patches for the baseline. For information about accepted formats for lists of approved patches and rejected patches, see Package Name Formats for Approved and Rejected Patch Lists in the AWS Systems Manager User Guide.
      */
     RejectedPatches?: PatchIdList;
     /**
      * A description of the patch baseline.
      */
     Description?: BaselineDescription;
+    /**
+     * Information about the patches to use to update the instances, including target operating systems and source repositories. Applies to Linux instances only.
+     */
+    Sources?: PatchSourceList;
     /**
      * User-provided idempotency token.
      */
@@ -1499,6 +1927,38 @@ declare namespace SSM {
     Name: DocumentName;
   }
   export interface DeleteDocumentResult {
+  }
+  export interface DeleteInventoryRequest {
+    /**
+     * The name of the custom inventory type for which you want to delete either all previously collected data, or the inventory type itself. 
+     */
+    TypeName: InventoryItemTypeName;
+    /**
+     * Use the SchemaDeleteOption to delete a custom inventory type (schema). If you don't choose this option, the system only deletes existing inventory data associated with the custom inventory type. Choose one of the following options: DisableSchema: If you choose this option, the system ignores all inventory data for the specified version, and any earlier versions. To enable this schema again, you must call the PutInventory action for a version greater than the disbled version. DeleteSchema: This option deletes the specified custom type from the Inventory service. You can recreate the schema later, if you want.
+     */
+    SchemaDeleteOption?: InventorySchemaDeleteOption;
+    /**
+     * Use this option to view a summary of the deletion request without deleting any data or the data type. This option is useful when you only want to understand what will be deleted. Once you validate that the data to be deleted is what you intend to delete, you can run the same command without specifying the DryRun option.
+     */
+    DryRun?: DryRun;
+    /**
+     * User-provided idempotency token.
+     */
+    ClientToken?: ClientToken;
+  }
+  export interface DeleteInventoryResult {
+    /**
+     * Every DeleteInventory action is assigned a unique ID. This option returns a unique ID. You can use this ID to query the status of a delete operation. This option is useful for ensuring that a delete operation has completed before you begin other actions. 
+     */
+    DeletionId?: InventoryDeletionId;
+    /**
+     * The name of the inventory data type specified in the request.
+     */
+    TypeName?: InventoryItemTypeName;
+    /**
+     * A summary of the delete operation. For more information about this summary, see Understanding the Delete Inventory Summary.
+     */
+    DeletionSummary?: InventoryDeletionSummary;
   }
   export interface DeleteMaintenanceWindowRequest {
     /**
@@ -1593,6 +2053,10 @@ declare namespace SSM {
      * The ID of the target definition to remove.
      */
     WindowTargetId: MaintenanceWindowTargetId;
+    /**
+     * The system checks if the target is being referenced by a task. If the target is being referenced, the system returns an error and does not deregister the target from the Maintenance Window.
+     */
+    Safe?: Boolean;
   }
   export interface DeregisterTargetFromMaintenanceWindowResult {
     /**
@@ -1662,7 +2126,7 @@ declare namespace SSM {
   }
   export interface DescribeAssociationRequest {
     /**
-     * The name of the SSM document.
+     * The name of the Systems Manager document.
      */
     Name?: DocumentName;
     /**
@@ -1673,6 +2137,10 @@ declare namespace SSM {
      * The association ID for which you want information.
      */
     AssociationId?: AssociationId;
+    /**
+     * Specify the association version to retrieve. To view the latest version, either specify $LATEST for this parameter, or omit this parameter. To view a list of all associations for an instance, use ListInstanceAssociations. To get a list of versions for a specific association, use ListAssociationVersions. 
+     */
+    AssociationVersion?: AssociationVersion;
   }
   export interface DescribeAssociationResult {
     /**
@@ -1699,6 +2167,38 @@ declare namespace SSM {
      * The list of details about each automation execution which has occurred which matches the filter specification, if any.
      */
     AutomationExecutionMetadataList?: AutomationExecutionMetadataList;
+    /**
+     * The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.
+     */
+    NextToken?: NextToken;
+  }
+  export interface DescribeAutomationStepExecutionsRequest {
+    /**
+     * The Automation execution ID for which you want step execution descriptions.
+     */
+    AutomationExecutionId: AutomationExecutionId;
+    /**
+     * One or more filters to limit the number of step executions returned by the request.
+     */
+    Filters?: StepExecutionFilterList;
+    /**
+     * The token for the next set of items to return. (You received this token from a previous call.)
+     */
+    NextToken?: NextToken;
+    /**
+     * The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
+     */
+    MaxResults?: MaxResults;
+    /**
+     * A boolean that indicates whether to list step executions in reverse order by start time. The default value is false.
+     */
+    ReverseOrder?: Boolean;
+  }
+  export interface DescribeAutomationStepExecutionsResult {
+    /**
+     * A list of details about the current state of all steps that make up an execution.
+     */
+    StepExecutions?: StepExecutionList;
     /**
      * The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.
      */
@@ -1746,7 +2246,7 @@ declare namespace SSM {
   }
   export interface DescribeDocumentRequest {
     /**
-     * The name of the SSM document.
+     * The name of the Systems Manager document.
      */
     Name: DocumentARN;
     /**
@@ -1756,7 +2256,7 @@ declare namespace SSM {
   }
   export interface DescribeDocumentResult {
     /**
-     * Information about the SSM document.
+     * Information about the Systems Manager document.
      */
     Document?: DocumentDescription;
   }
@@ -1937,6 +2437,30 @@ declare namespace SSM {
     Patches?: PatchComplianceDataList;
     /**
      * The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.
+     */
+    NextToken?: NextToken;
+  }
+  export interface DescribeInventoryDeletionsRequest {
+    /**
+     * Specify the delete inventory ID for which you want information. This ID was returned by the DeleteInventory action.
+     */
+    DeletionId?: InventoryDeletionId;
+    /**
+     * A token to start the list. Use this token to get the next set of results. 
+     */
+    NextToken?: NextToken;
+    /**
+     * The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
+     */
+    MaxResults?: MaxResults;
+  }
+  export interface DescribeInventoryDeletionsResult {
+    /**
+     * A list of status items for deleted inventory.
+     */
+    InventoryDeletions?: InventoryDeletionsList;
+    /**
+     * The token for the next set of items to return. Use this token to get the next set of results.
      */
     NextToken?: NextToken;
   }
@@ -2231,7 +2755,7 @@ declare namespace SSM {
   }
   export interface DocumentDescription {
     /**
-     * The SHA1 hash of the document, which you can use for verification purposes.
+     * The SHA1 hash of the document, which you can use for verification.
      */
     Sha1?: DocumentSha1;
     /**
@@ -2243,11 +2767,11 @@ declare namespace SSM {
      */
     HashType?: DocumentHashType;
     /**
-     * The name of the SSM document.
+     * The name of the Systems Manager document.
      */
     Name?: DocumentARN;
     /**
-     * The AWS user account of the person who created the document.
+     * The AWS user account that created the document.
      */
     Owner?: DocumentOwner;
     /**
@@ -2255,7 +2779,7 @@ declare namespace SSM {
      */
     CreatedDate?: DateTime;
     /**
-     * The status of the SSM document.
+     * The status of the Systems Manager document.
      */
     Status?: DocumentStatus;
     /**
@@ -2271,7 +2795,7 @@ declare namespace SSM {
      */
     Parameters?: DocumentParameterList;
     /**
-     * The list of OS platforms compatible with this SSM document. 
+     * The list of OS platforms compatible with this Systems Manager document. 
      */
     PlatformTypes?: PlatformTypeList;
     /**
@@ -2290,6 +2814,18 @@ declare namespace SSM {
      * The default version.
      */
     DefaultVersion?: DocumentVersion;
+    /**
+     * The document format, either JSON or YAML.
+     */
+    DocumentFormat?: DocumentFormat;
+    /**
+     * The target type which defines the kinds of resources the document can run on. For example, /AWS::EC2::Instance. For a list of valid resource types, see AWS Resource Types Reference in the AWS CloudFormation User Guide. 
+     */
+    TargetType?: TargetType;
+    /**
+     * The tags, or metadata, that have been applied to the document.
+     */
+    Tags?: TagList;
   }
   export interface DocumentFilter {
     /**
@@ -2304,15 +2840,16 @@ declare namespace SSM {
   export type DocumentFilterKey = "Name"|"Owner"|"PlatformTypes"|"DocumentType"|string;
   export type DocumentFilterList = DocumentFilter[];
   export type DocumentFilterValue = string;
+  export type DocumentFormat = "YAML"|"JSON"|string;
   export type DocumentHash = string;
   export type DocumentHashType = "Sha256"|"Sha1"|string;
   export interface DocumentIdentifier {
     /**
-     * The name of the SSM document.
+     * The name of the Systems Manager document.
      */
     Name?: DocumentARN;
     /**
-     * The AWS user account of the person who created the document.
+     * The AWS user account that created the document.
      */
     Owner?: DocumentOwner;
     /**
@@ -2331,8 +2868,34 @@ declare namespace SSM {
      * The schema version.
      */
     SchemaVersion?: DocumentSchemaVersion;
+    /**
+     * The document format, either JSON or YAML.
+     */
+    DocumentFormat?: DocumentFormat;
+    /**
+     * The target type which defines the kinds of resources the document can run on. For example, /AWS::EC2::Instance. For a list of valid resource types, see AWS Resource Types Reference in the AWS CloudFormation User Guide. 
+     */
+    TargetType?: TargetType;
+    /**
+     * The tags, or metadata, that have been applied to the document.
+     */
+    Tags?: TagList;
   }
   export type DocumentIdentifierList = DocumentIdentifier[];
+  export interface DocumentKeyValuesFilter {
+    /**
+     * The name of the filter key.
+     */
+    Key?: DocumentKeyValuesFilterKey;
+    /**
+     * The value for the filter key.
+     */
+    Values?: DocumentKeyValuesFilterValues;
+  }
+  export type DocumentKeyValuesFilterKey = string;
+  export type DocumentKeyValuesFilterList = DocumentKeyValuesFilter[];
+  export type DocumentKeyValuesFilterValue = string;
+  export type DocumentKeyValuesFilterValues = DocumentKeyValuesFilterValue[];
   export type DocumentName = string;
   export type DocumentOwner = string;
   export interface DocumentParameter {
@@ -2381,9 +2944,14 @@ declare namespace SSM {
      * An identifier for the default version of the document.
      */
     IsDefaultVersion?: Boolean;
+    /**
+     * The document format, either JSON or YAML.
+     */
+    DocumentFormat?: DocumentFormat;
   }
   export type DocumentVersionList = DocumentVersionInfo[];
   export type DocumentVersionNumber = string;
+  export type DryRun = boolean;
   export type EffectiveInstanceAssociationMaxResults = number;
   export interface EffectivePatch {
     /**
@@ -2397,6 +2965,7 @@ declare namespace SSM {
   }
   export type EffectivePatchList = EffectivePatch[];
   export type ErrorCount = number;
+  export type ExecutionMode = "Auto"|"Interactive"|string;
   export type ExpirationDate = Date;
   export interface FailedCreateAssociation {
     /**
@@ -2472,6 +3041,10 @@ declare namespace SSM {
      */
     DocumentName?: DocumentName;
     /**
+     * The SSM document version used in the request.
+     */
+    DocumentVersion?: DocumentVersion;
+    /**
      * The name of the plugin for which you want detailed results. For example, aws:RunShellScript is a plugin.
      */
     PluginName?: CommandPluginName;
@@ -2492,7 +3065,7 @@ declare namespace SSM {
      */
     ExecutionEndDateTime?: StringDateTime;
     /**
-     * The status of the parent command for this invocation. This status can be different than StatusDetails.
+     * The status of this invocation plugin. This status can be different than StatusDetails.
      */
     Status?: CommandInvocationStatus;
     /**
@@ -2562,17 +3135,21 @@ declare namespace SSM {
   }
   export interface GetDocumentRequest {
     /**
-     * The name of the SSM document.
+     * The name of the Systems Manager document.
      */
     Name: DocumentARN;
     /**
      * The document version for which you want information.
      */
     DocumentVersion?: DocumentVersion;
+    /**
+     * Returns the document in the specified format. The document format can be either JSON or YAML. JSON is the default format.
+     */
+    DocumentFormat?: DocumentFormat;
   }
   export interface GetDocumentResult {
     /**
-     * The name of the SSM document.
+     * The name of the Systems Manager document.
      */
     Name?: DocumentARN;
     /**
@@ -2580,19 +3157,27 @@ declare namespace SSM {
      */
     DocumentVersion?: DocumentVersion;
     /**
-     * The contents of the SSM document.
+     * The contents of the Systems Manager document.
      */
     Content?: DocumentContent;
     /**
      * The document type.
      */
     DocumentType?: DocumentType;
+    /**
+     * The document format, either JSON or YAML.
+     */
+    DocumentFormat?: DocumentFormat;
   }
   export interface GetInventoryRequest {
     /**
      * One or more filters. Use a filter to return a more specific list of results.
      */
     Filters?: InventoryFilterList;
+    /**
+     * Returns counts of inventory types based on one or more expressions. For example, if you aggregate by using an expression that uses the AWS:InstanceInformation.PlatformType type, you can see a count of how many Windows and Linux instances exist in your inventoried fleet.
+     */
+    Aggregators?: InventoryAggregatorList;
     /**
      * The list of inventory item types to return.
      */
@@ -2630,6 +3215,14 @@ declare namespace SSM {
      * The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
      */
     MaxResults?: GetInventorySchemaMaxResults;
+    /**
+     * Returns inventory schemas that support aggregation. For example, this call returns the AWS:InstanceInformation type, because it supports aggregation based on the PlatformName, PlatformType, and PlatformVersion attributes.
+     */
+    Aggregator?: AggregatorSchemaOnly;
+    /**
+     * Returns the sub-type schema for a specified inventory type.
+     */
+    SubType?: IsSubTypeSchema;
   }
   export interface GetInventorySchemaResult {
     /**
@@ -2673,6 +3266,70 @@ declare namespace SSM {
      */
     EndTime?: DateTime;
   }
+  export interface GetMaintenanceWindowExecutionTaskInvocationRequest {
+    /**
+     * The ID of the Maintenance Window execution for which the task is a part.
+     */
+    WindowExecutionId: MaintenanceWindowExecutionId;
+    /**
+     * The ID of the specific task in the Maintenance Window task that should be retrieved. 
+     */
+    TaskId: MaintenanceWindowExecutionTaskId;
+    /**
+     * The invocation ID to retrieve.
+     */
+    InvocationId: MaintenanceWindowExecutionTaskInvocationId;
+  }
+  export interface GetMaintenanceWindowExecutionTaskInvocationResult {
+    /**
+     * The Maintenance Window execution ID.
+     */
+    WindowExecutionId?: MaintenanceWindowExecutionId;
+    /**
+     * The task execution ID.
+     */
+    TaskExecutionId?: MaintenanceWindowExecutionTaskId;
+    /**
+     * The invocation ID.
+     */
+    InvocationId?: MaintenanceWindowExecutionTaskInvocationId;
+    /**
+     * The execution ID.
+     */
+    ExecutionId?: MaintenanceWindowExecutionTaskExecutionId;
+    /**
+     * Retrieves the task type for a Maintenance Window. Task types include the following: LAMBDA, STEP_FUNCTION, AUTOMATION, RUN_COMMAND.
+     */
+    TaskType?: MaintenanceWindowTaskType;
+    /**
+     * The parameters used at the time that the task executed.
+     */
+    Parameters?: MaintenanceWindowExecutionTaskInvocationParameters;
+    /**
+     * The task status for an invocation.
+     */
+    Status?: MaintenanceWindowExecutionStatus;
+    /**
+     * The details explaining the status. Details are only available for certain status values.
+     */
+    StatusDetails?: MaintenanceWindowExecutionStatusDetails;
+    /**
+     * The time that the task started executing on the target.
+     */
+    StartTime?: DateTime;
+    /**
+     * The time that the task finished executing on the target.
+     */
+    EndTime?: DateTime;
+    /**
+     * User-provided value to be included in any CloudWatch events raised while running tasks for these targets in this Maintenance Window. 
+     */
+    OwnerInformation?: OwnerInformation;
+    /**
+     * The Maintenance Window target ID.
+     */
+    WindowTargetId?: MaintenanceWindowTaskTargetId;
+  }
   export interface GetMaintenanceWindowExecutionTaskRequest {
     /**
      * The ID of the Maintenance Window execution that includes the task.
@@ -2705,7 +3362,7 @@ declare namespace SSM {
      */
     Type?: MaintenanceWindowTaskType;
     /**
-     * The parameters passed to the task when it was executed. The map has the following format: Key: string, between 1 and 255 characters Value: an array of strings, each string is between 1 and 255 characters
+     * The parameters passed to the task when it was executed.   TaskParameters has been deprecated. To specify parameters to pass to a task when it runs, instead use the Parameters option in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters.  The map has the following format: Key: string, between 1 and 255 characters Value: an array of strings, each string is between 1 and 255 characters
      */
     TaskParameters?: MaintenanceWindowTaskParametersList;
     /**
@@ -2753,6 +3410,10 @@ declare namespace SSM {
      */
     Name?: MaintenanceWindowName;
     /**
+     * The description of the Maintenance Window.
+     */
+    Description?: MaintenanceWindowDescription;
+    /**
      * The schedule of the Maintenance Window in the form of a cron or rate expression.
      */
     Schedule?: MaintenanceWindowSchedule;
@@ -2780,6 +3441,74 @@ declare namespace SSM {
      * The date the Maintenance Window was last modified.
      */
     ModifiedDate?: DateTime;
+  }
+  export interface GetMaintenanceWindowTaskRequest {
+    /**
+     * The Maintenance Window ID that includes the task to retrieve.
+     */
+    WindowId: MaintenanceWindowId;
+    /**
+     * The Maintenance Window task ID to retrieve.
+     */
+    WindowTaskId: MaintenanceWindowTaskId;
+  }
+  export interface GetMaintenanceWindowTaskResult {
+    /**
+     * The retrieved Maintenance Window ID.
+     */
+    WindowId?: MaintenanceWindowId;
+    /**
+     * The retrieved Maintenance Window task ID.
+     */
+    WindowTaskId?: MaintenanceWindowTaskId;
+    /**
+     * The targets where the task should execute.
+     */
+    Targets?: Targets;
+    /**
+     * The resource that the task used during execution. For RUN_COMMAND and AUTOMATION task types, the TaskArn is the Systems Manager Document name/ARN. For LAMBDA tasks, the value is the function name/ARN. For STEP_FUNCTION tasks, the value is the state machine ARN.
+     */
+    TaskArn?: MaintenanceWindowTaskArn;
+    /**
+     * The IAM service role to assume during task execution.
+     */
+    ServiceRoleArn?: ServiceRole;
+    /**
+     * The type of task to execute.
+     */
+    TaskType?: MaintenanceWindowTaskType;
+    /**
+     * The parameters to pass to the task when it executes.   TaskParameters has been deprecated. To specify parameters to pass to a task when it runs, instead use the Parameters option in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters. 
+     */
+    TaskParameters?: MaintenanceWindowTaskParameters;
+    /**
+     * The parameters to pass to the task when it executes.
+     */
+    TaskInvocationParameters?: MaintenanceWindowTaskInvocationParameters;
+    /**
+     * The priority of the task when it executes. The lower the number, the higher the priority. Tasks that have the same priority are scheduled in parallel.
+     */
+    Priority?: MaintenanceWindowTaskPriority;
+    /**
+     * The maximum number of targets allowed to run this task in parallel.
+     */
+    MaxConcurrency?: MaxConcurrency;
+    /**
+     * The maximum number of errors allowed before the task stops being scheduled.
+     */
+    MaxErrors?: MaxErrors;
+    /**
+     * The location in Amazon S3 where the task results are logged.   LoggingInfo has been deprecated. To specify an S3 bucket to contain logs, instead use the OutputS3BucketName and OutputS3KeyPrefix options in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters. 
+     */
+    LoggingInfo?: LoggingInfo;
+    /**
+     * The retrieved task name.
+     */
+    Name?: MaintenanceWindowName;
+    /**
+     * The retrieved task description.
+     */
+    Description?: MaintenanceWindowDescription;
   }
   export interface GetParameterHistoryRequest {
     /**
@@ -2828,15 +3557,15 @@ declare namespace SSM {
   export type GetParametersByPathMaxResults = number;
   export interface GetParametersByPathRequest {
     /**
-     * The hierarchy for the parameter. Hierarchies start with a forward slash (/) and end with the parameter name. A hierarchy can have a maximum of five levels. Examples: /Environment/Test/DBString003 /Finance/Prod/IAD/OS/WinServ2016/license15
+     * The hierarchy for the parameter. Hierarchies start with a forward slash (/) and end with the parameter name. A hierarchy can have a maximum of 15 levels. Here is an example of a hierarchy: /Finance/Prod/IAD/WinServ2016/license33 
      */
     Path: PSParameterName;
     /**
-     * Retrieve all parameters within a hierarchy.
+     * Retrieve all parameters within a hierarchy.  If a user has access to a path, then the user can access all levels of that path. For example, if a user has permission to access path /a, then the user can also access /a/b. Even if a user has explicitly been denied access in IAM for parameter /a, they can still call the GetParametersByPath API action recursively and view /a/b. 
      */
     Recursive?: Boolean;
     /**
-     * Filters to limit the request results.
+     * Filters to limit the request results.  You can't filter using the parameter name. 
      */
     ParameterFilters?: ParameterStringFilterList;
     /**
@@ -2942,6 +3671,10 @@ declare namespace SSM {
      */
     ApprovedPatchesComplianceLevel?: PatchComplianceLevel;
     /**
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the instances. The default value is 'false'. Applies to Linux instances only.
+     */
+    ApprovedPatchesEnableNonSecurity?: Boolean;
+    /**
      * A list of explicitly rejected patches for the baseline.
      */
     RejectedPatches?: PatchIdList;
@@ -2961,9 +3694,14 @@ declare namespace SSM {
      * A description of the patch baseline.
      */
     Description?: BaselineDescription;
+    /**
+     * Information about the patches to use to update the instances, including target operating systems and source repositories. Applies to Linux instances only.
+     */
+    Sources?: PatchSourceList;
   }
   export type IPAddress = string;
   export type IamRole = string;
+  export type IdempotencyToken = string;
   export interface InstanceAggregatedAssociationOverview {
     /**
      * Detailed status information about the aggregated associations.
@@ -2987,6 +3725,10 @@ declare namespace SSM {
      * The content of the association document for the instance(s).
      */
     Content?: DocumentContent;
+    /**
+     * Version information for the association on the instance.
+     */
+    AssociationVersion?: AssociationVersion;
   }
   export type InstanceAssociationExecutionSummary = string;
   export type InstanceAssociationList = InstanceAssociation[];
@@ -3017,6 +3759,10 @@ declare namespace SSM {
      */
     DocumentVersion?: DocumentVersion;
     /**
+     * The version of the association applied to the instance.
+     */
+    AssociationVersion?: AssociationVersion;
+    /**
      * The instance ID where the association was created.
      */
     InstanceId?: InstanceId;
@@ -3044,6 +3790,10 @@ declare namespace SSM {
      * A URL for an Amazon S3 bucket where you want to store the results of this request.
      */
     OutputUrl?: InstanceAssociationOutputUrl;
+    /**
+     * The name of the association applied to the instance.
+     */
+    AssociationName?: AssociationName;
   }
   export type InstanceAssociationStatusInfos = InstanceAssociationStatusInfo[];
   export type InstanceCount = number;
@@ -3067,7 +3817,7 @@ declare namespace SSM {
      */
     AgentVersion?: Version;
     /**
-     * Indicates whether latest version of the SSM Agent is running on your instance. 
+     * Indicates whether latest version of the SSM Agent is running on your instance. Some older versions of Windows Server use the EC2Config service to process SSM requests. For this reason, this field does not indicate whether or not the latest version is installed on Windows managed instances.
      */
     IsLatestVersion?: Boolean;
     /**
@@ -3172,7 +3922,7 @@ declare namespace SSM {
      */
     SnapshotId?: SnapshotId;
     /**
-     * Placeholder information, this field will always be empty in the current release of the service.
+     * Placeholder information. This field will always be empty in the current release of the service.
      */
     OwnerInformation?: OwnerInformation;
     /**
@@ -3231,7 +3981,84 @@ declare namespace SSM {
   export type InstancePatchStatesList = InstancePatchState[];
   export type InstanceTagName = string;
   export type Integer = number;
+  export interface InventoryAggregator {
+    /**
+     * The inventory type and attribute name for aggregation.
+     */
+    Expression?: InventoryAggregatorExpression;
+    /**
+     * Nested aggregators to further refine aggregation for an inventory type.
+     */
+    Aggregators?: InventoryAggregatorList;
+  }
+  export type InventoryAggregatorExpression = string;
+  export type InventoryAggregatorList = InventoryAggregator[];
   export type InventoryAttributeDataType = "string"|"number"|string;
+  export type InventoryDeletionId = string;
+  export type InventoryDeletionLastStatusMessage = string;
+  export type InventoryDeletionLastStatusUpdateTime = Date;
+  export type InventoryDeletionStartTime = Date;
+  export type InventoryDeletionStatus = "InProgress"|"Complete"|string;
+  export interface InventoryDeletionStatusItem {
+    /**
+     * The deletion ID returned by the DeleteInventory action.
+     */
+    DeletionId?: InventoryDeletionId;
+    /**
+     * The name of the inventory data type.
+     */
+    TypeName?: InventoryItemTypeName;
+    /**
+     * The UTC timestamp when the delete operation started.
+     */
+    DeletionStartTime?: InventoryDeletionStartTime;
+    /**
+     * The status of the operation. Possible values are InProgress and Complete.
+     */
+    LastStatus?: InventoryDeletionStatus;
+    /**
+     * Information about the status.
+     */
+    LastStatusMessage?: InventoryDeletionLastStatusMessage;
+    /**
+     * Information about the delete operation. For more information about this summary, see Understanding the Delete Inventory Summary.
+     */
+    DeletionSummary?: InventoryDeletionSummary;
+    /**
+     * The UTC timestamp of when the last status report.
+     */
+    LastStatusUpdateTime?: InventoryDeletionLastStatusUpdateTime;
+  }
+  export interface InventoryDeletionSummary {
+    /**
+     * The total number of items to delete. This count does not change during the delete operation.
+     */
+    TotalCount?: TotalCount;
+    /**
+     * Remaining number of items to delete.
+     */
+    RemainingCount?: RemainingCount;
+    /**
+     * A list of counts and versions for deleted items.
+     */
+    SummaryItems?: InventoryDeletionSummaryItems;
+  }
+  export interface InventoryDeletionSummaryItem {
+    /**
+     * The inventory type version.
+     */
+    Version?: InventoryItemSchemaVersion;
+    /**
+     * A count of the number of deleted items.
+     */
+    Count?: ResourceCount;
+    /**
+     * The remaining number of items to delete.
+     */
+    RemainingCount?: RemainingCount;
+  }
+  export type InventoryDeletionSummaryItems = InventoryDeletionSummaryItem[];
+  export type InventoryDeletionsList = InventoryDeletionStatusItem[];
   export interface InventoryFilter {
     /**
      * The name of the filter key.
@@ -3271,6 +4098,10 @@ declare namespace SSM {
      * The inventory data of the inventory type.
      */
     Content?: InventoryItemEntryList;
+    /**
+     * A map of associated properties for a specified inventory type. For example, with this attribute, you can specify the ExecutionId, ExecutionType, ComplianceType properties of the AWS:ComplianceItem type.
+     */
+    Context?: InventoryItemContentContext;
   }
   export interface InventoryItemAttribute {
     /**
@@ -3285,6 +4116,7 @@ declare namespace SSM {
   export type InventoryItemAttributeList = InventoryItemAttribute[];
   export type InventoryItemAttributeName = string;
   export type InventoryItemCaptureTime = string;
+  export type InventoryItemContentContext = {[key: string]: AttributeValue};
   export type InventoryItemContentHash = string;
   export type InventoryItemEntry = {[key: string]: AttributeValue};
   export type InventoryItemEntryList = InventoryItemEntry[];
@@ -3302,6 +4134,10 @@ declare namespace SSM {
      * The schema attributes for inventory. This contains data type and attribute name.
      */
     Attributes: InventoryItemAttributeList;
+    /**
+     * The alias name of the inventory type. The alias name is used for display purposes.
+     */
+    DisplayName?: InventoryTypeDisplayName;
   }
   export type InventoryItemSchemaResultList = InventoryItemSchema[];
   export type InventoryItemSchemaVersion = string;
@@ -3314,7 +4150,7 @@ declare namespace SSM {
      */
     Id?: InventoryResultEntityId;
     /**
-     * The data section in the inventory result entity json.
+     * The data section in the inventory result entity JSON.
      */
     Data?: InventoryResultItemMap;
   }
@@ -3344,11 +4180,39 @@ declare namespace SSM {
   }
   export type InventoryResultItemKey = string;
   export type InventoryResultItemMap = {[key: string]: InventoryResultItem};
+  export type InventorySchemaDeleteOption = "DisableSchema"|"DeleteSchema"|string;
+  export type InventoryTypeDisplayName = string;
   export type InvocationTraceOutput = string;
+  export type IsSubTypeSchema = boolean;
   export type KeyList = TagKey[];
+  export type LastResourceDataSyncMessage = string;
   export type LastResourceDataSyncStatus = "Successful"|"Failed"|"InProgress"|string;
   export type LastResourceDataSyncTime = Date;
   export type LastSuccessfulResourceDataSyncTime = Date;
+  export interface ListAssociationVersionsRequest {
+    /**
+     * The association ID for which you want to view all versions.
+     */
+    AssociationId: AssociationId;
+    /**
+     * The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
+     */
+    MaxResults?: MaxResults;
+    /**
+     * A token to start the list. Use this token to get the next set of results. 
+     */
+    NextToken?: NextToken;
+  }
+  export interface ListAssociationVersionsResult {
+    /**
+     * Information about all versions of the association for the specified association ID.
+     */
+    AssociationVersions?: AssociationVersionList;
+    /**
+     * The token for the next set of items to return. Use this token to get the next set of results.
+     */
+    NextToken?: NextToken;
+  }
   export interface ListAssociationsRequest {
     /**
      * One or more filters. Use a filter to return a more specific list of results.
@@ -3441,6 +4305,62 @@ declare namespace SSM {
      */
     NextToken?: NextToken;
   }
+  export interface ListComplianceItemsRequest {
+    /**
+     * One or more compliance filters. Use a filter to return a more specific list of results.
+     */
+    Filters?: ComplianceStringFilterList;
+    /**
+     * The ID for the resources from which to get compliance information. Currently, you can only specify one resource ID.
+     */
+    ResourceIds?: ComplianceResourceIdList;
+    /**
+     * The type of resource from which to get compliance information. Currently, the only supported resource type is ManagedInstance.
+     */
+    ResourceTypes?: ComplianceResourceTypeList;
+    /**
+     * A token to start the list. Use this token to get the next set of results. 
+     */
+    NextToken?: NextToken;
+    /**
+     * The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
+     */
+    MaxResults?: MaxResults;
+  }
+  export interface ListComplianceItemsResult {
+    /**
+     * A list of compliance information for the specified resource ID. 
+     */
+    ComplianceItems?: ComplianceItemList;
+    /**
+     * The token for the next set of items to return. Use this token to get the next set of results.
+     */
+    NextToken?: NextToken;
+  }
+  export interface ListComplianceSummariesRequest {
+    /**
+     * One or more compliance or inventory filters. Use a filter to return a more specific list of results.
+     */
+    Filters?: ComplianceStringFilterList;
+    /**
+     * A token to start the list. Use this token to get the next set of results. 
+     */
+    NextToken?: NextToken;
+    /**
+     * The maximum number of items to return for this call. Currently, you can specify null or 50. The call also returns a token that you can specify in a subsequent call to get the next set of results.
+     */
+    MaxResults?: MaxResults;
+  }
+  export interface ListComplianceSummariesResult {
+    /**
+     * A list of compliant and non-compliant summary counts based on compliance types. For example, this call returns State Manager associations, patches, or custom compliance types according to the filter criteria that you specified.
+     */
+    ComplianceSummaryItems?: ComplianceSummaryItemList;
+    /**
+     * The token for the next set of items to return. Use this token to get the next set of results.
+     */
+    NextToken?: NextToken;
+  }
   export interface ListDocumentVersionsRequest {
     /**
      * The name of the document about which you want version information.
@@ -3471,6 +4391,10 @@ declare namespace SSM {
      */
     DocumentFilterList?: DocumentFilterList;
     /**
+     * One or more filters. Use a filter to return a more specific list of results.
+     */
+    Filters?: DocumentKeyValuesFilterList;
+    /**
      * The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
      */
     MaxResults?: MaxResults;
@@ -3481,7 +4405,7 @@ declare namespace SSM {
   }
   export interface ListDocumentsResult {
     /**
-     * The names of the SSM documents.
+     * The names of the Systems Manager documents.
      */
     DocumentIdentifiers?: DocumentIdentifierList;
     /**
@@ -3537,6 +4461,30 @@ declare namespace SSM {
      */
     NextToken?: NextToken;
   }
+  export interface ListResourceComplianceSummariesRequest {
+    /**
+     * One or more filters. Use a filter to return a more specific list of results.
+     */
+    Filters?: ComplianceStringFilterList;
+    /**
+     * A token to start the list. Use this token to get the next set of results. 
+     */
+    NextToken?: NextToken;
+    /**
+     * The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
+     */
+    MaxResults?: MaxResults;
+  }
+  export interface ListResourceComplianceSummariesResult {
+    /**
+     * A summary count for specified or targeted managed instances. Summary count includes information about compliant and non-compliant State Manager associations, patch status, or custom items according to the filter criteria that you specify. 
+     */
+    ResourceComplianceSummaryItems?: ResourceComplianceSummaryItemList;
+    /**
+     * The token for the next set of items to return. Use this token to get the next set of results.
+     */
+    NextToken?: NextToken;
+  }
   export interface ListResourceDataSyncRequest {
     /**
      * A token to start the list. Use this token to get the next set of results. 
@@ -3587,8 +4535,20 @@ declare namespace SSM {
      */
     S3Region: S3Region;
   }
+  export type Long = number;
   export type MaintenanceWindowAllowUnassociatedTargets = boolean;
+  export interface MaintenanceWindowAutomationParameters {
+    /**
+     * The version of an Automation document to use during task execution.
+     */
+    DocumentVersion?: DocumentVersion;
+    /**
+     * The parameters for the AUTOMATION task. For information about specifying and updating task parameters, see RegisterTaskWithMaintenanceWindow and UpdateMaintenanceWindowTask.   LoggingInfo has been deprecated. To specify an S3 bucket to contain logs, instead use the OutputS3BucketName and OutputS3KeyPrefix options in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters.  TaskParameters has been deprecated. To specify parameters to pass to a task when it runs, instead use the Parameters option in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters. For AUTOMATION task types, Systems Manager ignores any values specified for these parameters. 
+     */
+    Parameters?: AutomationParameterMap;
+  }
   export type MaintenanceWindowCutoff = number;
+  export type MaintenanceWindowDescription = string;
   export type MaintenanceWindowDurationHours = number;
   export type MaintenanceWindowEnabled = boolean;
   export interface MaintenanceWindowExecution {
@@ -3678,6 +4638,10 @@ declare namespace SSM {
      */
     ExecutionId?: MaintenanceWindowExecutionTaskExecutionId;
     /**
+     * The task type.
+     */
+    TaskType?: MaintenanceWindowTaskType;
+    /**
      * The parameters that were provided for the invocation when it was executed.
      */
     Parameters?: MaintenanceWindowExecutionTaskInvocationParameters;
@@ -3733,6 +4697,10 @@ declare namespace SSM {
      */
     Name?: MaintenanceWindowName;
     /**
+     * A description of the Maintenance Window.
+     */
+    Description?: MaintenanceWindowDescription;
+    /**
      * Whether the Maintenance Window is enabled.
      */
     Enabled?: MaintenanceWindowEnabled;
@@ -3746,10 +4714,77 @@ declare namespace SSM {
     Cutoff?: MaintenanceWindowCutoff;
   }
   export type MaintenanceWindowIdentityList = MaintenanceWindowIdentity[];
+  export type MaintenanceWindowLambdaClientContext = string;
+  export interface MaintenanceWindowLambdaParameters {
+    /**
+     * Pass client-specific information to the Lambda function that you are invoking. You can then process the client information in your Lambda function as you choose through the context variable.
+     */
+    ClientContext?: MaintenanceWindowLambdaClientContext;
+    /**
+     * (Optional) Specify a Lambda function version or alias name. If you specify a function version, the action uses the qualified function ARN to invoke a specific Lambda function. If you specify an alias name, the action uses the alias ARN to invoke the Lambda function version to which the alias points.
+     */
+    Qualifier?: MaintenanceWindowLambdaQualifier;
+    /**
+     * JSON to provide to your Lambda function as input.
+     */
+    Payload?: MaintenanceWindowLambdaPayload;
+  }
+  export type MaintenanceWindowLambdaPayload = Buffer|Uint8Array|Blob|string;
+  export type MaintenanceWindowLambdaQualifier = string;
   export type MaintenanceWindowMaxResults = number;
   export type MaintenanceWindowName = string;
   export type MaintenanceWindowResourceType = "INSTANCE"|string;
+  export interface MaintenanceWindowRunCommandParameters {
+    /**
+     * Information about the command(s) to execute.
+     */
+    Comment?: Comment;
+    /**
+     * The SHA-256 or SHA-1 hash created by the system when the document was created. SHA-1 hashes have been deprecated.
+     */
+    DocumentHash?: DocumentHash;
+    /**
+     * SHA-256 or SHA-1. SHA-1 hashes have been deprecated.
+     */
+    DocumentHashType?: DocumentHashType;
+    /**
+     * Configurations for sending notifications about command status changes on a per-instance basis.
+     */
+    NotificationConfig?: NotificationConfig;
+    /**
+     * The name of the Amazon S3 bucket.
+     */
+    OutputS3BucketName?: S3BucketName;
+    /**
+     * The Amazon S3 bucket subfolder.
+     */
+    OutputS3KeyPrefix?: S3KeyPrefix;
+    /**
+     * The parameters for the RUN_COMMAND task execution.
+     */
+    Parameters?: Parameters;
+    /**
+     * The IAM service role to assume during task execution.
+     */
+    ServiceRoleArn?: ServiceRole;
+    /**
+     * If this time is reached and the command has not already started executing, it doesn not execute.
+     */
+    TimeoutSeconds?: TimeoutSeconds;
+  }
   export type MaintenanceWindowSchedule = string;
+  export type MaintenanceWindowStepFunctionsInput = string;
+  export type MaintenanceWindowStepFunctionsName = string;
+  export interface MaintenanceWindowStepFunctionsParameters {
+    /**
+     * The inputs for the STEP_FUNCTION task.
+     */
+    Input?: MaintenanceWindowStepFunctionsInput;
+    /**
+     * The name of the STEP_FUNCTION task.
+     */
+    Name?: MaintenanceWindowStepFunctionsName;
+  }
   export interface MaintenanceWindowTarget {
     /**
      * The Maintenance Window ID where the target is registered.
@@ -3771,6 +4806,14 @@ declare namespace SSM {
      * User-provided value that will be included in any CloudWatch events raised while running tasks for these targets in this Maintenance Window.
      */
     OwnerInformation?: OwnerInformation;
+    /**
+     * The target name.
+     */
+    Name?: MaintenanceWindowName;
+    /**
+     * A description of the target.
+     */
+    Description?: MaintenanceWindowDescription;
   }
   export type MaintenanceWindowTargetId = string;
   export type MaintenanceWindowTargetList = MaintenanceWindowTarget[];
@@ -3784,11 +4827,11 @@ declare namespace SSM {
      */
     WindowTaskId?: MaintenanceWindowTaskId;
     /**
-     * The ARN of the task to execute.
+     * The resource that the task uses during execution. For RUN_COMMAND and AUTOMATION task types, TaskArn is the Systems Manager document name or ARN. For LAMBDA tasks, it's the function name or ARN. For STEP_FUNCTION tasks, it's the state machine ARN.
      */
     TaskArn?: MaintenanceWindowTaskArn;
     /**
-     * The type of task.
+     * The type of task. The type can be one of the following: RUN_COMMAND, AUTOMATION, LAMBDA, or STEP_FUNCTION.
      */
     Type?: MaintenanceWindowTaskType;
     /**
@@ -3796,15 +4839,15 @@ declare namespace SSM {
      */
     Targets?: Targets;
     /**
-     * The parameters that should be passed to the task when it is executed.
+     * The parameters that should be passed to the task when it is executed.   TaskParameters has been deprecated. To specify parameters to pass to a task when it runs, instead use the Parameters option in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters. 
      */
     TaskParameters?: MaintenanceWindowTaskParameters;
     /**
-     * The priority of the task in the Maintenance Window, the lower the number the higher the priority. Tasks in a Maintenance Window are scheduled in priority order with tasks that have the same priority scheduled in parallel.
+     * The priority of the task in the Maintenance Window. The lower the number, the higher the priority. Tasks that have the same priority are scheduled in parallel.
      */
     Priority?: MaintenanceWindowTaskPriority;
     /**
-     * Information about an Amazon S3 bucket to write task-level logs to.
+     * Information about an Amazon S3 bucket to write task-level logs to.   LoggingInfo has been deprecated. To specify an S3 bucket to contain logs, instead use the OutputS3BucketName and OutputS3KeyPrefix options in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters. 
      */
     LoggingInfo?: LoggingInfo;
     /**
@@ -3819,9 +4862,35 @@ declare namespace SSM {
      * The maximum number of errors allowed before this task stops being scheduled.
      */
     MaxErrors?: MaxErrors;
+    /**
+     * The task name.
+     */
+    Name?: MaintenanceWindowName;
+    /**
+     * A description of the task.
+     */
+    Description?: MaintenanceWindowDescription;
   }
   export type MaintenanceWindowTaskArn = string;
   export type MaintenanceWindowTaskId = string;
+  export interface MaintenanceWindowTaskInvocationParameters {
+    /**
+     * The parameters for a RUN_COMMAND task type.
+     */
+    RunCommand?: MaintenanceWindowRunCommandParameters;
+    /**
+     * The parameters for an AUTOMATION task type.
+     */
+    Automation?: MaintenanceWindowAutomationParameters;
+    /**
+     * The parameters for a STEP_FUNCTION task type.
+     */
+    StepFunctions?: MaintenanceWindowStepFunctionsParameters;
+    /**
+     * The parameters for a LAMBDA task type.
+     */
+    Lambda?: MaintenanceWindowLambdaParameters;
+  }
   export type MaintenanceWindowTaskList = MaintenanceWindowTask[];
   export type MaintenanceWindowTaskParameterName = string;
   export type MaintenanceWindowTaskParameterValue = string;
@@ -3836,7 +4905,7 @@ declare namespace SSM {
   export type MaintenanceWindowTaskParametersList = MaintenanceWindowTaskParameters[];
   export type MaintenanceWindowTaskPriority = number;
   export type MaintenanceWindowTaskTargetId = string;
-  export type MaintenanceWindowTaskType = "RUN_COMMAND"|string;
+  export type MaintenanceWindowTaskType = "RUN_COMMAND"|"AUTOMATION"|"STEP_FUNCTIONS"|"LAMBDA"|string;
   export type ManagedInstanceId = string;
   export type MaxConcurrency = string;
   export type MaxErrors = string;
@@ -3863,6 +4932,16 @@ declare namespace SSM {
   export interface ModifyDocumentPermissionResponse {
   }
   export type NextToken = string;
+  export interface NonCompliantSummary {
+    /**
+     * The total number of compliance items that are not compliant.
+     */
+    NonCompliantCount?: ComplianceSummaryCount;
+    /**
+     * A summary of the non-compliance severity by compliance type
+     */
+    SeveritySummary?: SeveritySummary;
+  }
   export type NormalStringMap = {[key: string]: String};
   export type NotificationArn = string;
   export interface NotificationConfig {
@@ -3871,7 +4950,7 @@ declare namespace SSM {
      */
     NotificationArn?: NotificationArn;
     /**
-     * The different events for which you can receive notifications. These events include the following: All (events), InProgress, Success, TimedOut, Cancelled, Failed. To learn more about these events, see Setting Up Events and Notifications in the Amazon EC2 Systems Manager User Guide.
+     * The different events for which you can receive notifications. These events include the following: All (events), InProgress, Success, TimedOut, Cancelled, Failed. To learn more about these events, see Setting Up Events and Notifications in the AWS Systems Manager User Guide.
      */
     NotificationEvents?: NotificationEventList;
     /**
@@ -3882,10 +4961,11 @@ declare namespace SSM {
   export type NotificationEvent = "All"|"InProgress"|"Success"|"TimedOut"|"Cancelled"|"Failed"|string;
   export type NotificationEventList = NotificationEvent[];
   export type NotificationType = "Command"|"Invocation"|string;
-  export type OperatingSystem = "WINDOWS"|"AMAZON_LINUX"|"UBUNTU"|"REDHAT_ENTERPRISE_LINUX"|string;
+  export type OperatingSystem = "WINDOWS"|"AMAZON_LINUX"|"UBUNTU"|"REDHAT_ENTERPRISE_LINUX"|"SUSE"|"CENTOS"|string;
   export type OwnerInformation = string;
   export type PSParameterName = string;
   export type PSParameterValue = string;
+  export type PSParameterVersion = number;
   export interface Parameter {
     /**
      * The name of the parameter.
@@ -3899,6 +4979,10 @@ declare namespace SSM {
      * The parameter value.
      */
     Value?: PSParameterValue;
+    /**
+     * The parameter version.
+     */
+    Version?: PSParameterVersion;
   }
   export type ParameterDescription = string;
   export interface ParameterHistory {
@@ -3934,6 +5018,10 @@ declare namespace SSM {
      * Parameter names can include the following letters and symbols. a-zA-Z0-9_.-
      */
     AllowedPattern?: AllowedPattern;
+    /**
+     * The parameter version.
+     */
+    Version?: PSParameterVersion;
   }
   export type ParameterHistoryList = ParameterHistory[];
   export type ParameterKeyId = string;
@@ -3967,6 +5055,10 @@ declare namespace SSM {
      * A parameter name can include only the following letters and symbols. a-zA-Z0-9_.-
      */
     AllowedPattern?: AllowedPattern;
+    /**
+     * The parameter version.
+     */
+    Version?: PSParameterVersion;
   }
   export type ParameterMetadataList = ParameterMetadata[];
   export type ParameterName = string;
@@ -4072,7 +5164,7 @@ declare namespace SSM {
      */
     BaselineName?: BaselineName;
     /**
-     * Defines the operating system the patch baseline applies to. Supported operating systems include WINDOWS, AMAZON_LINUX, UBUNTU and REDHAT_ENTERPRISE_LINUX. The Default value is WINDOWS. 
+     * Defines the operating system the patch baseline applies to. The Default value is WINDOWS. 
      */
     OperatingSystem?: OperatingSystem;
     /**
@@ -4123,11 +5215,11 @@ declare namespace SSM {
   export type PatchFailedCount = number;
   export interface PatchFilter {
     /**
-     * The key for the filter (PRODUCT, CLASSIFICATION, MSRC_SEVERITY, PATCH_ID)
+     * The key for the filter. See PatchFilter for lists of valid keys for each operating system type.
      */
     Key: PatchFilterKey;
     /**
-     * The value for the filter key.
+     * The value for the filter key. See PatchFilter for lists of valid values for each key based on operating system type.
      */
     Values: PatchFilterValueList;
   }
@@ -4195,6 +5287,10 @@ declare namespace SSM {
      * The number of days after the release date of each patch matched by the rule the patch is marked as approved in the patch baseline.
      */
     ApproveAfterDays: ApproveAfterDays;
+    /**
+     * For instances identified by the approval rule filters, enables a patch baseline to apply non-security updates available in the specified repository. The default value is 'false'. Applies to Linux instances only.
+     */
+    EnableNonSecurity?: Boolean;
   }
   export interface PatchRuleGroup {
     /**
@@ -4204,6 +5300,25 @@ declare namespace SSM {
   }
   export type PatchRuleList = PatchRule[];
   export type PatchSeverity = string;
+  export interface PatchSource {
+    /**
+     * The name specified to identify the patch source.
+     */
+    Name: PatchSourceName;
+    /**
+     * The specific operating system versions a patch repository applies to, such as "Ubuntu16.04", "AmazonLinux2016.09", "RedhatEnterpriseLinux7.2" or "Suse12.7". For lists of supported product values, see PatchFilter.
+     */
+    Products: PatchSourceProductList;
+    /**
+     * The value of the yum repo configuration. For example:  cachedir=/var/cache/yum/$basesearch   $releasever   keepcache=0   debualevel=2 
+     */
+    Configuration: PatchSourceConfiguration;
+  }
+  export type PatchSourceConfiguration = string;
+  export type PatchSourceList = PatchSource[];
+  export type PatchSourceName = string;
+  export type PatchSourceProduct = string;
+  export type PatchSourceProductList = PatchSourceProduct[];
   export interface PatchStatus {
     /**
      * The approval status of a patch (APPROVED, PENDING_APPROVAL, EXPLICIT_APPROVED, EXPLICIT_REJECTED).
@@ -4224,6 +5339,35 @@ declare namespace SSM {
   export type PlatformType = "Windows"|"Linux"|string;
   export type PlatformTypeList = PlatformType[];
   export type Product = string;
+  export interface PutComplianceItemsRequest {
+    /**
+     * Specify an ID for this resource. For a managed instance, this is the instance ID.
+     */
+    ResourceId: ComplianceResourceId;
+    /**
+     * Specify the type of resource. ManagedInstance is currently the only supported resource type.
+     */
+    ResourceType: ComplianceResourceType;
+    /**
+     * Specify the compliance type. For example, specify Association (for a State Manager association), Patch, or Custom:string.
+     */
+    ComplianceType: ComplianceTypeName;
+    /**
+     * A summary of the call execution that includes an execution ID, the type of execution (for example, Command), and the date/time of the execution using a datetime object that is saved in the following format: yyyy-MM-dd'T'HH:mm:ss'Z'.
+     */
+    ExecutionSummary: ComplianceExecutionSummary;
+    /**
+     * Information about the compliance as defined by the resource type. For example, for a patch compliance type, Items includes information about the PatchSeverity, Classification, etc.
+     */
+    Items: ComplianceItemEntryList;
+    /**
+     * MD5 or SHA-256 content hash. The content hash is used to determine if existing information should be overwritten or ignored. If the content hashes match, the request to put compliance information is ignored.
+     */
+    ItemContentHash?: ComplianceItemContentHash;
+  }
+  export interface PutComplianceItemsResult {
+  }
+  export type PutInventoryMessage = string;
   export interface PutInventoryRequest {
     /**
      * One or more instance IDs where you want to add or update inventory items.
@@ -4235,14 +5379,18 @@ declare namespace SSM {
     Items: InventoryItemList;
   }
   export interface PutInventoryResult {
+    /**
+     * Information about the request.
+     */
+    Message?: PutInventoryMessage;
   }
   export interface PutParameterRequest {
     /**
-     * The name of the parameter that you want to add to the system.
+     * The fully qualified name of the parameter that you want to add to the system. The fully qualified name includes the complete hierarchy of the parameter path and name. For example: /Dev/DBServer/MySQL/db-string13  For information about parameter name requirements and restrictions, see About Creating Systems Manager Parameters in the AWS Systems Manager User Guide.  The maximum length constraint listed below includes capacity for additional system attributes that are not part of the name. The maximum length for the fully qualified parameter name is 1011 characters.  
      */
     Name: PSParameterName;
     /**
-     * Information about the parameter that you want to add to the system
+     * Information about the parameter that you want to add to the system.  Do not enter personally identifiable information in this field. 
      */
     Description?: ParameterDescription;
     /**
@@ -4267,6 +5415,10 @@ declare namespace SSM {
     AllowedPattern?: AllowedPattern;
   }
   export interface PutParameterResult {
+    /**
+     * The new version number of a parameter. If you edit a parameter value, Parameter Store automatically creates a new version and assigns this new version a unique ID. You can reference a parameter version ID in API actions or in Systems Manager documents (SSM documents). By default, if you don't specify a specific version, the system returns the latest parameter value when a parameter is called.
+     */
+    Version?: PSParameterVersion;
   }
   export interface RegisterDefaultPatchBaselineRequest {
     /**
@@ -4310,13 +5462,21 @@ declare namespace SSM {
      */
     ResourceType: MaintenanceWindowResourceType;
     /**
-     * The targets (either instances or tags). Instances are specified using Key=instanceids,Values=&lt;instanceid1&gt;,&lt;instanceid2&gt;. Tags are specified using Key=&lt;tag name&gt;,Values=&lt;tag value&gt;.
+     * The targets (either instances or tags).  Specify instances using the following format:  Key=InstanceIds,Values=&lt;instance-id-1&gt;,&lt;instance-id-2&gt;  Specify tags using either of the following formats:  Key=tag:&lt;tag-key&gt;,Values=&lt;tag-value-1&gt;,&lt;tag-value-2&gt;   Key=tag-key,Values=&lt;tag-key-1&gt;,&lt;tag-key-2&gt; 
      */
     Targets: Targets;
     /**
      * User-provided value that will be included in any CloudWatch events raised while running tasks for these targets in this Maintenance Window.
      */
     OwnerInformation?: OwnerInformation;
+    /**
+     * An optional name for the target.
+     */
+    Name?: MaintenanceWindowName;
+    /**
+     * An optional description for the target.
+     */
+    Description?: MaintenanceWindowDescription;
     /**
      * User-provided idempotency token.
      */
@@ -4330,11 +5490,11 @@ declare namespace SSM {
   }
   export interface RegisterTaskWithMaintenanceWindowRequest {
     /**
-     * The id of the Maintenance Window the task should be added to.
+     * The ID of the Maintenance Window the task should be added to.
      */
     WindowId: MaintenanceWindowId;
     /**
-     * The targets (either instances or tags). Instances are specified using Key=instanceids,Values=&lt;instanceid1&gt;,&lt;instanceid2&gt;. Tags are specified using Key=&lt;tag name&gt;,Values=&lt;tag value&gt;.
+     * The targets (either instances or Maintenance Window targets). Specify instances using the following format:   Key=InstanceIds,Values=&lt;instance-id-1&gt;,&lt;instance-id-2&gt;  Specify Maintenance Window targets using the following format:  Key=&lt;WindowTargetIds&gt;,Values=&lt;window-target-id-1&gt;,&lt;window-target-id-2&gt; 
      */
     Targets: Targets;
     /**
@@ -4350,9 +5510,13 @@ declare namespace SSM {
      */
     TaskType: MaintenanceWindowTaskType;
     /**
-     * The parameters that should be passed to the task when it is executed.
+     * The parameters that should be passed to the task when it is executed.   TaskParameters has been deprecated. To specify parameters to pass to a task when it runs, instead use the Parameters option in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters. 
      */
     TaskParameters?: MaintenanceWindowTaskParameters;
+    /**
+     * The parameters that the task should use during execution. Populate only the fields that match the task type. All other fields should be empty. 
+     */
+    TaskInvocationParameters?: MaintenanceWindowTaskInvocationParameters;
     /**
      * The priority of the task in the Maintenance Window, the lower the number the higher the priority. Tasks in a Maintenance Window are scheduled in priority order with tasks that have the same priority scheduled in parallel.
      */
@@ -4366,9 +5530,17 @@ declare namespace SSM {
      */
     MaxErrors: MaxErrors;
     /**
-     * A structure containing information about an Amazon S3 bucket to write instance-level logs to. 
+     * A structure containing information about an Amazon S3 bucket to write instance-level logs to.    LoggingInfo has been deprecated. To specify an S3 bucket to contain logs, instead use the OutputS3BucketName and OutputS3KeyPrefix options in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters. 
      */
     LoggingInfo?: LoggingInfo;
+    /**
+     * An optional name for the task.
+     */
+    Name?: MaintenanceWindowName;
+    /**
+     * An optional description for the task.
+     */
+    Description?: MaintenanceWindowDescription;
     /**
      * User-provided idempotency token.
      */
@@ -4382,13 +5554,14 @@ declare namespace SSM {
   }
   export type RegistrationLimit = number;
   export type RegistrationsCount = number;
+  export type RemainingCount = number;
   export interface RemoveTagsFromResourceRequest {
     /**
-     * The type of resource of which you want to remove a tag.
+     * The type of resource of which you want to remove a tag.  The ManagedInstance type for this API action is only for on-premises managed instances. You must specify the the name of the managed instance in the following format: mi-ID_number. For example, mi-1a2b3c4d5e6f. 
      */
     ResourceType: ResourceTypeForTagging;
     /**
-     * The resource ID for which you want to remove tags.
+     * The resource ID for which you want to remove tags. Use the ID of the resource. Here are some examples: ManagedInstance: mi-012345abcde MaintenanceWindow: mw-012345abcde PatchBaseline: pb-012345abcde For the Document and Parameter values, use the name of the resource.  The ManagedInstance type for this API action is only for on-premises managed instances. You must specify the the name of the managed instance in the following format: mi-ID_number. For example, mi-1a2b3c4d5e6f. 
      */
     ResourceId: ResourceId;
     /**
@@ -4398,6 +5571,53 @@ declare namespace SSM {
   }
   export interface RemoveTagsFromResourceResult {
   }
+  export interface ResolvedTargets {
+    /**
+     * A list of parameter values sent to targets that resolved during the Automation execution.
+     */
+    ParameterValues?: TargetParameterList;
+    /**
+     * A boolean value indicating whether the resolved target list is truncated.
+     */
+    Truncated?: Boolean;
+  }
+  export interface ResourceComplianceSummaryItem {
+    /**
+     * The compliance type.
+     */
+    ComplianceType?: ComplianceTypeName;
+    /**
+     * The resource type.
+     */
+    ResourceType?: ComplianceResourceType;
+    /**
+     * The resource ID.
+     */
+    ResourceId?: ComplianceResourceId;
+    /**
+     * The compliance status for the resource.
+     */
+    Status?: ComplianceStatus;
+    /**
+     * The highest severity item found for the resource. The resource is compliant for this item.
+     */
+    OverallSeverity?: ComplianceSeverity;
+    /**
+     * Information about the execution.
+     */
+    ExecutionSummary?: ComplianceExecutionSummary;
+    /**
+     * A list of items that are compliant for the resource.
+     */
+    CompliantSummary?: CompliantSummary;
+    /**
+     * A list of items that aren't compliant for the resource.
+     */
+    NonCompliantSummary?: NonCompliantSummary;
+  }
+  export type ResourceComplianceSummaryItemList = ResourceComplianceSummaryItem[];
+  export type ResourceCount = number;
+  export type ResourceDataSyncAWSKMSKeyARN = string;
   export type ResourceDataSyncCreatedTime = Date;
   export interface ResourceDataSyncItem {
     /**
@@ -4424,6 +5644,10 @@ declare namespace SSM {
      * The date and time the configuration was created (UTC).
      */
     SyncCreatedTime?: ResourceDataSyncCreatedTime;
+    /**
+     * The status message details reported by the last sync.
+     */
+    LastSyncStatusMessage?: LastResourceDataSyncMessage;
   }
   export type ResourceDataSyncItemList = ResourceDataSyncItem[];
   export type ResourceDataSyncName = string;
@@ -4445,13 +5669,17 @@ declare namespace SSM {
      * The AWS Region with the Amazon S3 bucket targeted by the Resource Data Sync.
      */
     Region: ResourceDataSyncS3Region;
+    /**
+     * The ARN of an encryption key for a destination in Amazon S3. Must belong to the same region as the destination Amazon S3 bucket.
+     */
+    AWSKMSKeyARN?: ResourceDataSyncAWSKMSKeyARN;
   }
   export type ResourceDataSyncS3Format = "JsonSerDe"|string;
   export type ResourceDataSyncS3Prefix = string;
   export type ResourceDataSyncS3Region = string;
   export type ResourceId = string;
   export type ResourceType = "ManagedInstance"|"Document"|"EC2Instance"|string;
-  export type ResourceTypeForTagging = "ManagedInstance"|"MaintenanceWindow"|"Parameter"|string;
+  export type ResourceTypeForTagging = "Document"|"ManagedInstance"|"MaintenanceWindow"|"Parameter"|"PatchBaseline"|string;
   export type ResponseCode = number;
   export interface ResultAttribute {
     /**
@@ -4484,6 +5712,22 @@ declare namespace SSM {
   }
   export type S3Region = string;
   export type ScheduleExpression = string;
+  export interface SendAutomationSignalRequest {
+    /**
+     * The unique identifier for an existing Automation execution that you want to send the signal to.
+     */
+    AutomationExecutionId: AutomationExecutionId;
+    /**
+     * The type of signal. Valid signal types include the following: Approve and Reject 
+     */
+    SignalType: SignalType;
+    /**
+     * The data sent with the signal. The data schema depends on the type of signal used in the request. 
+     */
+    Payload?: AutomationParameterMap;
+  }
+  export interface SendAutomationSignalResult {
+  }
   export interface SendCommandRequest {
     /**
      * The instance IDs where the command should execute. You can specify a maximum of 50 IDs. If you prefer not to list individual instance IDs, you can instead send commands to a fleet of instances using the Targets parameter, which accepts EC2 tags. For more information about how to use Targets, see Sending Commands to a Fleet.
@@ -4498,6 +5742,10 @@ declare namespace SSM {
      */
     DocumentName: DocumentARN;
     /**
+     * The SSM document version to use in the request. You can specify Default, Latest, or a specific version number. 
+     */
+    DocumentVersion?: DocumentVersion;
+    /**
      * The Sha256 or Sha1 hash created by the system when the document was created.   Sha1 hashes have been deprecated. 
      */
     DocumentHash?: DocumentHash;
@@ -4506,7 +5754,7 @@ declare namespace SSM {
      */
     DocumentHashType?: DocumentHashType;
     /**
-     * If this time is reached and the command has not already started executing, it will not execute.
+     * If this time is reached and the command has not already started executing, it will not run.
      */
     TimeoutSeconds?: TimeoutSeconds;
     /**
@@ -4534,7 +5782,7 @@ declare namespace SSM {
      */
     MaxConcurrency?: MaxConcurrency;
     /**
-     * The maximum number of errors allowed without the command failing. When the command fails one more time beyond the value of MaxErrors, the systems stops sending the command to additional targets. You can specify a number like 10 or a percentage like 10%. The default value is 50. For more information about how to use MaxErrors, see Using Error Controls.
+     * The maximum number of errors allowed without the command failing. When the command fails one more time beyond the value of MaxErrors, the systems stops sending the command to additional targets. You can specify a number like 10 or a percentage like 10%. The default value is 0. For more information about how to use MaxErrors, see Using Error Controls.
      */
     MaxErrors?: MaxErrors;
     /**
@@ -4553,6 +5801,33 @@ declare namespace SSM {
     Command?: Command;
   }
   export type ServiceRole = string;
+  export interface SeveritySummary {
+    /**
+     * The total number of resources or compliance items that have a severity level of critical. Critical severity is determined by the organization that published the compliance items.
+     */
+    CriticalCount?: ComplianceSummaryCount;
+    /**
+     * The total number of resources or compliance items that have a severity level of high. High severity is determined by the organization that published the compliance items.
+     */
+    HighCount?: ComplianceSummaryCount;
+    /**
+     * The total number of resources or compliance items that have a severity level of medium. Medium severity is determined by the organization that published the compliance items.
+     */
+    MediumCount?: ComplianceSummaryCount;
+    /**
+     * The total number of resources or compliance items that have a severity level of low. Low severity is determined by the organization that published the compliance items.
+     */
+    LowCount?: ComplianceSummaryCount;
+    /**
+     * The total number of resources or compliance items that have a severity level of informational. Informational severity is determined by the organization that published the compliance items.
+     */
+    InformationalCount?: ComplianceSummaryCount;
+    /**
+     * The total number of resources or compliance items that have a severity level of unspecified. Unspecified severity is determined by the organization that published the compliance items.
+     */
+    UnspecifiedCount?: ComplianceSummaryCount;
+  }
+  export type SignalType = "Approve"|"Reject"|"StartStep"|"StopStep"|"Resume"|string;
   export type SnapshotDownloadUrl = string;
   export type SnapshotId = string;
   export type StandardErrorContent = string;
@@ -4570,6 +5845,30 @@ declare namespace SSM {
      * A key-value map of execution parameters, which match the declared parameters in the Automation document.
      */
     Parameters?: AutomationParameterMap;
+    /**
+     * User-provided idempotency token. The token must be unique, is case insensitive, enforces the UUID format, and can't be reused.
+     */
+    ClientToken?: IdempotencyToken;
+    /**
+     * The execution mode of the automation. Valid modes include the following: Auto and Interactive. The default mode is Auto.
+     */
+    Mode?: ExecutionMode;
+    /**
+     * The name of the parameter used as the target resource for the rate-controlled execution. Required if you specify Targets.
+     */
+    TargetParameterName?: AutomationParameterKey;
+    /**
+     * A key-value mapping to target resources. Required if you specify TargetParameterName.
+     */
+    Targets?: Targets;
+    /**
+     * The maximum number of targets allowed to run this task in parallel. You can specify a number, such as 10, or a percentage, such as 10%. The default value is 10.
+     */
+    MaxConcurrency?: MaxConcurrency;
+    /**
+     * The number of errors that are allowed before the system stops running the automation on additional targets. You can specify either an absolute number of errors, for example 10, or a percentage of the target set, for example 10%. If you specify 3, for example, the system stops running the automation when the fourth error is received. If you specify 0, then the system stops running the automation on additional targets after the first error result is returned. If you run an automation on 50 resources and set max-errors to 10%, then the system stops running the automation on additional targets when the sixth error is received. Executions that are already running an automation when max-errors is reached are allowed to complete, but some of these executions may fail as well. If you need to ensure that there won't be more than max-errors failed executions, set max-concurrency to 1 so the executions proceed one at a time.
+     */
+    MaxErrors?: MaxErrors;
   }
   export interface StartAutomationExecutionResult {
     /**
@@ -4590,6 +5889,18 @@ declare namespace SSM {
      * The action this step performs. The action determines the behavior of the step.
      */
     Action?: AutomationActionName;
+    /**
+     * The timeout seconds of the step.
+     */
+    TimeoutSeconds?: Long;
+    /**
+     * The action to take if the step fails. The default value is Abort.
+     */
+    OnFailure?: String;
+    /**
+     * The maximum number of tries to run the action of the step. The default value is 1.
+     */
+    MaxAttempts?: Integer;
     /**
      * If a step has begun execution, this contains the time the step started. If the step is in Pending status, this field is not populated.
      */
@@ -4626,16 +5937,43 @@ declare namespace SSM {
      * Information about the Automation failure.
      */
     FailureDetails?: FailureDetails;
+    /**
+     * The unique ID of a step execution.
+     */
+    StepExecutionId?: String;
+    /**
+     * A user-specified list of parameters to override when executing a step.
+     */
+    OverriddenParameters?: AutomationParameterMap;
   }
+  export interface StepExecutionFilter {
+    /**
+     * One or more keys to limit the results. Valid filter keys include the following: StepName, Action, StepExecutionId, StepExecutionStatus, StartTimeBefore, StartTimeAfter.
+     */
+    Key: StepExecutionFilterKey;
+    /**
+     * The values of the filter key.
+     */
+    Values: StepExecutionFilterValueList;
+  }
+  export type StepExecutionFilterKey = "StartTimeBefore"|"StartTimeAfter"|"StepExecutionStatus"|"StepExecutionId"|"StepName"|"Action"|string;
+  export type StepExecutionFilterList = StepExecutionFilter[];
+  export type StepExecutionFilterValue = string;
+  export type StepExecutionFilterValueList = StepExecutionFilterValue[];
   export type StepExecutionList = StepExecution[];
   export interface StopAutomationExecutionRequest {
     /**
      * The execution ID of the Automation to stop.
      */
     AutomationExecutionId: AutomationExecutionId;
+    /**
+     * The stop request type. Valid types include the following: Cancel and Complete. The default type is Cancel.
+     */
+    Type?: StopType;
   }
   export interface StopAutomationExecutionResult {
   }
+  export type StopType = "Complete"|"Cancel"|string;
   export type String = string;
   export type StringDateTime = string;
   export type StringList = String[];
@@ -4664,10 +6002,13 @@ declare namespace SSM {
   }
   export type TargetCount = number;
   export type TargetKey = string;
+  export type TargetParameterList = ParameterValue[];
+  export type TargetType = string;
   export type TargetValue = string;
   export type TargetValues = TargetValue[];
   export type Targets = Target[];
   export type TimeoutSeconds = number;
+  export type TotalCount = number;
   export interface UpdateAssociationRequest {
     /**
      * The ID of the association you want to update. 
@@ -4697,6 +6038,14 @@ declare namespace SSM {
      * The targets of the association.
      */
     Targets?: Targets;
+    /**
+     * The name of the association that you want to update.
+     */
+    AssociationName?: AssociationName;
+    /**
+     * This parameter is provided for concurrency control purposes. You must specify the latest association version in the service. If you want to ensure that this request succeeds, either specify $LATEST, or omit this parameter.
+     */
+    AssociationVersion?: AssociationVersion;
   }
   export interface UpdateAssociationResult {
     /**
@@ -4706,7 +6055,7 @@ declare namespace SSM {
   }
   export interface UpdateAssociationStatusRequest {
     /**
-     * The name of the SSM document.
+     * The name of the Systems Manager document.
      */
     Name: DocumentName;
     /**
@@ -4753,6 +6102,14 @@ declare namespace SSM {
      * The version of the document that you want to update.
      */
     DocumentVersion?: DocumentVersion;
+    /**
+     * Specify the document format for the new document version. Systems Manager supports JSON and YAML documents. JSON is the default format.
+     */
+    DocumentFormat?: DocumentFormat;
+    /**
+     * Specify a new target type for the document.
+     */
+    TargetType?: TargetType;
   }
   export interface UpdateDocumentResult {
     /**
@@ -4770,6 +6127,48 @@ declare namespace SSM {
      */
     Name?: MaintenanceWindowName;
     /**
+     * An optional description for the update request.
+     */
+    Description?: MaintenanceWindowDescription;
+    /**
+     * The schedule of the Maintenance Window in the form of a cron or rate expression.
+     */
+    Schedule?: MaintenanceWindowSchedule;
+    /**
+     * The duration of the Maintenance Window in hours.
+     */
+    Duration?: MaintenanceWindowDurationHours;
+    /**
+     * The number of hours before the end of the Maintenance Window that Systems Manager stops scheduling new tasks for execution.
+     */
+    Cutoff?: MaintenanceWindowCutoff;
+    /**
+     * Whether targets must be registered with the Maintenance Window before tasks can be defined for those targets.
+     */
+    AllowUnassociatedTargets?: MaintenanceWindowAllowUnassociatedTargets;
+    /**
+     * Whether the Maintenance Window is enabled.
+     */
+    Enabled?: MaintenanceWindowEnabled;
+    /**
+     * If True, then all fields that are required by the CreateMaintenanceWindow action are also required for this API request. Optional fields that are not specified are set to null. 
+     */
+    Replace?: Boolean;
+  }
+  export interface UpdateMaintenanceWindowResult {
+    /**
+     * The ID of the created Maintenance Window.
+     */
+    WindowId?: MaintenanceWindowId;
+    /**
+     * The name of the Maintenance Window.
+     */
+    Name?: MaintenanceWindowName;
+    /**
+     * An optional description of the update.
+     */
+    Description?: MaintenanceWindowDescription;
+    /**
      * The schedule of the Maintenance Window in the form of a cron or rate expression.
      */
     Schedule?: MaintenanceWindowSchedule;
@@ -4790,35 +6189,173 @@ declare namespace SSM {
      */
     Enabled?: MaintenanceWindowEnabled;
   }
-  export interface UpdateMaintenanceWindowResult {
+  export interface UpdateMaintenanceWindowTargetRequest {
     /**
-     * The ID of the created Maintenance Window.
+     * The Maintenance Window ID with which to modify the target.
      */
-    WindowId?: MaintenanceWindowId;
+    WindowId: MaintenanceWindowId;
     /**
-     * The name of the Maintenance Window.
+     * The target ID to modify.
+     */
+    WindowTargetId: MaintenanceWindowTargetId;
+    /**
+     * The targets to add or replace.
+     */
+    Targets?: Targets;
+    /**
+     * User-provided value that will be included in any CloudWatch events raised while running tasks for these targets in this Maintenance Window.
+     */
+    OwnerInformation?: OwnerInformation;
+    /**
+     * A name for the update.
      */
     Name?: MaintenanceWindowName;
     /**
-     * The schedule of the Maintenance Window in the form of a cron or rate expression.
+     * An optional description for the update.
      */
-    Schedule?: MaintenanceWindowSchedule;
+    Description?: MaintenanceWindowDescription;
     /**
-     * The duration of the Maintenance Window in hours.
+     * If True, then all fields that are required by the RegisterTargetWithMaintenanceWindow action are also required for this API request. Optional fields that are not specified are set to null.
      */
-    Duration?: MaintenanceWindowDurationHours;
+    Replace?: Boolean;
+  }
+  export interface UpdateMaintenanceWindowTargetResult {
     /**
-     * The number of hours before the end of the Maintenance Window that Systems Manager stops scheduling new tasks for execution.
+     * The Maintenance Window ID specified in the update request.
      */
-    Cutoff?: MaintenanceWindowCutoff;
+    WindowId?: MaintenanceWindowId;
     /**
-     * Whether targets must be registered with the Maintenance Window before tasks can be defined for those targets.
+     * The target ID specified in the update request.
      */
-    AllowUnassociatedTargets?: MaintenanceWindowAllowUnassociatedTargets;
+    WindowTargetId?: MaintenanceWindowTargetId;
     /**
-     * Whether the Maintenance Window is enabled.
+     * The updated targets.
      */
-    Enabled?: MaintenanceWindowEnabled;
+    Targets?: Targets;
+    /**
+     * The updated owner.
+     */
+    OwnerInformation?: OwnerInformation;
+    /**
+     * The updated name.
+     */
+    Name?: MaintenanceWindowName;
+    /**
+     * The updated description.
+     */
+    Description?: MaintenanceWindowDescription;
+  }
+  export interface UpdateMaintenanceWindowTaskRequest {
+    /**
+     * The Maintenance Window ID that contains the task to modify.
+     */
+    WindowId: MaintenanceWindowId;
+    /**
+     * The task ID to modify.
+     */
+    WindowTaskId: MaintenanceWindowTaskId;
+    /**
+     * The targets (either instances or tags) to modify. Instances are specified using Key=instanceids,Values=instanceID_1,instanceID_2. Tags are specified using Key=tag_name,Values=tag_value. 
+     */
+    Targets?: Targets;
+    /**
+     * The task ARN to modify.
+     */
+    TaskArn?: MaintenanceWindowTaskArn;
+    /**
+     * The IAM service role ARN to modify. The system assumes this role during task execution. 
+     */
+    ServiceRoleArn?: ServiceRole;
+    /**
+     * The parameters to modify.   TaskParameters has been deprecated. To specify parameters to pass to a task when it runs, instead use the Parameters option in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters.  The map has the following format: Key: string, between 1 and 255 characters Value: an array of strings, each string is between 1 and 255 characters
+     */
+    TaskParameters?: MaintenanceWindowTaskParameters;
+    /**
+     * The parameters that the task should use during execution. Populate only the fields that match the task type. All other fields should be empty.
+     */
+    TaskInvocationParameters?: MaintenanceWindowTaskInvocationParameters;
+    /**
+     * The new task priority to specify. The lower the number, the higher the priority. Tasks that have the same priority are scheduled in parallel.
+     */
+    Priority?: MaintenanceWindowTaskPriority;
+    /**
+     * The new MaxConcurrency value you want to specify. MaxConcurrency is the number of targets that are allowed to run this task in parallel.
+     */
+    MaxConcurrency?: MaxConcurrency;
+    /**
+     * The new MaxErrors value to specify. MaxErrors is the maximum number of errors that are allowed before the task stops being scheduled.
+     */
+    MaxErrors?: MaxErrors;
+    /**
+     * The new logging location in Amazon S3 to specify.   LoggingInfo has been deprecated. To specify an S3 bucket to contain logs, instead use the OutputS3BucketName and OutputS3KeyPrefix options in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters. 
+     */
+    LoggingInfo?: LoggingInfo;
+    /**
+     * The new task name to specify.
+     */
+    Name?: MaintenanceWindowName;
+    /**
+     * The new task description to specify.
+     */
+    Description?: MaintenanceWindowDescription;
+    /**
+     * If True, then all fields that are required by the RegisterTaskWithMaintenanceWndow action are also required for this API request. Optional fields that are not specified are set to null.
+     */
+    Replace?: Boolean;
+  }
+  export interface UpdateMaintenanceWindowTaskResult {
+    /**
+     * The ID of the Maintenance Window that was updated.
+     */
+    WindowId?: MaintenanceWindowId;
+    /**
+     * The task ID of the Maintenance Window that was updated.
+     */
+    WindowTaskId?: MaintenanceWindowTaskId;
+    /**
+     * The updated target values.
+     */
+    Targets?: Targets;
+    /**
+     * The updated task ARN value.
+     */
+    TaskArn?: MaintenanceWindowTaskArn;
+    /**
+     * The updated service role ARN value.
+     */
+    ServiceRoleArn?: ServiceRole;
+    /**
+     * The updated parameter values.   TaskParameters has been deprecated. To specify parameters to pass to a task when it runs, instead use the Parameters option in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters. 
+     */
+    TaskParameters?: MaintenanceWindowTaskParameters;
+    /**
+     * The updated parameter values.
+     */
+    TaskInvocationParameters?: MaintenanceWindowTaskInvocationParameters;
+    /**
+     * The updated priority value.
+     */
+    Priority?: MaintenanceWindowTaskPriority;
+    /**
+     * The updated MaxConcurrency value.
+     */
+    MaxConcurrency?: MaxConcurrency;
+    /**
+     * The updated MaxErrors value.
+     */
+    MaxErrors?: MaxErrors;
+    /**
+     * The updated logging information in Amazon S3.   LoggingInfo has been deprecated. To specify an S3 bucket to contain logs, instead use the OutputS3BucketName and OutputS3KeyPrefix options in the TaskInvocationParameters structure. For information about how Systems Manager handles these options for the supported Maintenance Window task types, see MaintenanceWindowTaskInvocationParameters. 
+     */
+    LoggingInfo?: LoggingInfo;
+    /**
+     * The updated task name.
+     */
+    Name?: MaintenanceWindowName;
+    /**
+     * The updated task description.
+     */
+    Description?: MaintenanceWindowDescription;
   }
   export interface UpdateManagedInstanceRoleRequest {
     /**
@@ -4850,7 +6387,7 @@ declare namespace SSM {
      */
     ApprovalRules?: PatchRuleGroup;
     /**
-     * A list of explicitly approved patches for the baseline.
+     * A list of explicitly approved patches for the baseline. For information about accepted formats for lists of approved patches and rejected patches, see Package Name Formats for Approved and Rejected Patch Lists in the AWS Systems Manager User Guide.
      */
     ApprovedPatches?: PatchIdList;
     /**
@@ -4858,13 +6395,25 @@ declare namespace SSM {
      */
     ApprovedPatchesComplianceLevel?: PatchComplianceLevel;
     /**
-     * A list of explicitly rejected patches for the baseline.
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the instances. The default value is 'false'. Applies to Linux instances only.
+     */
+    ApprovedPatchesEnableNonSecurity?: Boolean;
+    /**
+     * A list of explicitly rejected patches for the baseline. For information about accepted formats for lists of approved patches and rejected patches, see Package Name Formats for Approved and Rejected Patch Lists in the AWS Systems Manager User Guide.
      */
     RejectedPatches?: PatchIdList;
     /**
      * A description of the patch baseline.
      */
     Description?: BaselineDescription;
+    /**
+     * Information about the patches to use to update the instances, including target operating systems and source repositories. Applies to Linux instances only.
+     */
+    Sources?: PatchSourceList;
+    /**
+     * If True, then all fields that are required by the CreatePatchBaseline action are also required for this API request. Optional fields that are not specified are set to null.
+     */
+    Replace?: Boolean;
   }
   export interface UpdatePatchBaselineResult {
     /**
@@ -4896,6 +6445,10 @@ declare namespace SSM {
      */
     ApprovedPatchesComplianceLevel?: PatchComplianceLevel;
     /**
+     * Indicates whether the list of approved patches includes non-security updates that should be applied to the instances. The default value is 'false'. Applies to Linux instances only.
+     */
+    ApprovedPatchesEnableNonSecurity?: Boolean;
+    /**
      * A list of explicitly rejected patches for the baseline.
      */
     RejectedPatches?: PatchIdList;
@@ -4911,6 +6464,10 @@ declare namespace SSM {
      * A description of the Patch Baseline.
      */
     Description?: BaselineDescription;
+    /**
+     * Information about the patches to use to update the instances, including target operating systems and source repositories. Applies to Linux instances only.
+     */
+    Sources?: PatchSourceList;
   }
   export type Url = string;
   export type Version = string;

@@ -3,7 +3,7 @@ import {Response} from '../lib/response';
 import {AWSError} from '../lib/error';
 import {Service} from '../lib/service';
 import {ServiceConfigurationOptions} from '../lib/service';
-import {ConfigBase as Config} from '../lib/config';
+import {ConfigBase as Config} from '../lib/config-base';
 interface Blob {}
 declare class AppSync extends Service {
   /**
@@ -12,11 +12,27 @@ declare class AppSync extends Service {
   constructor(options?: AppSync.Types.ClientConfiguration)
   config: Config & AppSync.Types.ClientConfiguration;
   /**
-   * Creates a unique key that you can distribute to clients who are executing your API.
+   * Maps an endpoint to your custom domain.
+   */
+  associateApi(params: AppSync.Types.AssociateApiRequest, callback?: (err: AWSError, data: AppSync.Types.AssociateApiResponse) => void): Request<AppSync.Types.AssociateApiResponse, AWSError>;
+  /**
+   * Maps an endpoint to your custom domain.
+   */
+  associateApi(callback?: (err: AWSError, data: AppSync.Types.AssociateApiResponse) => void): Request<AppSync.Types.AssociateApiResponse, AWSError>;
+  /**
+   * Creates a cache for the GraphQL API.
+   */
+  createApiCache(params: AppSync.Types.CreateApiCacheRequest, callback?: (err: AWSError, data: AppSync.Types.CreateApiCacheResponse) => void): Request<AppSync.Types.CreateApiCacheResponse, AWSError>;
+  /**
+   * Creates a cache for the GraphQL API.
+   */
+  createApiCache(callback?: (err: AWSError, data: AppSync.Types.CreateApiCacheResponse) => void): Request<AppSync.Types.CreateApiCacheResponse, AWSError>;
+  /**
+   * Creates a unique key that you can distribute to clients who invoke your API.
    */
   createApiKey(params: AppSync.Types.CreateApiKeyRequest, callback?: (err: AWSError, data: AppSync.Types.CreateApiKeyResponse) => void): Request<AppSync.Types.CreateApiKeyResponse, AWSError>;
   /**
-   * Creates a unique key that you can distribute to clients who are executing your API.
+   * Creates a unique key that you can distribute to clients who invoke your API.
    */
   createApiKey(callback?: (err: AWSError, data: AppSync.Types.CreateApiKeyResponse) => void): Request<AppSync.Types.CreateApiKeyResponse, AWSError>;
   /**
@@ -28,6 +44,22 @@ declare class AppSync extends Service {
    */
   createDataSource(callback?: (err: AWSError, data: AppSync.Types.CreateDataSourceResponse) => void): Request<AppSync.Types.CreateDataSourceResponse, AWSError>;
   /**
+   * Creates a custom DomainName object.
+   */
+  createDomainName(params: AppSync.Types.CreateDomainNameRequest, callback?: (err: AWSError, data: AppSync.Types.CreateDomainNameResponse) => void): Request<AppSync.Types.CreateDomainNameResponse, AWSError>;
+  /**
+   * Creates a custom DomainName object.
+   */
+  createDomainName(callback?: (err: AWSError, data: AppSync.Types.CreateDomainNameResponse) => void): Request<AppSync.Types.CreateDomainNameResponse, AWSError>;
+  /**
+   * Creates a Function object. A function is a reusable entity. You can use multiple functions to compose the resolver logic.
+   */
+  createFunction(params: AppSync.Types.CreateFunctionRequest, callback?: (err: AWSError, data: AppSync.Types.CreateFunctionResponse) => void): Request<AppSync.Types.CreateFunctionResponse, AWSError>;
+  /**
+   * Creates a Function object. A function is a reusable entity. You can use multiple functions to compose the resolver logic.
+   */
+  createFunction(callback?: (err: AWSError, data: AppSync.Types.CreateFunctionResponse) => void): Request<AppSync.Types.CreateFunctionResponse, AWSError>;
+  /**
    * Creates a GraphqlApi object.
    */
   createGraphqlApi(params: AppSync.Types.CreateGraphqlApiRequest, callback?: (err: AWSError, data: AppSync.Types.CreateGraphqlApiResponse) => void): Request<AppSync.Types.CreateGraphqlApiResponse, AWSError>;
@@ -36,11 +68,11 @@ declare class AppSync extends Service {
    */
   createGraphqlApi(callback?: (err: AWSError, data: AppSync.Types.CreateGraphqlApiResponse) => void): Request<AppSync.Types.CreateGraphqlApiResponse, AWSError>;
   /**
-   * Creates a Resolver object. A resolver converts incoming requests into a format that a data source can understand and converts the data source's responses into GraphQL.
+   * Creates a Resolver object. A resolver converts incoming requests into a format that a data source can understand, and converts the data source's responses into GraphQL.
    */
   createResolver(params: AppSync.Types.CreateResolverRequest, callback?: (err: AWSError, data: AppSync.Types.CreateResolverResponse) => void): Request<AppSync.Types.CreateResolverResponse, AWSError>;
   /**
-   * Creates a Resolver object. A resolver converts incoming requests into a format that a data source can understand and converts the data source's responses into GraphQL.
+   * Creates a Resolver object. A resolver converts incoming requests into a format that a data source can understand, and converts the data source's responses into GraphQL.
    */
   createResolver(callback?: (err: AWSError, data: AppSync.Types.CreateResolverResponse) => void): Request<AppSync.Types.CreateResolverResponse, AWSError>;
   /**
@@ -51,6 +83,14 @@ declare class AppSync extends Service {
    * Creates a Type object.
    */
   createType(callback?: (err: AWSError, data: AppSync.Types.CreateTypeResponse) => void): Request<AppSync.Types.CreateTypeResponse, AWSError>;
+  /**
+   * Deletes an ApiCache object.
+   */
+  deleteApiCache(params: AppSync.Types.DeleteApiCacheRequest, callback?: (err: AWSError, data: AppSync.Types.DeleteApiCacheResponse) => void): Request<AppSync.Types.DeleteApiCacheResponse, AWSError>;
+  /**
+   * Deletes an ApiCache object.
+   */
+  deleteApiCache(callback?: (err: AWSError, data: AppSync.Types.DeleteApiCacheResponse) => void): Request<AppSync.Types.DeleteApiCacheResponse, AWSError>;
   /**
    * Deletes an API key.
    */
@@ -67,6 +107,22 @@ declare class AppSync extends Service {
    * Deletes a DataSource object.
    */
   deleteDataSource(callback?: (err: AWSError, data: AppSync.Types.DeleteDataSourceResponse) => void): Request<AppSync.Types.DeleteDataSourceResponse, AWSError>;
+  /**
+   * Deletes a custom DomainName object.
+   */
+  deleteDomainName(params: AppSync.Types.DeleteDomainNameRequest, callback?: (err: AWSError, data: AppSync.Types.DeleteDomainNameResponse) => void): Request<AppSync.Types.DeleteDomainNameResponse, AWSError>;
+  /**
+   * Deletes a custom DomainName object.
+   */
+  deleteDomainName(callback?: (err: AWSError, data: AppSync.Types.DeleteDomainNameResponse) => void): Request<AppSync.Types.DeleteDomainNameResponse, AWSError>;
+  /**
+   * Deletes a Function.
+   */
+  deleteFunction(params: AppSync.Types.DeleteFunctionRequest, callback?: (err: AWSError, data: AppSync.Types.DeleteFunctionResponse) => void): Request<AppSync.Types.DeleteFunctionResponse, AWSError>;
+  /**
+   * Deletes a Function.
+   */
+  deleteFunction(callback?: (err: AWSError, data: AppSync.Types.DeleteFunctionResponse) => void): Request<AppSync.Types.DeleteFunctionResponse, AWSError>;
   /**
    * Deletes a GraphqlApi object.
    */
@@ -92,6 +148,38 @@ declare class AppSync extends Service {
    */
   deleteType(callback?: (err: AWSError, data: AppSync.Types.DeleteTypeResponse) => void): Request<AppSync.Types.DeleteTypeResponse, AWSError>;
   /**
+   * Removes an ApiAssociation object from a custom domain.
+   */
+  disassociateApi(params: AppSync.Types.DisassociateApiRequest, callback?: (err: AWSError, data: AppSync.Types.DisassociateApiResponse) => void): Request<AppSync.Types.DisassociateApiResponse, AWSError>;
+  /**
+   * Removes an ApiAssociation object from a custom domain.
+   */
+  disassociateApi(callback?: (err: AWSError, data: AppSync.Types.DisassociateApiResponse) => void): Request<AppSync.Types.DisassociateApiResponse, AWSError>;
+  /**
+   * Flushes an ApiCache object.
+   */
+  flushApiCache(params: AppSync.Types.FlushApiCacheRequest, callback?: (err: AWSError, data: AppSync.Types.FlushApiCacheResponse) => void): Request<AppSync.Types.FlushApiCacheResponse, AWSError>;
+  /**
+   * Flushes an ApiCache object.
+   */
+  flushApiCache(callback?: (err: AWSError, data: AppSync.Types.FlushApiCacheResponse) => void): Request<AppSync.Types.FlushApiCacheResponse, AWSError>;
+  /**
+   * Retrieves an ApiAssociation object.
+   */
+  getApiAssociation(params: AppSync.Types.GetApiAssociationRequest, callback?: (err: AWSError, data: AppSync.Types.GetApiAssociationResponse) => void): Request<AppSync.Types.GetApiAssociationResponse, AWSError>;
+  /**
+   * Retrieves an ApiAssociation object.
+   */
+  getApiAssociation(callback?: (err: AWSError, data: AppSync.Types.GetApiAssociationResponse) => void): Request<AppSync.Types.GetApiAssociationResponse, AWSError>;
+  /**
+   * Retrieves an ApiCache object.
+   */
+  getApiCache(params: AppSync.Types.GetApiCacheRequest, callback?: (err: AWSError, data: AppSync.Types.GetApiCacheResponse) => void): Request<AppSync.Types.GetApiCacheResponse, AWSError>;
+  /**
+   * Retrieves an ApiCache object.
+   */
+  getApiCache(callback?: (err: AWSError, data: AppSync.Types.GetApiCacheResponse) => void): Request<AppSync.Types.GetApiCacheResponse, AWSError>;
+  /**
    * Retrieves a DataSource object.
    */
   getDataSource(params: AppSync.Types.GetDataSourceRequest, callback?: (err: AWSError, data: AppSync.Types.GetDataSourceResponse) => void): Request<AppSync.Types.GetDataSourceResponse, AWSError>;
@@ -99,6 +187,22 @@ declare class AppSync extends Service {
    * Retrieves a DataSource object.
    */
   getDataSource(callback?: (err: AWSError, data: AppSync.Types.GetDataSourceResponse) => void): Request<AppSync.Types.GetDataSourceResponse, AWSError>;
+  /**
+   * Retrieves a custom DomainName object.
+   */
+  getDomainName(params: AppSync.Types.GetDomainNameRequest, callback?: (err: AWSError, data: AppSync.Types.GetDomainNameResponse) => void): Request<AppSync.Types.GetDomainNameResponse, AWSError>;
+  /**
+   * Retrieves a custom DomainName object.
+   */
+  getDomainName(callback?: (err: AWSError, data: AppSync.Types.GetDomainNameResponse) => void): Request<AppSync.Types.GetDomainNameResponse, AWSError>;
+  /**
+   * Get a Function.
+   */
+  getFunction(params: AppSync.Types.GetFunctionRequest, callback?: (err: AWSError, data: AppSync.Types.GetFunctionResponse) => void): Request<AppSync.Types.GetFunctionResponse, AWSError>;
+  /**
+   * Get a Function.
+   */
+  getFunction(callback?: (err: AWSError, data: AppSync.Types.GetFunctionResponse) => void): Request<AppSync.Types.GetFunctionResponse, AWSError>;
   /**
    * Retrieves a GraphqlApi object.
    */
@@ -140,11 +244,11 @@ declare class AppSync extends Service {
    */
   getType(callback?: (err: AWSError, data: AppSync.Types.GetTypeResponse) => void): Request<AppSync.Types.GetTypeResponse, AWSError>;
   /**
-   * Lists the API keys for a given API.  API keys are deleted automatically sometime after they expire. However, they may still be included in the response until they have actually been deleted. You can safely call DeleteApiKey to manually delete a key before it's automatically deleted. 
+   * Lists the API keys for a given API.  API keys are deleted automatically 60 days after they expire. However, they may still be included in the response until they have actually been deleted. You can safely call DeleteApiKey to manually delete a key before it's automatically deleted. 
    */
   listApiKeys(params: AppSync.Types.ListApiKeysRequest, callback?: (err: AWSError, data: AppSync.Types.ListApiKeysResponse) => void): Request<AppSync.Types.ListApiKeysResponse, AWSError>;
   /**
-   * Lists the API keys for a given API.  API keys are deleted automatically sometime after they expire. However, they may still be included in the response until they have actually been deleted. You can safely call DeleteApiKey to manually delete a key before it's automatically deleted. 
+   * Lists the API keys for a given API.  API keys are deleted automatically 60 days after they expire. However, they may still be included in the response until they have actually been deleted. You can safely call DeleteApiKey to manually delete a key before it's automatically deleted. 
    */
   listApiKeys(callback?: (err: AWSError, data: AppSync.Types.ListApiKeysResponse) => void): Request<AppSync.Types.ListApiKeysResponse, AWSError>;
   /**
@@ -155,6 +259,22 @@ declare class AppSync extends Service {
    * Lists the data sources for a given API.
    */
   listDataSources(callback?: (err: AWSError, data: AppSync.Types.ListDataSourcesResponse) => void): Request<AppSync.Types.ListDataSourcesResponse, AWSError>;
+  /**
+   * Lists multiple custom domain names.
+   */
+  listDomainNames(params: AppSync.Types.ListDomainNamesRequest, callback?: (err: AWSError, data: AppSync.Types.ListDomainNamesResponse) => void): Request<AppSync.Types.ListDomainNamesResponse, AWSError>;
+  /**
+   * Lists multiple custom domain names.
+   */
+  listDomainNames(callback?: (err: AWSError, data: AppSync.Types.ListDomainNamesResponse) => void): Request<AppSync.Types.ListDomainNamesResponse, AWSError>;
+  /**
+   * List multiple functions.
+   */
+  listFunctions(params: AppSync.Types.ListFunctionsRequest, callback?: (err: AWSError, data: AppSync.Types.ListFunctionsResponse) => void): Request<AppSync.Types.ListFunctionsResponse, AWSError>;
+  /**
+   * List multiple functions.
+   */
+  listFunctions(callback?: (err: AWSError, data: AppSync.Types.ListFunctionsResponse) => void): Request<AppSync.Types.ListFunctionsResponse, AWSError>;
   /**
    * Lists your GraphQL APIs.
    */
@@ -172,6 +292,22 @@ declare class AppSync extends Service {
    */
   listResolvers(callback?: (err: AWSError, data: AppSync.Types.ListResolversResponse) => void): Request<AppSync.Types.ListResolversResponse, AWSError>;
   /**
+   * List the resolvers that are associated with a specific function.
+   */
+  listResolversByFunction(params: AppSync.Types.ListResolversByFunctionRequest, callback?: (err: AWSError, data: AppSync.Types.ListResolversByFunctionResponse) => void): Request<AppSync.Types.ListResolversByFunctionResponse, AWSError>;
+  /**
+   * List the resolvers that are associated with a specific function.
+   */
+  listResolversByFunction(callback?: (err: AWSError, data: AppSync.Types.ListResolversByFunctionResponse) => void): Request<AppSync.Types.ListResolversByFunctionResponse, AWSError>;
+  /**
+   * Lists the tags for a resource.
+   */
+  listTagsForResource(params: AppSync.Types.ListTagsForResourceRequest, callback?: (err: AWSError, data: AppSync.Types.ListTagsForResourceResponse) => void): Request<AppSync.Types.ListTagsForResourceResponse, AWSError>;
+  /**
+   * Lists the tags for a resource.
+   */
+  listTagsForResource(callback?: (err: AWSError, data: AppSync.Types.ListTagsForResourceResponse) => void): Request<AppSync.Types.ListTagsForResourceResponse, AWSError>;
+  /**
    * Lists the types for a given API.
    */
   listTypes(params: AppSync.Types.ListTypesRequest, callback?: (err: AWSError, data: AppSync.Types.ListTypesResponse) => void): Request<AppSync.Types.ListTypesResponse, AWSError>;
@@ -188,11 +324,35 @@ declare class AppSync extends Service {
    */
   startSchemaCreation(callback?: (err: AWSError, data: AppSync.Types.StartSchemaCreationResponse) => void): Request<AppSync.Types.StartSchemaCreationResponse, AWSError>;
   /**
-   * Updates an API key.
+   * Tags a resource with user-supplied tags.
+   */
+  tagResource(params: AppSync.Types.TagResourceRequest, callback?: (err: AWSError, data: AppSync.Types.TagResourceResponse) => void): Request<AppSync.Types.TagResourceResponse, AWSError>;
+  /**
+   * Tags a resource with user-supplied tags.
+   */
+  tagResource(callback?: (err: AWSError, data: AppSync.Types.TagResourceResponse) => void): Request<AppSync.Types.TagResourceResponse, AWSError>;
+  /**
+   * Untags a resource.
+   */
+  untagResource(params: AppSync.Types.UntagResourceRequest, callback?: (err: AWSError, data: AppSync.Types.UntagResourceResponse) => void): Request<AppSync.Types.UntagResourceResponse, AWSError>;
+  /**
+   * Untags a resource.
+   */
+  untagResource(callback?: (err: AWSError, data: AppSync.Types.UntagResourceResponse) => void): Request<AppSync.Types.UntagResourceResponse, AWSError>;
+  /**
+   * Updates the cache for the GraphQL API.
+   */
+  updateApiCache(params: AppSync.Types.UpdateApiCacheRequest, callback?: (err: AWSError, data: AppSync.Types.UpdateApiCacheResponse) => void): Request<AppSync.Types.UpdateApiCacheResponse, AWSError>;
+  /**
+   * Updates the cache for the GraphQL API.
+   */
+  updateApiCache(callback?: (err: AWSError, data: AppSync.Types.UpdateApiCacheResponse) => void): Request<AppSync.Types.UpdateApiCacheResponse, AWSError>;
+  /**
+   * Updates an API key. You can update the key as long as it's not deleted.
    */
   updateApiKey(params: AppSync.Types.UpdateApiKeyRequest, callback?: (err: AWSError, data: AppSync.Types.UpdateApiKeyResponse) => void): Request<AppSync.Types.UpdateApiKeyResponse, AWSError>;
   /**
-   * Updates an API key.
+   * Updates an API key. You can update the key as long as it's not deleted.
    */
   updateApiKey(callback?: (err: AWSError, data: AppSync.Types.UpdateApiKeyResponse) => void): Request<AppSync.Types.UpdateApiKeyResponse, AWSError>;
   /**
@@ -203,6 +363,22 @@ declare class AppSync extends Service {
    * Updates a DataSource object.
    */
   updateDataSource(callback?: (err: AWSError, data: AppSync.Types.UpdateDataSourceResponse) => void): Request<AppSync.Types.UpdateDataSourceResponse, AWSError>;
+  /**
+   * Updates a custom DomainName object.
+   */
+  updateDomainName(params: AppSync.Types.UpdateDomainNameRequest, callback?: (err: AWSError, data: AppSync.Types.UpdateDomainNameResponse) => void): Request<AppSync.Types.UpdateDomainNameResponse, AWSError>;
+  /**
+   * Updates a custom DomainName object.
+   */
+  updateDomainName(callback?: (err: AWSError, data: AppSync.Types.UpdateDomainNameResponse) => void): Request<AppSync.Types.UpdateDomainNameResponse, AWSError>;
+  /**
+   * Updates a Function object.
+   */
+  updateFunction(params: AppSync.Types.UpdateFunctionRequest, callback?: (err: AWSError, data: AppSync.Types.UpdateFunctionResponse) => void): Request<AppSync.Types.UpdateFunctionResponse, AWSError>;
+  /**
+   * Updates a Function object.
+   */
+  updateFunction(callback?: (err: AWSError, data: AppSync.Types.UpdateFunctionResponse) => void): Request<AppSync.Types.UpdateFunctionResponse, AWSError>;
   /**
    * Updates a GraphqlApi object.
    */
@@ -229,6 +405,72 @@ declare class AppSync extends Service {
   updateType(callback?: (err: AWSError, data: AppSync.Types.UpdateTypeResponse) => void): Request<AppSync.Types.UpdateTypeResponse, AWSError>;
 }
 declare namespace AppSync {
+  export interface AdditionalAuthenticationProvider {
+    /**
+     * The authentication type: API key, Identity and Access Management (IAM), OpenID Connect (OIDC), Amazon Cognito user pools, or Lambda.
+     */
+    authenticationType?: AuthenticationType;
+    /**
+     * The OIDC configuration.
+     */
+    openIDConnectConfig?: OpenIDConnectConfig;
+    /**
+     * The Amazon Cognito user pool configuration.
+     */
+    userPoolConfig?: CognitoUserPoolConfig;
+    /**
+     * Configuration for Lambda function authorization.
+     */
+    lambdaAuthorizerConfig?: LambdaAuthorizerConfig;
+  }
+  export type AdditionalAuthenticationProviders = AdditionalAuthenticationProvider[];
+  export interface ApiAssociation {
+    /**
+     * The domain name.
+     */
+    domainName?: DomainName;
+    /**
+     * The API ID.
+     */
+    apiId?: String;
+    /**
+     * Identifies the status of an association.    PROCESSING: The API association is being created. You cannot modify association requests during processing.    SUCCESS: The API association was successful. You can modify associations after success.    FAILED: The API association has failed. You can modify associations after failure.  
+     */
+    associationStatus?: AssociationStatus;
+    /**
+     * Details about the last deployment status.
+     */
+    deploymentDetail?: String;
+  }
+  export interface ApiCache {
+    /**
+     * TTL in seconds for cache entries. Valid values are 1–3,600 seconds.
+     */
+    ttl?: Long;
+    /**
+     * Caching behavior.    FULL_REQUEST_CACHING: All requests are fully cached.    PER_RESOLVER_CACHING: Individual resolvers that you specify are cached.  
+     */
+    apiCachingBehavior?: ApiCachingBehavior;
+    /**
+     * Transit encryption flag when connecting to cache. You cannot update this setting after creation.
+     */
+    transitEncryptionEnabled?: Boolean;
+    /**
+     * At-rest encryption flag for cache. You cannot update this setting after creation.
+     */
+    atRestEncryptionEnabled?: Boolean;
+    /**
+     * The cache instance type. Valid values are     SMALL     MEDIUM     LARGE     XLARGE     LARGE_2X     LARGE_4X     LARGE_8X (not available in all regions)    LARGE_12X    Historically, instance types were identified by an EC2-style value. As of July 2020, this is deprecated, and the generic identifiers above should be used. The following legacy instance types are available, but their use is discouraged:    T2_SMALL: A t2.small instance type.    T2_MEDIUM: A t2.medium instance type.    R4_LARGE: A r4.large instance type.    R4_XLARGE: A r4.xlarge instance type.    R4_2XLARGE: A r4.2xlarge instance type.    R4_4XLARGE: A r4.4xlarge instance type.    R4_8XLARGE: A r4.8xlarge instance type.  
+     */
+    type?: ApiCacheType;
+    /**
+     * The cache instance status.    AVAILABLE: The instance is available for use.    CREATING: The instance is currently creating.    DELETING: The instance is currently deleting.    MODIFYING: The instance is currently modifying.    FAILED: The instance has failed creation.  
+     */
+    status?: ApiCacheStatus;
+  }
+  export type ApiCacheStatus = "AVAILABLE"|"CREATING"|"DELETING"|"MODIFYING"|"FAILED"|string;
+  export type ApiCacheType = "T2_SMALL"|"T2_MEDIUM"|"R4_LARGE"|"R4_XLARGE"|"R4_2XLARGE"|"R4_4XLARGE"|"R4_8XLARGE"|"SMALL"|"MEDIUM"|"LARGE"|"XLARGE"|"LARGE_2X"|"LARGE_4X"|"LARGE_8X"|"LARGE_12X"|string;
+  export type ApiCachingBehavior = "FULL_REQUEST_CACHING"|"PER_RESOLVER_CACHING"|string;
   export interface ApiKey {
     /**
      * The API key ID.
@@ -242,11 +484,114 @@ declare namespace AppSync {
      * The time after which the API key expires. The date is represented as seconds since the epoch, rounded down to the nearest hour.
      */
     expires?: Long;
+    /**
+     * The time after which the API key is deleted. The date is represented as seconds since the epoch, rounded down to the nearest hour.
+     */
+    deletes?: Long;
   }
   export type ApiKeys = ApiKey[];
-  export type AuthenticationType = "API_KEY"|"AWS_IAM"|"AMAZON_COGNITO_USER_POOLS"|"OPENID_CONNECT"|string;
+  export interface AssociateApiRequest {
+    /**
+     * The domain name.
+     */
+    domainName: DomainName;
+    /**
+     * The API ID.
+     */
+    apiId: String;
+  }
+  export interface AssociateApiResponse {
+    /**
+     * The ApiAssociation object.
+     */
+    apiAssociation?: ApiAssociation;
+  }
+  export type AssociationStatus = "PROCESSING"|"FAILED"|"SUCCESS"|string;
+  export type AuthenticationType = "API_KEY"|"AWS_IAM"|"AMAZON_COGNITO_USER_POOLS"|"OPENID_CONNECT"|"AWS_LAMBDA"|string;
+  export interface AuthorizationConfig {
+    /**
+     * The authorization type that the HTTP endpoint requires.    AWS_IAM: The authorization type is Signature Version 4 (SigV4).  
+     */
+    authorizationType: AuthorizationType;
+    /**
+     * The Identity and Access Management (IAM) settings.
+     */
+    awsIamConfig?: AwsIamConfig;
+  }
+  export type AuthorizationType = "AWS_IAM"|string;
+  export interface AwsIamConfig {
+    /**
+     * The signing Amazon Web Services Region for IAM authorization.
+     */
+    signingRegion?: String;
+    /**
+     * The signing service name for IAM authorization.
+     */
+    signingServiceName?: String;
+  }
   export type _Blob = Buffer|Uint8Array|Blob|string;
   export type Boolean = boolean;
+  export type BooleanValue = boolean;
+  export interface CachingConfig {
+    /**
+     * The TTL in seconds for a resolver that has caching activated. Valid values are 1–3,600 seconds.
+     */
+    ttl?: Long;
+    /**
+     * The caching keys for a resolver that has caching activated. Valid values are entries from the $context.arguments, $context.source, and $context.identity maps.
+     */
+    cachingKeys?: CachingKeys;
+  }
+  export type CachingKeys = String[];
+  export type CertificateArn = string;
+  export interface CognitoUserPoolConfig {
+    /**
+     * The user pool ID.
+     */
+    userPoolId: String;
+    /**
+     * The Amazon Web Services Region in which the user pool was created.
+     */
+    awsRegion: String;
+    /**
+     * A regular expression for validating the incoming Amazon Cognito user pool app client ID.
+     */
+    appIdClientRegex?: String;
+  }
+  export type ConflictDetectionType = "VERSION"|"NONE"|string;
+  export type ConflictHandlerType = "OPTIMISTIC_CONCURRENCY"|"LAMBDA"|"AUTOMERGE"|"NONE"|string;
+  export interface CreateApiCacheRequest {
+    /**
+     * The GraphQL API ID.
+     */
+    apiId: String;
+    /**
+     * TTL in seconds for cache entries. Valid values are 1–3,600 seconds.
+     */
+    ttl: Long;
+    /**
+     * Transit encryption flag when connecting to cache. You cannot update this setting after creation.
+     */
+    transitEncryptionEnabled?: Boolean;
+    /**
+     * At-rest encryption flag for cache. You cannot update this setting after creation.
+     */
+    atRestEncryptionEnabled?: Boolean;
+    /**
+     * Caching behavior.    FULL_REQUEST_CACHING: All requests are fully cached.    PER_RESOLVER_CACHING: Individual resolvers that you specify are cached.  
+     */
+    apiCachingBehavior: ApiCachingBehavior;
+    /**
+     * The cache instance type. Valid values are     SMALL     MEDIUM     LARGE     XLARGE     LARGE_2X     LARGE_4X     LARGE_8X (not available in all regions)    LARGE_12X    Historically, instance types were identified by an EC2-style value. As of July 2020, this is deprecated, and the generic identifiers above should be used. The following legacy instance types are available, but their use is discouraged:    T2_SMALL: A t2.small instance type.    T2_MEDIUM: A t2.medium instance type.    R4_LARGE: A r4.large instance type.    R4_XLARGE: A r4.xlarge instance type.    R4_2XLARGE: A r4.2xlarge instance type.    R4_4XLARGE: A r4.4xlarge instance type.    R4_8XLARGE: A r4.8xlarge instance type.  
+     */
+    type: ApiCacheType;
+  }
+  export interface CreateApiCacheResponse {
+    /**
+     * The ApiCache object.
+     */
+    apiCache?: ApiCache;
+  }
   export interface CreateApiKeyRequest {
     /**
      * The ID for your GraphQL API.
@@ -257,7 +602,7 @@ declare namespace AppSync {
      */
     description?: String;
     /**
-     * The time from creation time after which the API key expires. The date is represented as seconds since the epoch, rounded down to the nearest hour. The default value for this parameter is 7 days from creation time. For more information, see .
+     * From the creation time, the time after which the API key expires. The date is represented as seconds since the epoch, rounded down to the nearest hour. The default value for this parameter is 7 days from creation time. For more information, see .
      */
     expires?: Long;
   }
@@ -285,21 +630,33 @@ declare namespace AppSync {
      */
     type: DataSourceType;
     /**
-     * The IAM service role ARN for the data source. The system assumes this role when accessing the data source.
+     * The Identity and Access Management (IAM) service role Amazon Resource Name (ARN) for the data source. The system assumes this role when accessing the data source.
      */
     serviceRoleArn?: String;
     /**
-     * DynamoDB settings.
+     * Amazon DynamoDB settings.
      */
     dynamodbConfig?: DynamodbDataSourceConfig;
     /**
-     * AWS Lambda settings.
+     * Lambda settings.
      */
     lambdaConfig?: LambdaDataSourceConfig;
     /**
-     * Amazon Elasticsearch settings.
+     * Amazon OpenSearch Service settings. As of September 2021, Amazon Elasticsearch service is Amazon OpenSearch Service. This configuration is deprecated. For new data sources, use CreateDataSourceRequest$openSearchServiceConfig to create an OpenSearch data source.
      */
     elasticsearchConfig?: ElasticsearchDataSourceConfig;
+    /**
+     * Amazon OpenSearch Service settings.
+     */
+    openSearchServiceConfig?: OpenSearchServiceDataSourceConfig;
+    /**
+     * HTTP endpoint settings.
+     */
+    httpConfig?: HttpDataSourceConfig;
+    /**
+     * Relational database settings.
+     */
+    relationalDatabaseConfig?: RelationalDatabaseDataSourceConfig;
   }
   export interface CreateDataSourceResponse {
     /**
@@ -307,27 +664,104 @@ declare namespace AppSync {
      */
     dataSource?: DataSource;
   }
+  export interface CreateDomainNameRequest {
+    /**
+     * The domain name.
+     */
+    domainName: DomainName;
+    /**
+     * The Amazon Resource Name (ARN) of the certificate. This can be an Certificate Manager (ACM) certificate or an Identity and Access Management (IAM) server certificate.
+     */
+    certificateArn: CertificateArn;
+    /**
+     * A description of the DomainName.
+     */
+    description?: Description;
+  }
+  export interface CreateDomainNameResponse {
+    /**
+     * The configuration for the DomainName.
+     */
+    domainNameConfig?: DomainNameConfig;
+  }
+  export interface CreateFunctionRequest {
+    /**
+     * The GraphQL API ID.
+     */
+    apiId: String;
+    /**
+     * The Function name. The function name does not have to be unique.
+     */
+    name: ResourceName;
+    /**
+     * The Function description.
+     */
+    description?: String;
+    /**
+     * The Function DataSource name.
+     */
+    dataSourceName: ResourceName;
+    /**
+     * The Function request mapping template. Functions support only the 2018-05-29 version of the request mapping template.
+     */
+    requestMappingTemplate?: MappingTemplate;
+    /**
+     * The Function response mapping template.
+     */
+    responseMappingTemplate?: MappingTemplate;
+    /**
+     * The version of the request mapping template. Currently, the supported value is 2018-05-29.
+     */
+    functionVersion: String;
+    syncConfig?: SyncConfig;
+    /**
+     * The maximum batching size for a resolver.
+     */
+    maxBatchSize?: MaxBatchSize;
+  }
+  export interface CreateFunctionResponse {
+    /**
+     * The Function object.
+     */
+    functionConfiguration?: FunctionConfiguration;
+  }
   export interface CreateGraphqlApiRequest {
     /**
      * A user-supplied name for the GraphqlApi.
      */
     name: String;
     /**
-     * The Amazon CloudWatch logs configuration.
+     * The Amazon CloudWatch Logs configuration.
      */
     logConfig?: LogConfig;
     /**
-     * The authentication type: API key, IAM, or Amazon Cognito User Pools.
+     * The authentication type: API key, Identity and Access Management (IAM), OpenID Connect (OIDC), Amazon Cognito user pools, or Lambda.
      */
     authenticationType: AuthenticationType;
     /**
-     * The Amazon Cognito User Pool configuration.
+     * The Amazon Cognito user pool configuration.
      */
     userPoolConfig?: UserPoolConfig;
     /**
-     * The Open Id Connect configuration configuration.
+     * The OIDC configuration.
      */
     openIDConnectConfig?: OpenIDConnectConfig;
+    /**
+     * A TagMap object.
+     */
+    tags?: TagMap;
+    /**
+     * A list of additional authentication providers for the GraphqlApi API.
+     */
+    additionalAuthenticationProviders?: AdditionalAuthenticationProviders;
+    /**
+     * A flag indicating whether to use X-Ray tracing for the GraphqlApi.
+     */
+    xrayEnabled?: Boolean;
+    /**
+     * Configuration for Lambda function authorization.
+     */
+    lambdaAuthorizerConfig?: LambdaAuthorizerConfig;
   }
   export interface CreateGraphqlApiResponse {
     /**
@@ -351,15 +785,35 @@ declare namespace AppSync {
     /**
      * The name of the data source for which the resolver is being created.
      */
-    dataSourceName: ResourceName;
+    dataSourceName?: ResourceName;
     /**
-     * The mapping template to be used for requests. A resolver uses a request mapping template to convert a GraphQL expression into a format that a data source can understand. Mapping templates are written in Apache Velocity Template Language (VTL).
+     * The mapping template to use for requests. A resolver uses a request mapping template to convert a GraphQL expression into a format that a data source can understand. Mapping templates are written in Apache Velocity Template Language (VTL). VTL request mapping templates are optional when using an Lambda data source. For all other data sources, VTL request and response mapping templates are required.
      */
-    requestMappingTemplate: MappingTemplate;
+    requestMappingTemplate?: MappingTemplate;
     /**
-     * The mapping template to be used for responses from the data source.
+     * The mapping template to use for responses from the data source.
      */
     responseMappingTemplate?: MappingTemplate;
+    /**
+     * The resolver type.    UNIT: A UNIT resolver type. A UNIT resolver is the default resolver type. You can use a UNIT resolver to run a GraphQL query against a single data source.    PIPELINE: A PIPELINE resolver type. You can use a PIPELINE resolver to invoke a series of Function objects in a serial manner. You can use a pipeline resolver to run a GraphQL query against multiple data sources.  
+     */
+    kind?: ResolverKind;
+    /**
+     * The PipelineConfig.
+     */
+    pipelineConfig?: PipelineConfig;
+    /**
+     * The SyncConfig for a resolver attached to a versioned data source.
+     */
+    syncConfig?: SyncConfig;
+    /**
+     * The caching configuration for the resolver.
+     */
+    cachingConfig?: CachingConfig;
+    /**
+     * The maximum batching size for a resolver.
+     */
+    maxBatchSize?: MaxBatchSize;
   }
   export interface CreateResolverResponse {
     /**
@@ -389,7 +843,7 @@ declare namespace AppSync {
   }
   export interface DataSource {
     /**
-     * The data source ARN.
+     * The data source Amazon Resource Name (ARN).
      */
     dataSourceArn?: String;
     /**
@@ -401,11 +855,11 @@ declare namespace AppSync {
      */
     description?: String;
     /**
-     * The type of the data source.    AMAZON_DYNAMODB: The data source is an Amazon DynamoDB table.    AMAZON_ELASTICSEARCH: The data source is an Amazon Elasticsearch Service domain.    AWS_LAMBDA: The data source is an AWS Lambda function.    NONE: There is no data source. This type is used when when you wish to invoke a GraphQL operation without connecting to a data source, such as performing data transformation with resolvers or triggering a subscription to be invoked from a mutation.  
+     * The type of the data source.    AWS_LAMBDA: The data source is an Lambda function.    AMAZON_DYNAMODB: The data source is an Amazon DynamoDB table.    AMAZON_ELASTICSEARCH: The data source is an Amazon OpenSearch Service domain.    AMAZON_OPENSEARCH_SERVICE: The data source is an Amazon OpenSearch Service domain.    NONE: There is no data source. Use this type when you want to invoke a GraphQL operation without connecting to a data source, such as when you're performing data transformation with resolvers or invoking a subscription from a mutation.    HTTP: The data source is an HTTP endpoint.    RELATIONAL_DATABASE: The data source is a relational database.  
      */
     type?: DataSourceType;
     /**
-     * The IAM service role ARN for the data source. The system assumes this role when accessing the data source.
+     * The Identity and Access Management (IAM) service role Amazon Resource Name (ARN) for the data source. The system assumes this role when accessing the data source.
      */
     serviceRoleArn?: String;
     /**
@@ -417,13 +871,33 @@ declare namespace AppSync {
      */
     lambdaConfig?: LambdaDataSourceConfig;
     /**
-     * Amazon Elasticsearch settings.
+     * Amazon OpenSearch Service settings.
      */
     elasticsearchConfig?: ElasticsearchDataSourceConfig;
+    /**
+     * Amazon OpenSearch Service settings.
+     */
+    openSearchServiceConfig?: OpenSearchServiceDataSourceConfig;
+    /**
+     * HTTP endpoint settings.
+     */
+    httpConfig?: HttpDataSourceConfig;
+    /**
+     * Relational database settings.
+     */
+    relationalDatabaseConfig?: RelationalDatabaseDataSourceConfig;
   }
-  export type DataSourceType = "AWS_LAMBDA"|"AMAZON_DYNAMODB"|"AMAZON_ELASTICSEARCH"|"NONE"|string;
+  export type DataSourceType = "AWS_LAMBDA"|"AMAZON_DYNAMODB"|"AMAZON_ELASTICSEARCH"|"NONE"|"HTTP"|"RELATIONAL_DATABASE"|"AMAZON_OPENSEARCH_SERVICE"|string;
   export type DataSources = DataSource[];
   export type DefaultAction = "ALLOW"|"DENY"|string;
+  export interface DeleteApiCacheRequest {
+    /**
+     * The API ID.
+     */
+    apiId: String;
+  }
+  export interface DeleteApiCacheResponse {
+  }
   export interface DeleteApiKeyRequest {
     /**
      * The API ID.
@@ -447,6 +921,26 @@ declare namespace AppSync {
     name: ResourceName;
   }
   export interface DeleteDataSourceResponse {
+  }
+  export interface DeleteDomainNameRequest {
+    /**
+     * The domain name.
+     */
+    domainName: DomainName;
+  }
+  export interface DeleteDomainNameResponse {
+  }
+  export interface DeleteFunctionRequest {
+    /**
+     * The GraphQL API ID.
+     */
+    apiId: String;
+    /**
+     * The Function ID.
+     */
+    functionId: ResourceName;
+  }
+  export interface DeleteFunctionResponse {
   }
   export interface DeleteGraphqlApiRequest {
     /**
@@ -484,19 +978,74 @@ declare namespace AppSync {
   }
   export interface DeleteTypeResponse {
   }
+  export interface DeltaSyncConfig {
+    /**
+     * The number of minutes that an Item is stored in the data source.
+     */
+    baseTableTTL?: Long;
+    /**
+     * The Delta Sync table name.
+     */
+    deltaSyncTableName?: String;
+    /**
+     * The number of minutes that a Delta Sync log entry is stored in the Delta Sync table.
+     */
+    deltaSyncTableTTL?: Long;
+  }
+  export type Description = string;
+  export interface DisassociateApiRequest {
+    /**
+     * The domain name.
+     */
+    domainName: DomainName;
+  }
+  export interface DisassociateApiResponse {
+  }
+  export type DomainName = string;
+  export interface DomainNameConfig {
+    /**
+     * The domain name.
+     */
+    domainName?: DomainName;
+    /**
+     * A description of the DomainName configuration.
+     */
+    description?: Description;
+    /**
+     * The Amazon Resource Name (ARN) of the certificate. This can be an Certificate Manager (ACM) certificate or an Identity and Access Management (IAM) server certificate.
+     */
+    certificateArn?: CertificateArn;
+    /**
+     * The domain name that AppSync provides.
+     */
+    appsyncDomainName?: String;
+    /**
+     * The ID of your Amazon Route 53 hosted zone.
+     */
+    hostedZoneId?: String;
+  }
+  export type DomainNameConfigs = DomainNameConfig[];
   export interface DynamodbDataSourceConfig {
     /**
      * The table name.
      */
     tableName: String;
     /**
-     * The AWS region.
+     * The Amazon Web Services Region.
      */
     awsRegion: String;
     /**
      * Set to TRUE to use Amazon Cognito credentials with this data source.
      */
     useCallerCredentials?: Boolean;
+    /**
+     * The DeltaSyncConfig for a versioned data source.
+     */
+    deltaSyncConfig?: DeltaSyncConfig;
+    /**
+     * Set to TRUE to use Conflict Detection and Resolution with this data source.
+     */
+    versioned?: Boolean;
   }
   export interface ElasticsearchDataSourceConfig {
     /**
@@ -504,12 +1053,84 @@ declare namespace AppSync {
      */
     endpoint: String;
     /**
-     * The AWS region.
+     * The Amazon Web Services Region.
      */
     awsRegion: String;
   }
-  export type ErrorMessage = string;
   export type FieldLogLevel = "NONE"|"ERROR"|"ALL"|string;
+  export interface FlushApiCacheRequest {
+    /**
+     * The API ID.
+     */
+    apiId: String;
+  }
+  export interface FlushApiCacheResponse {
+  }
+  export interface FunctionConfiguration {
+    /**
+     * A unique ID representing the Function object.
+     */
+    functionId?: String;
+    /**
+     * The Amazon Resource Name (ARN) of the Function object.
+     */
+    functionArn?: String;
+    /**
+     * The name of the Function object.
+     */
+    name?: ResourceName;
+    /**
+     * The Function description.
+     */
+    description?: String;
+    /**
+     * The name of the DataSource.
+     */
+    dataSourceName?: ResourceName;
+    /**
+     * The Function request mapping template. Functions support only the 2018-05-29 version of the request mapping template.
+     */
+    requestMappingTemplate?: MappingTemplate;
+    /**
+     * The Function response mapping template.
+     */
+    responseMappingTemplate?: MappingTemplate;
+    /**
+     * The version of the request mapping template. Currently, only the 2018-05-29 version of the template is supported.
+     */
+    functionVersion?: String;
+    syncConfig?: SyncConfig;
+    /**
+     * The maximum batching size for a resolver.
+     */
+    maxBatchSize?: MaxBatchSize;
+  }
+  export type Functions = FunctionConfiguration[];
+  export type FunctionsIds = String[];
+  export interface GetApiAssociationRequest {
+    /**
+     * The domain name.
+     */
+    domainName: DomainName;
+  }
+  export interface GetApiAssociationResponse {
+    /**
+     * The ApiAssociation object.
+     */
+    apiAssociation?: ApiAssociation;
+  }
+  export interface GetApiCacheRequest {
+    /**
+     * The API ID.
+     */
+    apiId: String;
+  }
+  export interface GetApiCacheResponse {
+    /**
+     * The ApiCache object.
+     */
+    apiCache?: ApiCache;
+  }
   export interface GetDataSourceRequest {
     /**
      * The API ID.
@@ -525,6 +1146,34 @@ declare namespace AppSync {
      * The DataSource object.
      */
     dataSource?: DataSource;
+  }
+  export interface GetDomainNameRequest {
+    /**
+     * The domain name.
+     */
+    domainName: DomainName;
+  }
+  export interface GetDomainNameResponse {
+    /**
+     * The configuration for the DomainName.
+     */
+    domainNameConfig?: DomainNameConfig;
+  }
+  export interface GetFunctionRequest {
+    /**
+     * The GraphQL API ID.
+     */
+    apiId: String;
+    /**
+     * The Function ID.
+     */
+    functionId: ResourceName;
+  }
+  export interface GetFunctionResponse {
+    /**
+     * The Function object.
+     */
+    functionConfiguration?: FunctionConfiguration;
   }
   export interface GetGraphqlApiRequest {
     /**
@@ -547,6 +1196,10 @@ declare namespace AppSync {
      * The schema format: SDL or JSON.
      */
     format: OutputType;
+    /**
+     * A flag that specifies whether the schema introspection should contain directives.
+     */
+    includeDirectives?: BooleanValue;
   }
   export interface GetIntrospectionSchemaResponse {
     /**
@@ -582,7 +1235,7 @@ declare namespace AppSync {
   }
   export interface GetSchemaCreationStatusResponse {
     /**
-     * The current state of the schema (PROCESSING, ACTIVE, or DELETING). Once the schema is in the ACTIVE state, you can add data.
+     * The current state of the schema (PROCESSING, FAILED, SUCCESS, or NOT_APPLICABLE). When the schema is in the ACTIVE state, you can add data.
      */
     status?: SchemaStatus;
     /**
@@ -628,26 +1281,76 @@ declare namespace AppSync {
      */
     logConfig?: LogConfig;
     /**
-     * The Amazon Cognito User Pool configuration.
+     * The Amazon Cognito user pool configuration.
      */
     userPoolConfig?: UserPoolConfig;
     /**
-     * The Open Id Connect configuration.
+     * The OpenID Connect configuration.
      */
     openIDConnectConfig?: OpenIDConnectConfig;
     /**
-     * The ARN.
+     * The Amazon Resource Name (ARN).
      */
     arn?: String;
     /**
      * The URIs.
      */
     uris?: MapOfStringToString;
+    /**
+     * The tags.
+     */
+    tags?: TagMap;
+    /**
+     * A list of additional authentication providers for the GraphqlApi API.
+     */
+    additionalAuthenticationProviders?: AdditionalAuthenticationProviders;
+    /**
+     * A flag indicating whether to use X-Ray tracing for this GraphqlApi.
+     */
+    xrayEnabled?: Boolean;
+    /**
+     * The ARN of the WAF access control list (ACL) associated with this GraphqlApi, if one exists.
+     */
+    wafWebAclArn?: String;
+    /**
+     * Configuration for Lambda function authorization.
+     */
+    lambdaAuthorizerConfig?: LambdaAuthorizerConfig;
   }
   export type GraphqlApis = GraphqlApi[];
+  export interface HttpDataSourceConfig {
+    /**
+     * The HTTP URL endpoint. You can specify either the domain name or IP, and port combination, and the URL scheme must be HTTP or HTTPS. If you don't specify the port, AppSync uses the default port 80 for the HTTP endpoint and port 443 for HTTPS endpoints.
+     */
+    endpoint?: String;
+    /**
+     * The authorization configuration in case the HTTP endpoint requires authorization.
+     */
+    authorizationConfig?: AuthorizationConfig;
+  }
+  export interface LambdaAuthorizerConfig {
+    /**
+     * The number of seconds a response should be cached for. The default is 5 minutes (300 seconds). The Lambda function can override this by returning a ttlOverride key in its response. A value of 0 disables caching of responses.
+     */
+    authorizerResultTtlInSeconds?: TTL;
+    /**
+     * The Amazon Resource Name (ARN) of the Lambda function to be called for authorization. This can be a standard Lambda ARN, a version ARN (.../v3), or an alias ARN.   Note: This Lambda function must have the following resource-based policy assigned to it. When configuring Lambda authorizers in the console, this is done for you. To use the Command Line Interface (CLI), run the following:  aws lambda add-permission --function-name "arn:aws:lambda:us-east-2:111122223333:function:my-function" --statement-id "appsync" --principal appsync.amazonaws.com --action lambda:InvokeFunction 
+     */
+    authorizerUri: String;
+    /**
+     * A regular expression for validation of tokens before the Lambda function is called.
+     */
+    identityValidationExpression?: String;
+  }
+  export interface LambdaConflictHandlerConfig {
+    /**
+     * The Amazon Resource Name (ARN) for the Lambda function to use as the Conflict Handler.
+     */
+    lambdaConflictHandlerArn?: String;
+  }
   export interface LambdaDataSourceConfig {
     /**
-     * The ARN for the Lambda function.
+     * The Amazon Resource Name (ARN) for the Lambda function.
      */
     lambdaFunctionArn: String;
   }
@@ -657,11 +1360,11 @@ declare namespace AppSync {
      */
     apiId: String;
     /**
-     * An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.
+     * An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.
      */
     nextToken?: PaginationToken;
     /**
-     * The maximum number of results you want the request to return.
+     * The maximum number of results that you want the request to return.
      */
     maxResults?: MaxResults;
   }
@@ -671,7 +1374,7 @@ declare namespace AppSync {
      */
     apiKeys?: ApiKeys;
     /**
-     * An identifier to be passed in the next request to this operation to return the next set of items in the list.
+     * An identifier to pass in the next request to this operation to return the next set of items in the list.
      */
     nextToken?: PaginationToken;
   }
@@ -681,11 +1384,11 @@ declare namespace AppSync {
      */
     apiId: String;
     /**
-     * An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list. 
+     * An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.
      */
     nextToken?: PaginationToken;
     /**
-     * The maximum number of results you want the request to return.
+     * The maximum number of results that you want the request to return.
      */
     maxResults?: MaxResults;
   }
@@ -695,17 +1398,61 @@ declare namespace AppSync {
      */
     dataSources?: DataSources;
     /**
-     * An identifier to be passed in the next request to this operation to return the next set of items in the list.
+     * An identifier to pass in the next request to this operation to return the next set of items in the list.
+     */
+    nextToken?: PaginationToken;
+  }
+  export interface ListDomainNamesRequest {
+    /**
+     * The API token.
+     */
+    nextToken?: PaginationToken;
+    /**
+     * The maximum number of results that you want the request to return.
+     */
+    maxResults?: MaxResults;
+  }
+  export interface ListDomainNamesResponse {
+    /**
+     * Lists configurations for multiple domain names.
+     */
+    domainNameConfigs?: DomainNameConfigs;
+    /**
+     * The API token.
+     */
+    nextToken?: PaginationToken;
+  }
+  export interface ListFunctionsRequest {
+    /**
+     * The GraphQL API ID.
+     */
+    apiId: String;
+    /**
+     * An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.
+     */
+    nextToken?: PaginationToken;
+    /**
+     * The maximum number of results that you want the request to return.
+     */
+    maxResults?: MaxResults;
+  }
+  export interface ListFunctionsResponse {
+    /**
+     * A list of Function objects.
+     */
+    functions?: Functions;
+    /**
+     * An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.
      */
     nextToken?: PaginationToken;
   }
   export interface ListGraphqlApisRequest {
     /**
-     * An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list. 
+     * An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.
      */
     nextToken?: PaginationToken;
     /**
-     * The maximum number of results you want the request to return.
+     * The maximum number of results that you want the request to return.
      */
     maxResults?: MaxResults;
   }
@@ -715,7 +1462,35 @@ declare namespace AppSync {
      */
     graphqlApis?: GraphqlApis;
     /**
-     * An identifier to be passed in the next request to this operation to return the next set of items in the list.
+     * An identifier to pass in the next request to this operation to return the next set of items in the list.
+     */
+    nextToken?: PaginationToken;
+  }
+  export interface ListResolversByFunctionRequest {
+    /**
+     * The API ID.
+     */
+    apiId: String;
+    /**
+     * The function ID.
+     */
+    functionId: String;
+    /**
+     * An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.
+     */
+    nextToken?: PaginationToken;
+    /**
+     * The maximum number of results that you want the request to return.
+     */
+    maxResults?: MaxResults;
+  }
+  export interface ListResolversByFunctionResponse {
+    /**
+     * The list of resolvers.
+     */
+    resolvers?: Resolvers;
+    /**
+     * An identifier that you can use to return the next set of items in the list.
      */
     nextToken?: PaginationToken;
   }
@@ -729,11 +1504,11 @@ declare namespace AppSync {
      */
     typeName: String;
     /**
-     * An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list. 
+     * An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.
      */
     nextToken?: PaginationToken;
     /**
-     * The maximum number of results you want the request to return.
+     * The maximum number of results that you want the request to return.
      */
     maxResults?: MaxResults;
   }
@@ -743,9 +1518,21 @@ declare namespace AppSync {
      */
     resolvers?: Resolvers;
     /**
-     * An identifier to be passed in the next request to this operation to return the next set of items in the list.
+     * An identifier to pass in the next request to this operation to return the next set of items in the list.
      */
     nextToken?: PaginationToken;
+  }
+  export interface ListTagsForResourceRequest {
+    /**
+     * The GraphqlApi Amazon Resource Name (ARN).
+     */
+    resourceArn: ResourceArn;
+  }
+  export interface ListTagsForResourceResponse {
+    /**
+     * A TagMap object.
+     */
+    tags?: TagMap;
   }
   export interface ListTypesRequest {
     /**
@@ -757,11 +1544,11 @@ declare namespace AppSync {
      */
     format: TypeDefinitionFormat;
     /**
-     * An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list. 
+     * An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.
      */
     nextToken?: PaginationToken;
     /**
-     * The maximum number of results you want the request to return.
+     * The maximum number of results that you want the request to return.
      */
     maxResults?: MaxResults;
   }
@@ -771,44 +1558,98 @@ declare namespace AppSync {
      */
     types?: TypeList;
     /**
-     * An identifier to be passed in the next request to this operation to return the next set of items in the list.
+     * An identifier to pass in the next request to this operation to return the next set of items in the list.
      */
     nextToken?: PaginationToken;
   }
   export interface LogConfig {
     /**
-     * The field logging level. Values can be NONE, ERROR, ALL.     NONE: No field-level logs are captured.    ERROR: Logs the following information only for the fields that are in error:   The error section in the server response.   Field-level errors.   The generated request/response functions that got resolved for error fields.      ALL: The following information is logged for all fields in the query:   Field-level tracing information.   The generated request/response functions that got resolved for each field.    
+     * The field logging level. Values can be NONE, ERROR, or ALL.    NONE: No field-level logs are captured.    ERROR: Logs the following information only for the fields that are in error:   The error section in the server response.   Field-level errors.   The generated request/response functions that got resolved for error fields.      ALL: The following information is logged for all fields in the query:   Field-level tracing information.   The generated request/response functions that got resolved for each field.    
      */
     fieldLogLevel: FieldLogLevel;
     /**
-     * The service role that AWS AppSync will assume to publish to Amazon CloudWatch logs in your account. 
+     * The service role that AppSync assumes to publish to CloudWatch logs in your account.
      */
     cloudWatchLogsRoleArn: String;
+    /**
+     * Set to TRUE to exclude sections that contain information such as headers, context, and evaluated mapping templates, regardless of logging level.
+     */
+    excludeVerboseContent?: Boolean;
   }
   export type Long = number;
   export type MapOfStringToString = {[key: string]: String};
   export type MappingTemplate = string;
+  export type MaxBatchSize = number;
   export type MaxResults = number;
   export interface OpenIDConnectConfig {
     /**
-     * The issuer for the open id connect configuration. The issuer returned by discovery MUST exactly match the value of iss in the ID Token.
+     * The issuer for the OIDC configuration. The issuer returned by discovery must exactly match the value of iss in the ID token.
      */
     issuer: String;
     /**
-     * The client identifier of the Relying party at the OpenID Provider. This identifier is typically obtained when the Relying party is registered with the OpenID Provider. You can specify a regular expression so the AWS AppSync can validate against multiple client identifiers at a time
+     * The client identifier of the relying party at the OpenID identity provider. This identifier is typically obtained when the relying party is registered with the OpenID identity provider. You can specify a regular expression so that AppSync can validate against multiple client identifiers at a time.
      */
     clientId?: String;
     /**
-     * The number of milliseconds a token is valid after being issued to a user.
+     * The number of milliseconds that a token is valid after it's issued to a user.
      */
     iatTTL?: Long;
     /**
-     * The number of milliseconds a token is valid after being authenticated.
+     * The number of milliseconds that a token is valid after being authenticated.
      */
     authTTL?: Long;
   }
+  export interface OpenSearchServiceDataSourceConfig {
+    /**
+     * The endpoint.
+     */
+    endpoint: String;
+    /**
+     * The Amazon Web Services Region.
+     */
+    awsRegion: String;
+  }
   export type OutputType = "SDL"|"JSON"|string;
   export type PaginationToken = string;
+  export interface PipelineConfig {
+    /**
+     * A list of Function objects.
+     */
+    functions?: FunctionsIds;
+  }
+  export interface RdsHttpEndpointConfig {
+    /**
+     * Amazon Web Services Region for Amazon RDS HTTP endpoint.
+     */
+    awsRegion?: String;
+    /**
+     * Amazon RDS cluster Amazon Resource Name (ARN).
+     */
+    dbClusterIdentifier?: String;
+    /**
+     * Logical database name.
+     */
+    databaseName?: String;
+    /**
+     * Logical schema name.
+     */
+    schema?: String;
+    /**
+     * Amazon Web Services secret store Amazon Resource Name (ARN) for database credentials.
+     */
+    awsSecretStoreArn?: String;
+  }
+  export interface RelationalDatabaseDataSourceConfig {
+    /**
+     * Source type for the relational database.    RDS_HTTP_ENDPOINT: The relational database source type is an Amazon Relational Database Service (Amazon RDS) HTTP endpoint.  
+     */
+    relationalDatabaseSourceType?: RelationalDatabaseSourceType;
+    /**
+     * Amazon RDS HTTP endpoint settings.
+     */
+    rdsHttpEndpointConfig?: RdsHttpEndpointConfig;
+  }
+  export type RelationalDatabaseSourceType = "RDS_HTTP_ENDPOINT"|string;
   export interface Resolver {
     /**
      * The resolver type name.
@@ -823,7 +1664,7 @@ declare namespace AppSync {
      */
     dataSourceName?: ResourceName;
     /**
-     * The resolver ARN.
+     * The resolver Amazon Resource Name (ARN).
      */
     resolverArn?: String;
     /**
@@ -834,10 +1675,32 @@ declare namespace AppSync {
      * The response mapping template.
      */
     responseMappingTemplate?: MappingTemplate;
+    /**
+     * The resolver type.    UNIT: A UNIT resolver type. A UNIT resolver is the default resolver type. You can use a UNIT resolver to run a GraphQL query against a single data source.    PIPELINE: A PIPELINE resolver type. You can use a PIPELINE resolver to invoke a series of Function objects in a serial manner. You can use a pipeline resolver to run a GraphQL query against multiple data sources.  
+     */
+    kind?: ResolverKind;
+    /**
+     * The PipelineConfig.
+     */
+    pipelineConfig?: PipelineConfig;
+    /**
+     * The SyncConfig for a resolver attached to a versioned data source.
+     */
+    syncConfig?: SyncConfig;
+    /**
+     * The caching configuration for the resolver.
+     */
+    cachingConfig?: CachingConfig;
+    /**
+     * The maximum batching size for a resolver.
+     */
+    maxBatchSize?: MaxBatchSize;
   }
+  export type ResolverKind = "UNIT"|"PIPELINE"|string;
   export type Resolvers = Resolver[];
+  export type ResourceArn = string;
   export type ResourceName = string;
-  export type SchemaStatus = "PROCESSING"|"ACTIVE"|"DELETING"|string;
+  export type SchemaStatus = "PROCESSING"|"ACTIVE"|"DELETING"|"FAILED"|"SUCCESS"|"NOT_APPLICABLE"|string;
   export interface StartSchemaCreationRequest {
     /**
      * The API ID.
@@ -850,11 +1713,42 @@ declare namespace AppSync {
   }
   export interface StartSchemaCreationResponse {
     /**
-     * The current state of the schema (PROCESSING, ACTIVE, or DELETING). Once the schema is in the ACTIVE state, you can add data.
+     * The current state of the schema (PROCESSING, FAILED, SUCCESS, or NOT_APPLICABLE). When the schema is in the ACTIVE state, you can add data.
      */
     status?: SchemaStatus;
   }
   export type String = string;
+  export interface SyncConfig {
+    /**
+     * The Conflict Resolution strategy to perform in the event of a conflict.    OPTIMISTIC_CONCURRENCY: Resolve conflicts by rejecting mutations when versions don't match the latest version at the server.    AUTOMERGE: Resolve conflicts with the Automerge conflict resolution strategy.    LAMBDA: Resolve conflicts with an Lambda function supplied in the LambdaConflictHandlerConfig.  
+     */
+    conflictHandler?: ConflictHandlerType;
+    /**
+     * The Conflict Detection strategy to use.    VERSION: Detect conflicts based on object versions for this resolver.    NONE: Do not detect conflicts when invoking this resolver.  
+     */
+    conflictDetection?: ConflictDetectionType;
+    /**
+     * The LambdaConflictHandlerConfig when configuring LAMBDA as the Conflict Handler.
+     */
+    lambdaConflictHandlerConfig?: LambdaConflictHandlerConfig;
+  }
+  export type TTL = number;
+  export type TagKey = string;
+  export type TagKeyList = TagKey[];
+  export type TagMap = {[key: string]: TagValue};
+  export interface TagResourceRequest {
+    /**
+     * The GraphqlApi Amazon Resource Name (ARN).
+     */
+    resourceArn: ResourceArn;
+    /**
+     * A TagMap object.
+     */
+    tags: TagMap;
+  }
+  export interface TagResourceResponse {
+  }
+  export type TagValue = string;
   export interface Type {
     /**
      * The type name.
@@ -865,7 +1759,7 @@ declare namespace AppSync {
      */
     description?: String;
     /**
-     * The type ARN.
+     * The type Amazon Resource Name (ARN).
      */
     arn?: String;
     /**
@@ -879,9 +1773,45 @@ declare namespace AppSync {
   }
   export type TypeDefinitionFormat = "SDL"|"JSON"|string;
   export type TypeList = Type[];
+  export interface UntagResourceRequest {
+    /**
+     * The GraphqlApi Amazon Resource Name (ARN).
+     */
+    resourceArn: ResourceArn;
+    /**
+     * A list of TagKey objects.
+     */
+    tagKeys: TagKeyList;
+  }
+  export interface UntagResourceResponse {
+  }
+  export interface UpdateApiCacheRequest {
+    /**
+     * The GraphQL API ID.
+     */
+    apiId: String;
+    /**
+     * TTL in seconds for cache entries. Valid values are 1–3,600 seconds.
+     */
+    ttl: Long;
+    /**
+     * Caching behavior.    FULL_REQUEST_CACHING: All requests are fully cached.    PER_RESOLVER_CACHING: Individual resolvers that you specify are cached.  
+     */
+    apiCachingBehavior: ApiCachingBehavior;
+    /**
+     * The cache instance type. Valid values are     SMALL     MEDIUM     LARGE     XLARGE     LARGE_2X     LARGE_4X     LARGE_8X (not available in all regions)    LARGE_12X    Historically, instance types were identified by an EC2-style value. As of July 2020, this is deprecated, and the generic identifiers above should be used. The following legacy instance types are available, but their use is discouraged:    T2_SMALL: A t2.small instance type.    T2_MEDIUM: A t2.medium instance type.    R4_LARGE: A r4.large instance type.    R4_XLARGE: A r4.xlarge instance type.    R4_2XLARGE: A r4.2xlarge instance type.    R4_4XLARGE: A r4.4xlarge instance type.    R4_8XLARGE: A r4.8xlarge instance type.  
+     */
+    type: ApiCacheType;
+  }
+  export interface UpdateApiCacheResponse {
+    /**
+     * The ApiCache object.
+     */
+    apiCache?: ApiCache;
+  }
   export interface UpdateApiKeyRequest {
     /**
-     * The ID for the GraphQL API
+     * The ID for the GraphQL API.
      */
     apiId: String;
     /**
@@ -893,7 +1823,7 @@ declare namespace AppSync {
      */
     description?: String;
     /**
-     * The time from update time after which the API key expires. The date is represented as seconds since the epoch. For more information, see .
+     * From the update time, the time after which the API key expires. The date is represented as seconds since the epoch. For more information, see .
      */
     expires?: Long;
   }
@@ -921,11 +1851,11 @@ declare namespace AppSync {
      */
     type: DataSourceType;
     /**
-     * The new service role ARN for the data source.
+     * The new service role Amazon Resource Name (ARN) for the data source.
      */
     serviceRoleArn?: String;
     /**
-     * The new DynamoDB configuration.
+     * The new Amazon DynamoDB configuration.
      */
     dynamodbConfig?: DynamodbDataSourceConfig;
     /**
@@ -933,15 +1863,88 @@ declare namespace AppSync {
      */
     lambdaConfig?: LambdaDataSourceConfig;
     /**
-     * The new Elasticsearch configuration.
+     * The new OpenSearch configuration. As of September 2021, Amazon Elasticsearch service is Amazon OpenSearch Service. This configuration is deprecated. Instead, use UpdateDataSourceRequest$openSearchServiceConfig to update an OpenSearch data source.
      */
     elasticsearchConfig?: ElasticsearchDataSourceConfig;
+    /**
+     * The new OpenSearch configuration.
+     */
+    openSearchServiceConfig?: OpenSearchServiceDataSourceConfig;
+    /**
+     * The new HTTP endpoint configuration.
+     */
+    httpConfig?: HttpDataSourceConfig;
+    /**
+     * The new relational database configuration.
+     */
+    relationalDatabaseConfig?: RelationalDatabaseDataSourceConfig;
   }
   export interface UpdateDataSourceResponse {
     /**
      * The updated DataSource object.
      */
     dataSource?: DataSource;
+  }
+  export interface UpdateDomainNameRequest {
+    /**
+     * The domain name.
+     */
+    domainName: DomainName;
+    /**
+     * A description of the DomainName.
+     */
+    description?: Description;
+  }
+  export interface UpdateDomainNameResponse {
+    /**
+     * The configuration for the DomainName.
+     */
+    domainNameConfig?: DomainNameConfig;
+  }
+  export interface UpdateFunctionRequest {
+    /**
+     * The GraphQL API ID.
+     */
+    apiId: String;
+    /**
+     * The Function name.
+     */
+    name: ResourceName;
+    /**
+     * The Function description.
+     */
+    description?: String;
+    /**
+     * The function ID.
+     */
+    functionId: ResourceName;
+    /**
+     * The Function DataSource name.
+     */
+    dataSourceName: ResourceName;
+    /**
+     * The Function request mapping template. Functions support only the 2018-05-29 version of the request mapping template.
+     */
+    requestMappingTemplate?: MappingTemplate;
+    /**
+     * The Function request mapping template.
+     */
+    responseMappingTemplate?: MappingTemplate;
+    /**
+     * The version of the request mapping template. Currently, the supported value is 2018-05-29.
+     */
+    functionVersion: String;
+    syncConfig?: SyncConfig;
+    /**
+     * The maximum batching size for a resolver.
+     */
+    maxBatchSize?: MaxBatchSize;
+  }
+  export interface UpdateFunctionResponse {
+    /**
+     * The Function object.
+     */
+    functionConfiguration?: FunctionConfiguration;
   }
   export interface UpdateGraphqlApiRequest {
     /**
@@ -953,7 +1956,7 @@ declare namespace AppSync {
      */
     name: String;
     /**
-     * The Amazon CloudWatch logs configuration for the GraphqlApi object.
+     * The Amazon CloudWatch Logs configuration for the GraphqlApi object.
      */
     logConfig?: LogConfig;
     /**
@@ -961,13 +1964,25 @@ declare namespace AppSync {
      */
     authenticationType?: AuthenticationType;
     /**
-     * The new Amazon Cognito User Pool configuration for the GraphqlApi object.
+     * The new Amazon Cognito user pool configuration for the ~GraphqlApi object.
      */
     userPoolConfig?: UserPoolConfig;
     /**
-     * The Open Id Connect configuration configuration for the GraphqlApi object.
+     * The OpenID Connect configuration for the GraphqlApi object.
      */
     openIDConnectConfig?: OpenIDConnectConfig;
+    /**
+     * A list of additional authentication providers for the GraphqlApi API.
+     */
+    additionalAuthenticationProviders?: AdditionalAuthenticationProviders;
+    /**
+     * A flag indicating whether to use X-Ray tracing for the GraphqlApi.
+     */
+    xrayEnabled?: Boolean;
+    /**
+     * Configuration for Lambda function authorization.
+     */
+    lambdaAuthorizerConfig?: LambdaAuthorizerConfig;
   }
   export interface UpdateGraphqlApiResponse {
     /**
@@ -991,15 +2006,35 @@ declare namespace AppSync {
     /**
      * The new data source name.
      */
-    dataSourceName: ResourceName;
+    dataSourceName?: ResourceName;
     /**
-     * The new request mapping template.
+     * The new request mapping template. A resolver uses a request mapping template to convert a GraphQL expression into a format that a data source can understand. Mapping templates are written in Apache Velocity Template Language (VTL). VTL request mapping templates are optional when using an Lambda data source. For all other data sources, VTL request and response mapping templates are required.
      */
-    requestMappingTemplate: MappingTemplate;
+    requestMappingTemplate?: MappingTemplate;
     /**
      * The new response mapping template.
      */
     responseMappingTemplate?: MappingTemplate;
+    /**
+     * The resolver type.    UNIT: A UNIT resolver type. A UNIT resolver is the default resolver type. You can use a UNIT resolver to run a GraphQL query against a single data source.    PIPELINE: A PIPELINE resolver type. You can use a PIPELINE resolver to invoke a series of Function objects in a serial manner. You can use a pipeline resolver to run a GraphQL query against multiple data sources.  
+     */
+    kind?: ResolverKind;
+    /**
+     * The PipelineConfig.
+     */
+    pipelineConfig?: PipelineConfig;
+    /**
+     * The SyncConfig for a resolver attached to a versioned data source.
+     */
+    syncConfig?: SyncConfig;
+    /**
+     * The caching configuration for the resolver.
+     */
+    cachingConfig?: CachingConfig;
+    /**
+     * The maximum batching size for a resolver.
+     */
+    maxBatchSize?: MaxBatchSize;
   }
   export interface UpdateResolverResponse {
     /**
@@ -1037,15 +2072,15 @@ declare namespace AppSync {
      */
     userPoolId: String;
     /**
-     * The AWS region in which the user pool was created.
+     * The Amazon Web Services Region in which the user pool was created.
      */
     awsRegion: String;
     /**
-     * The action that you want your GraphQL API to take when a request that uses Amazon Cognito User Pool authentication doesn't match the Amazon Cognito User Pool configuration.
+     * The action that you want your GraphQL API to take when a request that uses Amazon Cognito user pool authentication doesn't match the Amazon Cognito user pool configuration.
      */
     defaultAction: DefaultAction;
     /**
-     * A regular expression for validating the incoming Amazon Cognito User Pool app client ID.
+     * A regular expression for validating the incoming Amazon Cognito user pool app client ID.
      */
     appIdClientRegex?: String;
   }

@@ -8,6 +8,9 @@
 
   ignoreRequire = require;
 
+  // import SDK for tests that do not access the AWS namespace
+  require('../index');
+
   if (typeof window === 'undefined') {
     AWS = ignoreRequire('../lib/aws');
     topLevelScope = global;
@@ -72,10 +75,15 @@
     spy = function() {
       spy.calls.push({
         object: this,
-        "arguments": Array.prototype.slice.call(arguments)
+        'arguments': Array.prototype.slice.call(arguments)
       });
       if (spy.callFn) {
-        return spy.callFn.apply(spy.object, arguments);
+        // 'this' to keep the current 'this' intact, so that if we've mocked a class method
+        // we can still use 'this' inside the method to get the instance properties.
+        //
+        // This used to be 'object' but then in case of mocking a class method we'd only
+        // be able to access the class (object prototype), instead of the object itself.
+        return spy.callFn.apply(this, arguments);
       }
       if (spy.shouldReturn) {
         return spy.returnValue;
@@ -168,10 +176,11 @@
   });
 
   MockServiceFromApi = function(customApi) {
-    customApi.metadata = {
-      endpointPrefix: 'mockservice',
-      signatureVersion: 'v4'
-    };
+    if (!customApi.metadata) {
+      customApi.metadata = {};
+      customApi.metadata.endpointPrefix = 'mockservice';
+      customApi.metadata.signatureVersion = 'v4';
+    }
     return AWS.Service.defineService('mock', {
       serviceIdentifier: 'mock',
       initialize: function(config) {
@@ -180,22 +189,11 @@
           accessKeyId: 'akid',
           secretAccessKey: 'secret'
         };
-        return this.config.region = 'mock-region';
-      },
-      setupRequestListeners: function(request) {
-        request.on('extractData', function(resp) {
-          return resp.data = (resp.httpResponse.body || '').toString();
-        });
-        return request.on('extractError', function(resp) {
-          return resp.error = {
-            code: (resp.httpResponse.body || '').toString() || resp.httpResponse.statusCode,
-            message: null
-          };
-        });
+        this.config.region = this.config.region || 'mock-region';
       },
       api: new AWS.Model.Api(customApi)
     });
-  }
+  };
 
   mockHttpSuccessfulResponse = function(status, headers, data, cb) {
     var httpResp;
@@ -225,7 +223,7 @@
           if (chunk === null) {
             return null;
           } else {
-            return new Buffer(chunk);
+            return AWS.util.buffer.toBuffer(chunk);
           }
         } else {
           return null;
@@ -236,7 +234,7 @@
       if (AWS.util.isNode() && httpResp._events.readable) {
         return httpResp.emit('readable');
       } else {
-        return httpResp.emit('data', new Buffer(str));
+        return httpResp.emit('data', AWS.util.buffer.toBuffer(str));
       }
     });
     if (httpResp._events['readable'] || httpResp._events['data']) {

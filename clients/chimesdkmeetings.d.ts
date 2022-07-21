@@ -20,6 +20,14 @@ declare class ChimeSDKMeetings extends Service {
    */
   batchCreateAttendee(callback?: (err: AWSError, data: ChimeSDKMeetings.Types.BatchCreateAttendeeResponse) => void): Request<ChimeSDKMeetings.Types.BatchCreateAttendeeResponse, AWSError>;
   /**
+   * Updates AttendeeCapabilities except the capabilities listed in an ExcludedAttendeeIds table.  You use the capabilities with a set of values that control what the capabilities can do, such as SendReceive data. For more information about those values, see .  When using capabilities, be aware of these corner cases:   You can't set content capabilities to SendReceive or Receive unless you also set video capabilities to SendReceive or Receive. If you don't set the video capability to receive, the response will contain an HTTP 400 Bad Request status code. However, you can set your video capability to receive and you set your content capability to not receive.   When you change an audio capability from None or Receive to Send or SendReceive , and if the attendee left their microphone unmuted, audio will flow from the attendee to the other meeting participants.   When you change a video or content capability from None or Receive to Send or SendReceive , and if the attendee turned on their video or content streams, remote attendess can receive those streams, but only after media renegotiation between the client and the Amazon Chime back-end server.  
+   */
+  batchUpdateAttendeeCapabilitiesExcept(params: ChimeSDKMeetings.Types.BatchUpdateAttendeeCapabilitiesExceptRequest, callback?: (err: AWSError, data: {}) => void): Request<{}, AWSError>;
+  /**
+   * Updates AttendeeCapabilities except the capabilities listed in an ExcludedAttendeeIds table.  You use the capabilities with a set of values that control what the capabilities can do, such as SendReceive data. For more information about those values, see .  When using capabilities, be aware of these corner cases:   You can't set content capabilities to SendReceive or Receive unless you also set video capabilities to SendReceive or Receive. If you don't set the video capability to receive, the response will contain an HTTP 400 Bad Request status code. However, you can set your video capability to receive and you set your content capability to not receive.   When you change an audio capability from None or Receive to Send or SendReceive , and if the attendee left their microphone unmuted, audio will flow from the attendee to the other meeting participants.   When you change a video or content capability from None or Receive to Send or SendReceive , and if the attendee turned on their video or content streams, remote attendess can receive those streams, but only after media renegotiation between the client and the Amazon Chime back-end server.  
+   */
+  batchUpdateAttendeeCapabilitiesExcept(callback?: (err: AWSError, data: {}) => void): Request<{}, AWSError>;
+  /**
    *  Creates a new attendee for an active Amazon Chime SDK meeting. For more information about the Amazon Chime SDK, see Using the Amazon Chime SDK in the Amazon Chime Developer Guide. 
    */
   createAttendee(params: ChimeSDKMeetings.Types.CreateAttendeeRequest, callback?: (err: AWSError, data: ChimeSDKMeetings.Types.CreateAttendeeResponse) => void): Request<ChimeSDKMeetings.Types.CreateAttendeeResponse, AWSError>;
@@ -99,6 +107,14 @@ declare class ChimeSDKMeetings extends Service {
    * Stops transcription for the specified meetingId.
    */
   stopMeetingTranscription(callback?: (err: AWSError, data: {}) => void): Request<{}, AWSError>;
+  /**
+   * The capabilties that you want to update.  You use the capabilities with a set of values that control what the capabilities can do, such as SendReceive data. For more information about those values, see .  When using capabilities, be aware of these corner cases:   You can't set content capabilities to SendReceive or Receive unless you also set video capabilities to SendReceive or Receive. If you don't set the video capability to receive, the response will contain an HTTP 400 Bad Request status code. However, you can set your video capability to receive and you set your content capability to not receive.   When you change an audio capability from None or Receive to Send or SendReceive , and if the attendee left their microphone unmuted, audio will flow from the attendee to the other meeting participants.   When you change a video or content capability from None or Receive to Send or SendReceive , and if the attendee turned on their video or content streams, remote attendess can receive those streams, but only after media renegotiation between the client and the Amazon Chime back-end server.  
+   */
+  updateAttendeeCapabilities(params: ChimeSDKMeetings.Types.UpdateAttendeeCapabilitiesRequest, callback?: (err: AWSError, data: ChimeSDKMeetings.Types.UpdateAttendeeCapabilitiesResponse) => void): Request<ChimeSDKMeetings.Types.UpdateAttendeeCapabilitiesResponse, AWSError>;
+  /**
+   * The capabilties that you want to update.  You use the capabilities with a set of values that control what the capabilities can do, such as SendReceive data. For more information about those values, see .  When using capabilities, be aware of these corner cases:   You can't set content capabilities to SendReceive or Receive unless you also set video capabilities to SendReceive or Receive. If you don't set the video capability to receive, the response will contain an HTTP 400 Bad Request status code. However, you can set your video capability to receive and you set your content capability to not receive.   When you change an audio capability from None or Receive to Send or SendReceive , and if the attendee left their microphone unmuted, audio will flow from the attendee to the other meeting participants.   When you change a video or content capability from None or Receive to Send or SendReceive , and if the attendee turned on their video or content streams, remote attendess can receive those streams, but only after media renegotiation between the client and the Amazon Chime back-end server.  
+   */
+  updateAttendeeCapabilities(callback?: (err: AWSError, data: ChimeSDKMeetings.Types.UpdateAttendeeCapabilitiesResponse) => void): Request<ChimeSDKMeetings.Types.UpdateAttendeeCapabilitiesResponse, AWSError>;
 }
 declare namespace ChimeSDKMeetings {
   export type Arn = string;
@@ -115,7 +131,32 @@ declare namespace ChimeSDKMeetings {
      * The join token used by the Amazon Chime SDK attendee.
      */
     JoinToken?: JoinTokenString;
+    /**
+     * The capabilities assigned to an attendee: audio, video, or content.  You use the capabilities with a set of values that control what the capabilities can do, such as SendReceive data. For more information about those values, see .  When using capabilities, be aware of these corner cases:   You can't set content capabilities to SendReceive or Receive unless you also set video capabilities to SendReceive or Receive. If you don't set the video capability to receive, the response will contain an HTTP 400 Bad Request status code. However, you can set your video capability to receive and you set your content capability to not receive.   When you change an audio capability from None or Receive to Send or SendReceive , and if the attendee left their microphone unmuted, audio will flow from the attendee to the other meeting participants.   When you change a video or content capability from None or Receive to Send or SendReceive , and if the attendee turned on their video or content streams, remote attendess can receive those streams, but only after media renegotiation between the client and the Amazon Chime back-end server.  
+     */
+    Capabilities?: AttendeeCapabilities;
   }
+  export interface AttendeeCapabilities {
+    /**
+     * The audio capability assigned to an attendee.
+     */
+    Audio: MediaCapabilities;
+    /**
+     * The video capability assigned to an attendee.
+     */
+    Video: MediaCapabilities;
+    /**
+     * The content capability assigned to an attendee.
+     */
+    Content: MediaCapabilities;
+  }
+  export interface AttendeeIdItem {
+    /**
+     * A list of one or more attendee IDs.
+     */
+    AttendeeId: GuidString;
+  }
+  export type AttendeeIdsList = AttendeeIdItem[];
   export type AttendeeList = Attendee[];
   export interface AudioFeatures {
     /**
@@ -144,6 +185,20 @@ declare namespace ChimeSDKMeetings {
      */
     Errors?: BatchCreateAttendeeErrorList;
   }
+  export interface BatchUpdateAttendeeCapabilitiesExceptRequest {
+    /**
+     * The ID of the meeting associated with the update request.
+     */
+    MeetingId: GuidString;
+    /**
+     * The AttendeeIDs that you want to exclude from one or more capabilities.
+     */
+    ExcludedAttendeeIds: AttendeeIdsList;
+    /**
+     * The capabilities (audio, video, or content) that you want to update.
+     */
+    Capabilities: AttendeeCapabilities;
+  }
   export type Boolean = boolean;
   export type ClientRequestToken = string;
   export interface CreateAttendeeError {
@@ -169,12 +224,20 @@ declare namespace ChimeSDKMeetings {
      * The Amazon Chime SDK external user ID. An idempotency token. Links the attendee to an identity managed by a builder application.
      */
     ExternalUserId: ExternalUserId;
+    /**
+     * The capabilities (audio, video, or content) that you want to grant an attendee. If you don't specify capabilities, all users have send and receive capabilities on all media channels by default.  You use the capabilities with a set of values that control what the capabilities can do, such as SendReceive data. For more information about those values, see .  When using capabilities, be aware of these corner cases:   You can't set content capabilities to SendReceive or Receive unless you also set video capabilities to SendReceive or Receive. If you don't set the video capability to receive, the response will contain an HTTP 400 Bad Request status code. However, you can set your video capability to receive and you set your content capability to not receive.   When you change an audio capability from None or Receive to Send or SendReceive , and if the attendee left their microphone unmuted, audio will flow from the attendee to the other meeting participants.   When you change a video or content capability from None or Receive to Send or SendReceive , and if the attendee turned on their video or content streams, remote attendess can receive those streams, but only after media renegotiation between the client and the Amazon Chime back-end server.  
+     */
+    Capabilities?: AttendeeCapabilities;
   }
   export interface CreateAttendeeRequestItem {
     /**
      * The Amazon Chime SDK external user ID. An idempotency token. Links the attendee to an identity managed by a builder application.
      */
     ExternalUserId: ExternalUserId;
+    /**
+     * A list of one or more capabilities.
+     */
+    Capabilities?: AttendeeCapabilities;
   }
   export type CreateAttendeeRequestItemList = CreateAttendeeRequestItem[];
   export interface CreateAttendeeResponse {
@@ -208,6 +271,14 @@ declare namespace ChimeSDKMeetings {
      * Lists the audio and video features enabled for a meeting, such as echo reduction.
      */
     MeetingFeatures?: MeetingFeaturesConfiguration;
+    /**
+     * When specified, replicates the media from the primary meeting to the new meeting.
+     */
+    PrimaryMeetingId?: PrimaryMeetingId;
+    /**
+     * A consistent and opaque identifier, created and maintained by the builder to represent a segment of their users.
+     */
+    TenantIds?: TenantIdList;
   }
   export interface CreateMeetingResponse {
     /**
@@ -244,6 +315,14 @@ declare namespace ChimeSDKMeetings {
      * The attendee information, including attendees' IDs and join tokens.
      */
     Attendees: CreateMeetingWithAttendeesRequestItemList;
+    /**
+     * When specified, replicates the media from the primary meeting to the new meeting.
+     */
+    PrimaryMeetingId?: PrimaryMeetingId;
+    /**
+     * A consistent and opaque identifier, created and maintained by the builder to represent a segment of their users.
+     */
+    TenantIds?: TenantIdList;
   }
   export type CreateMeetingWithAttendeesRequestItemList = CreateAttendeeRequestItem[];
   export interface CreateMeetingWithAttendeesResponse {
@@ -294,7 +373,7 @@ declare namespace ChimeSDKMeetings {
      */
     VocabularyName?: String;
     /**
-     * The AWS Region passed to Amazon Transcribe Medical. If you don't specify a Region, Amazon Chime uses the meeting's Region.
+     * The AWS Region passed to Amazon Transcribe Medical. If you don't specify a Region, Amazon Chime uses the meeting's Region. 
      */
     Region?: TranscribeMedicalRegion;
     /**
@@ -416,6 +495,7 @@ declare namespace ChimeSDKMeetings {
      */
     NextToken?: String;
   }
+  export type MediaCapabilities = "SendReceive"|"Send"|"Receive"|"None"|string;
   export interface MediaPlacement {
     /**
      * The audio host URL.
@@ -476,6 +556,14 @@ declare namespace ChimeSDKMeetings {
      * The features available to a meeting, such as Amazon Voice Focus.
      */
     MeetingFeatures?: MeetingFeaturesConfiguration;
+    /**
+     * When specified, replicates the media from the primary meeting to this meeting.
+     */
+    PrimaryMeetingId?: PrimaryMeetingId;
+    /**
+     * Array of strings.
+     */
+    TenantIds?: TenantIdList;
   }
   export type MeetingFeatureStatus = "AVAILABLE"|"UNAVAILABLE"|string;
   export interface MeetingFeaturesConfiguration {
@@ -498,6 +586,7 @@ declare namespace ChimeSDKMeetings {
      */
     SqsQueueArn?: Arn;
   }
+  export type PrimaryMeetingId = string;
   export type ResultMax = number;
   export interface StartMeetingTranscriptionRequest {
     /**
@@ -516,6 +605,8 @@ declare namespace ChimeSDKMeetings {
     MeetingId: GuidString;
   }
   export type String = string;
+  export type TenantId = string;
+  export type TenantIdList = TenantId[];
   export type TranscribeContentIdentificationType = "PII"|string;
   export type TranscribeContentRedactionType = "PII"|string;
   export type TranscribeLanguageCode = "en-US"|"en-GB"|"es-US"|"fr-CA"|"fr-FR"|"en-AU"|"it-IT"|"de-DE"|"pt-BR"|"ja-JP"|"ko-KR"|"zh-CN"|string;
@@ -528,7 +619,7 @@ declare namespace ChimeSDKMeetings {
   export type TranscribeMedicalType = "CONVERSATION"|"DICTATION"|string;
   export type TranscribePartialResultsStability = "low"|"medium"|"high"|string;
   export type TranscribePiiEntityTypes = string;
-  export type TranscribeRegion = "us-east-2"|"us-east-1"|"us-west-2"|"ap-northeast-2"|"ap-southeast-2"|"ap-northeast-1"|"ca-central-1"|"eu-central-1"|"eu-west-1"|"eu-west-2"|"sa-east-1"|"auto"|string;
+  export type TranscribeRegion = "us-east-2"|"us-east-1"|"us-west-2"|"ap-northeast-2"|"ap-southeast-2"|"ap-northeast-1"|"ca-central-1"|"eu-central-1"|"eu-west-1"|"eu-west-2"|"sa-east-1"|"auto"|"us-gov-west-1"|string;
   export type TranscribeVocabularyFilterMethod = "remove"|"mask"|"tag"|string;
   export interface TranscriptionConfiguration {
     /**
@@ -539,6 +630,26 @@ declare namespace ChimeSDKMeetings {
      * The transcription configuration settings passed to Amazon Transcribe Medical.
      */
     EngineTranscribeMedicalSettings?: EngineTranscribeMedicalSettings;
+  }
+  export interface UpdateAttendeeCapabilitiesRequest {
+    /**
+     * The ID of the meeting associated with the update request.
+     */
+    MeetingId: GuidString;
+    /**
+     * The ID of the attendee associated with the update request.
+     */
+    AttendeeId: GuidString;
+    /**
+     * The capabilties that you want to update.
+     */
+    Capabilities: AttendeeCapabilities;
+  }
+  export interface UpdateAttendeeCapabilitiesResponse {
+    /**
+     * The updated attendee data.
+     */
+    Attendee?: Attendee;
   }
   /**
    * A string in YYYY-MM-DD format that represents the latest possible API version that can be used in this service. Specify 'latest' to use the latest possible version.

@@ -687,6 +687,11 @@
           "locationName": "arn",
           "shape": "__string"
         },
+        "CreatedAt": {
+          "documentation": "The date and time the Channel was created.",
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "Description": {
           "documentation": "A short text description of the Channel.",
           "locationName": "description",
@@ -724,6 +729,10 @@
           "locationName": "constantInitializationVector",
           "shape": "__string"
         },
+        "EncryptionMethod": {
+          "locationName": "encryptionMethod",
+          "shape": "CmafEncryptionMethod"
+        },
         "KeyRotationIntervalSeconds": {
           "documentation": "Time (in seconds) between each encryption key rotation.",
           "locationName": "keyRotationIntervalSeconds",
@@ -738,6 +747,14 @@
         "SpekeKeyProvider"
       ],
       "type": "structure"
+    },
+    "CmafEncryptionMethod": {
+      "documentation": "The encryption method to use.",
+      "enum": [
+        "SAMPLE_AES",
+        "AES_CTR"
+      ],
+      "type": "string"
     },
     "CmafPackage": {
       "documentation": "A Common Media Application Format (CMAF) packaging configuration.",
@@ -827,6 +844,11 @@
           "locationName": "arn",
           "shape": "__string"
         },
+        "CreatedAt": {
+          "documentation": "The date and time the Channel was created.",
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "Description": {
           "documentation": "A short text description of the Channel.",
           "locationName": "description",
@@ -884,6 +906,11 @@
         "Arn": {
           "documentation": "The Amazon Resource Name (ARN) assigned to the Channel.",
           "locationName": "arn",
+          "shape": "__string"
+        },
+        "CreatedAt": {
+          "documentation": "The date and time the Channel was created.",
+          "locationName": "createdAt",
           "shape": "__string"
         },
         "Description": {
@@ -965,7 +992,7 @@
           "shape": "__string"
         },
         "CreatedAt": {
-          "documentation": "The time the HarvestJob was submitted\n",
+          "documentation": "The date and time the HarvestJob was submitted.\n",
           "locationName": "createdAt",
           "shape": "__string"
         },
@@ -1095,6 +1122,11 @@
           "locationName": "cmafPackage",
           "shape": "CmafPackage"
         },
+        "CreatedAt": {
+          "documentation": "The date and time the OriginEndpoint was created.",
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "DashPackage": {
           "locationName": "dashPackage",
           "shape": "DashPackage"
@@ -1193,7 +1225,7 @@
           "shape": "__boolean"
         },
         "ManifestLayout": {
-          "documentation": "Determines the position of some tags in the Media Presentation Description (MPD).  When set to FULL, elements like SegmentTemplate and ContentProtection are included in each Representation.  When set to COMPACT, duplicate elements are combined and presented at the AdaptationSet level.",
+          "documentation": "Determines the position of some tags in the Media Presentation Description (MPD).  When set to FULL, elements like SegmentTemplate and ContentProtection are included in each Representation.  When set to COMPACT, duplicate elements are combined and presented at the AdaptationSet level. When set to DRM_TOP_LEVEL_COMPACT, content protection elements are placed the MPD level and referenced at the AdaptationSet level.",
           "locationName": "manifestLayout",
           "shape": "ManifestLayout"
         },
@@ -1311,6 +1343,11 @@
           "locationName": "arn",
           "shape": "__string"
         },
+        "CreatedAt": {
+          "documentation": "The date and time the Channel was created.",
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "Description": {
           "documentation": "A short text description of the Channel.",
           "locationName": "description",
@@ -1367,7 +1404,7 @@
           "shape": "__string"
         },
         "CreatedAt": {
-          "documentation": "The time the HarvestJob was submitted\n",
+          "documentation": "The date and time the HarvestJob was submitted.\n",
           "locationName": "createdAt",
           "shape": "__string"
         },
@@ -1436,6 +1473,11 @@
         "CmafPackage": {
           "locationName": "cmafPackage",
           "shape": "CmafPackage"
+        },
+        "CreatedAt": {
+          "documentation": "The date and time the OriginEndpoint was created.",
+          "locationName": "createdAt",
+          "shape": "__string"
         },
         "DashPackage": {
           "locationName": "dashPackage",
@@ -1548,7 +1590,7 @@
           "shape": "__string"
         },
         "CreatedAt": {
-          "documentation": "The time the HarvestJob was submitted\n",
+          "documentation": "The date and time the HarvestJob was submitted.\n",
           "locationName": "createdAt",
           "shape": "__string"
         },
@@ -1670,6 +1712,14 @@
           "documentation": "The URL of the packaged OriginEndpoint for consumption.",
           "locationName": "url",
           "shape": "__string"
+        },
+        "AdTriggers": {
+          "locationName": "adTriggers",
+          "shape": "AdTriggers"
+        },
+        "AdsOnDeliveryRestrictions": {
+          "locationName": "adsOnDeliveryRestrictions",
+          "shape": "AdsOnDeliveryRestrictions"
         }
       },
       "required": [
@@ -1802,7 +1852,7 @@
         "Password": {
           "documentation": "The system generated password for ingest authentication.",
           "locationName": "password",
-          "shape": "__string"
+          "shape": "SensitiveString"
         },
         "Url": {
           "documentation": "The ingest URL to which the source stream should be sent.",
@@ -1812,7 +1862,7 @@
         "Username": {
           "documentation": "The system generated username for ingest authentication.",
           "locationName": "username",
-          "shape": "__string"
+          "shape": "SensitiveString"
         }
       },
       "type": "structure"
@@ -1967,7 +2017,8 @@
     "ManifestLayout": {
       "enum": [
         "FULL",
-        "COMPACT"
+        "COMPACT",
+        "DRM_TOP_LEVEL_COMPACT"
       ],
       "type": "string"
     },
@@ -2033,6 +2084,11 @@
         "CmafPackage": {
           "locationName": "cmafPackage",
           "shape": "CmafPackage"
+        },
+        "CreatedAt": {
+          "documentation": "The date and time the OriginEndpoint was created.",
+          "locationName": "createdAt",
+          "shape": "__string"
         },
         "DashPackage": {
           "locationName": "dashPackage",
@@ -2165,6 +2221,11 @@
           "locationName": "arn",
           "shape": "__string"
         },
+        "CreatedAt": {
+          "documentation": "The date and time the Channel was created.",
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "Description": {
           "documentation": "A short text description of the Channel.",
           "locationName": "description",
@@ -2220,6 +2281,11 @@
         "Arn": {
           "documentation": "The Amazon Resource Name (ARN) assigned to the Channel.",
           "locationName": "arn",
+          "shape": "__string"
+        },
+        "CreatedAt": {
+          "documentation": "The date and time the Channel was created.",
+          "locationName": "createdAt",
           "shape": "__string"
         },
         "Description": {
@@ -2283,6 +2349,10 @@
         "TIME_WITH_TIMELINE",
         "NUMBER_WITH_DURATION"
       ],
+      "type": "string"
+    },
+    "SensitiveString": {
+      "sensitive": true,
       "type": "string"
     },
     "SpekeKeyProvider": {
@@ -2438,6 +2508,11 @@
           "locationName": "arn",
           "shape": "__string"
         },
+        "CreatedAt": {
+          "documentation": "The date and time the Channel was created.",
+          "locationName": "createdAt",
+          "shape": "__string"
+        },
         "Description": {
           "documentation": "A short text description of the Channel.",
           "locationName": "description",
@@ -2551,6 +2626,11 @@
         "CmafPackage": {
           "locationName": "cmafPackage",
           "shape": "CmafPackage"
+        },
+        "CreatedAt": {
+          "documentation": "The date and time the OriginEndpoint was created.",
+          "locationName": "createdAt",
+          "shape": "__string"
         },
         "DashPackage": {
           "locationName": "dashPackage",

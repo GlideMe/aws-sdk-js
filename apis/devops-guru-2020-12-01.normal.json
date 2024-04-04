@@ -48,7 +48,7 @@
           "shape": "ValidationException"
         }
       ],
-      "documentation": "<p> Adds a notification channel to DevOps Guru. A notification channel is used to notify you about important DevOps Guru events, such as when an insight is generated. </p> <p>If you use an Amazon SNS topic in another account, you must attach a policy to it that grants DevOps Guru permission to it notifications. DevOps Guru adds the required policy on your behalf to send notifications using Amazon SNS in your account. DevOps Guru only supports standard SNS topics. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-required-permissions.html\">Permissions for cross account Amazon SNS topics</a>.</p> <p>If you use an Amazon SNS topic in another account, you must attach a policy to it that grants DevOps Guru permission to it notifications. DevOps Guru adds the required policy on your behalf to send notifications using Amazon SNS in your account. For more information, see Permissions for cross account Amazon SNS topics.</p> <p>If you use an Amazon SNS topic that is encrypted by an Amazon Web Services Key Management Service customer-managed key (CMK), then you must add permissions to the CMK. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-kms-permissions.html\">Permissions for Amazon Web Services KMS–encrypted Amazon SNS topics</a>.</p>"
+      "documentation": "<p> Adds a notification channel to DevOps Guru. A notification channel is used to notify you about important DevOps Guru events, such as when an insight is generated. </p> <p>If you use an Amazon SNS topic in another account, you must attach a policy to it that grants DevOps Guru permission to send it notifications. DevOps Guru adds the required policy on your behalf to send notifications using Amazon SNS in your account. DevOps Guru only supports standard SNS topics. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-required-permissions.html\">Permissions for Amazon SNS topics</a>.</p> <p>If you use an Amazon SNS topic that is encrypted by an Amazon Web Services Key Management Service customer-managed key (CMK), then you must add permissions to the CMK. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-kms-permissions.html\">Permissions for Amazon Web Services KMS–encrypted Amazon SNS topics</a>.</p>"
     },
     "DeleteInsight": {
       "name": "DeleteInsight",
@@ -821,7 +821,7 @@
           "shape": "ValidationException"
         }
       ],
-      "documentation": "<p> Returns a list of insights in your Amazon Web Services account. You can specify which insights are returned by their start time, one or more statuses (<code>ONGOING</code>, <code>CLOSED</code>, and <code>CLOSED</code>), one or more severities (<code>LOW</code>, <code>MEDIUM</code>, and <code>HIGH</code>), and type (<code>REACTIVE</code> or <code>PROACTIVE</code>). </p> <p> Use the <code>Filters</code> parameter to specify status and severity search parameters. Use the <code>Type</code> parameter to specify <code>REACTIVE</code> or <code>PROACTIVE</code> in your search. </p>"
+      "documentation": "<p> Returns a list of insights in your Amazon Web Services account. You can specify which insights are returned by their start time, one or more statuses (<code>ONGOING</code> or <code>CLOSED</code>), one or more severities (<code>LOW</code>, <code>MEDIUM</code>, and <code>HIGH</code>), and type (<code>REACTIVE</code> or <code>PROACTIVE</code>). </p> <p> Use the <code>Filters</code> parameter to specify status and severity search parameters. Use the <code>Type</code> parameter to specify <code>REACTIVE</code> or <code>PROACTIVE</code> in your search. </p>"
     },
     "SearchOrganizationInsights": {
       "name": "SearchOrganizationInsights",
@@ -1058,6 +1058,9 @@
       },
       "documentation": "<p>Information about your account's integration with Amazon CodeGuru Profiler. This returns whether DevOps Guru is configured to consume recommendations generated from Amazon CodeGuru Profiler.</p>"
     },
+    "AnalyzedResourceCount": {
+      "type": "long"
+    },
     "AnomalousLogGroup": {
       "type": "structure",
       "members": {
@@ -1287,6 +1290,10 @@
         "Insight": {
           "shape": "InsightHealth",
           "documentation": "<p> Information about the health of the Amazon Web Services resources in your account that are specified by an Amazon Web Services CloudFormation stack, including the number of open proactive, open reactive insights, and the Mean Time to Recover (MTTR) of closed insights. </p>"
+        },
+        "AnalyzedResourceCount": {
+          "shape": "AnalyzedResourceCount",
+          "documentation": "<p> Number of resources that DevOps Guru is monitoring in your account that are specified by an Amazon Web Services CloudFormation stack. </p>"
         }
       },
       "documentation": "<p> Information about the health of Amazon Web Services resources in your account that are specified by an Amazon Web Services CloudFormation stack. </p>"
@@ -1422,7 +1429,7 @@
         },
         "Tags": {
           "shape": "TagCostEstimationResourceCollectionFilters",
-          "documentation": "<p>The Amazon Web Services tags used to filter the resource collection that is used for a cost estimate.</p> <p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://d1.awsstatic.com/whitepapers/aws-tagging-best-practices.pdf\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>Devops-guru-deployment-application</code> or <code>Devops-guru-rds-application</code>. While <i>keys</i> are case-sensitive, the case of <i>key</i> characters don't matter to DevOps Guru. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
+          "documentation": "<p>The Amazon Web Services tags used to filter the resource collection that is used for a cost estimate.</p> <p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/tagging-best-practices.html\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>DevOps-Guru-deployment-application</code> or <code>devops-guru-rds-application</code>. When you create a <i>key</i>, the case of characters in the <i>key</i> can be whatever you choose. After you create a <i>key</i>, it is case-sensitive. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>, and these act as two different <i>keys</i>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
         }
       },
       "documentation": "<p>Information about a filter used to specify which Amazon Web Services resources are analyzed to create a monthly DevOps Guru cost estimate. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/cost-estimate.html\">Estimate your Amazon DevOps Guru costs</a> and <a href=\"http://aws.amazon.com/devops-guru/pricing/\">Amazon DevOps Guru pricing</a>. </p>"
@@ -1520,6 +1527,10 @@
         "ResourceHours": {
           "shape": "ResourceHours",
           "documentation": "<p>The number of Amazon DevOps Guru resource analysis hours billed to the current Amazon Web Services account in the last hour. </p>"
+        },
+        "AnalyzedResourceCount": {
+          "shape": "AnalyzedResourceCount",
+          "documentation": "<p> Number of resources that DevOps Guru is monitoring in your Amazon Web Services account. </p>"
         }
       }
     },
@@ -1787,7 +1798,7 @@
         },
         "Tags": {
           "shape": "TagHealths",
-          "documentation": "<p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://d1.awsstatic.com/whitepapers/aws-tagging-best-practices.pdf\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>Devops-guru-deployment-application</code> or <code>Devops-guru-rds-application</code>. While <i>keys</i> are case-sensitive, the case of <i>key</i> characters don't matter to DevOps Guru. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
+          "documentation": "<p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/tagging-best-practices.html\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>DevOps-Guru-deployment-application</code> or <code>devops-guru-rds-application</code>. When you create a <i>key</i>, the case of characters in the <i>key</i> can be whatever you choose. After you create a <i>key</i>, it is case-sensitive. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>, and these act as two different <i>keys</i>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
         }
       }
     },
@@ -1828,7 +1839,7 @@
         },
         "Tags": {
           "shape": "TagHealths",
-          "documentation": "<p>The Amazon Web Services tags that are used by resources in the resource collection.</p> <p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://d1.awsstatic.com/whitepapers/aws-tagging-best-practices.pdf\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>Devops-guru-deployment-application</code> or <code>Devops-guru-rds-application</code>. While <i>keys</i> are case-sensitive, the case of <i>key</i> characters don't matter to DevOps Guru. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
+          "documentation": "<p>The Amazon Web Services tags that are used by resources in the resource collection.</p> <p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/tagging-best-practices.html\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>DevOps-Guru-deployment-application</code> or <code>devops-guru-rds-application</code>. When you create a <i>key</i>, the case of characters in the <i>key</i> can be whatever you choose. After you create a <i>key</i>, it is case-sensitive. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>, and these act as two different <i>keys</i>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
         }
       }
     },
@@ -2199,6 +2210,57 @@
         "PROACTIVE"
       ]
     },
+    "KMSKeyId": {
+      "type": "string",
+      "max": 2048,
+      "min": 1,
+      "pattern": "^.*$"
+    },
+    "KMSServerSideEncryptionIntegration": {
+      "type": "structure",
+      "members": {
+        "KMSKeyId": {
+          "shape": "KMSKeyId",
+          "documentation": "<p> Describes the specified KMS key. </p> <p>To specify a KMS key, use its key ID, key ARN, alias name, or alias ARN. When using an alias name, prefix it with \"alias/\". If you specify a predefined Amazon Web Services alias (an Amazon Web Services alias with no key ID), Amazon Web Services KMS associates the alias with an Amazon Web Services managed key and returns its KeyId and Arn in the response. To specify a KMS key in a different Amazon Web Services account, you must use the key ARN or alias ARN.</p> <p>For example: </p> <p>Key ID: 1234abcd-12ab-34cd-56ef-1234567890ab</p> <p>Key ARN: arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</p> <p>Alias name: alias/ExampleAlias</p> <p>Alias ARN: arn:aws:kms:us-east-2:111122223333:alias/ExampleAlias</p>"
+        },
+        "OptInStatus": {
+          "shape": "OptInStatus",
+          "documentation": "<p> Specifies if DevOps Guru is enabled for customer managed keys. </p>"
+        },
+        "Type": {
+          "shape": "ServerSideEncryptionType",
+          "documentation": "<p> The type of KMS key used. Customer managed keys are the KMS keys that you create. Amazon Web Services owned keys are keys that are owned and managed by DevOps Guru. </p>"
+        }
+      },
+      "documentation": "<p> Information about the KMS encryption used with DevOps Guru. </p>"
+    },
+    "KMSServerSideEncryptionIntegrationConfig": {
+      "type": "structure",
+      "members": {
+        "KMSKeyId": {
+          "shape": "KMSKeyId",
+          "documentation": "<p> Describes the specified KMS key.</p> <p>To specify a KMS key, use its key ID, key ARN, alias name, or alias ARN. When using an alias name, prefix it with \"alias/\". If you specify a predefined Amazon Web Services alias (an Amazon Web Services alias with no key ID), Amazon Web Services KMS associates the alias with an Amazon Web Services managed key and returns its KeyId and Arn in the response. To specify a KMS key in a different Amazon Web Services account, you must use the key ARN or alias ARN.</p> <p>For example: </p> <p>Key ID: 1234abcd-12ab-34cd-56ef-1234567890ab</p> <p>Key ARN: arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</p> <p>Alias name: alias/ExampleAlias</p> <p>Alias ARN: arn:aws:kms:us-east-2:111122223333:alias/ExampleAlias</p>"
+        },
+        "OptInStatus": {
+          "shape": "OptInStatus",
+          "documentation": "<p> Specifies if DevOps Guru is enabled for KMS integration. </p>"
+        },
+        "Type": {
+          "shape": "ServerSideEncryptionType",
+          "documentation": "<p> The type of KMS key used. Customer managed keys are the KMS keys that you create. Amazon Web Services owned keys are keys that are owned and managed by DevOps Guru. </p>"
+        }
+      },
+      "documentation": "<p> Information about whether DevOps Guru is configured to encrypt server-side data using KMS. </p>"
+    },
+    "ListAnomaliesForInsightFilters": {
+      "type": "structure",
+      "members": {
+        "ServiceCollection": {
+          "shape": "ServiceCollection"
+        }
+      },
+      "documentation": "<p> Specifies one or more service names that are used to list anomalies. </p>"
+    },
     "ListAnomaliesForInsightMaxResults": {
       "type": "integer",
       "max": 500,
@@ -2231,6 +2293,10 @@
         "AccountId": {
           "shape": "AwsAccountId",
           "documentation": "<p>The ID of the Amazon Web Services account. </p>"
+        },
+        "Filters": {
+          "shape": "ListAnomaliesForInsightFilters",
+          "documentation": "<p> Specifies one or more service names that are used to list anomalies. </p>"
         }
       }
     },
@@ -2521,9 +2587,6 @@
     },
     "ListMonitoredResourcesRequest": {
       "type": "structure",
-      "required": [
-        "Filters"
-      ],
       "members": {
         "Filters": {
           "shape": "ListMonitoredResourcesFilters",
@@ -2807,6 +2870,13 @@
         "ResourcePermission": {
           "shape": "ResourcePermission",
           "documentation": "<p> The permission status of a resource. </p>"
+        },
+        "LastUpdated": {
+          "shape": "Timestamp",
+          "documentation": "<p> The time at which DevOps Guru last updated this resource. </p>"
+        },
+        "ResourceCollection": {
+          "shape": "ResourceCollection"
         }
       },
       "documentation": "<p> Information about the resource that is being monitored, including the name of the resource, the type of resource, and whether or not permission is given to DevOps Guru to access that resource. </p>"
@@ -2835,7 +2905,7 @@
           "documentation": "<p> A <code>NotificationChannelConfig</code> object that contains information about configured notification channels. </p>"
         }
       },
-      "documentation": "<p> Information about a notification channel. A notification channel is used to notify you when DevOps Guru creates an insight. The one supported notification channel is Amazon Simple Notification Service (Amazon SNS). </p> <p>If you use an Amazon SNS topic in another account, you must attach a policy to it that grants DevOps Guru permission to it notifications. DevOps Guru adds the required policy on your behalf to send notifications using Amazon SNS in your account. DevOps Guru only supports standard SNS topics. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-required-permissions.html\">Permissions for cross account Amazon SNS topics</a>.</p> <p>If you use an Amazon SNS topic in another account, you must attach a policy to it that grants DevOps Guru permission to it notifications. DevOps Guru adds the required policy on your behalf to send notifications using Amazon SNS in your account. For more information, see Permissions for cross account Amazon SNS topics.</p> <p>If you use an Amazon SNS topic that is encrypted by an Amazon Web Services Key Management Service customer-managed key (CMK), then you must add permissions to the CMK. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-kms-permissions.html\">Permissions for Amazon Web Services KMS–encrypted Amazon SNS topics</a>.</p>"
+      "documentation": "<p> Information about a notification channel. A notification channel is used to notify you when DevOps Guru creates an insight. The one supported notification channel is Amazon Simple Notification Service (Amazon SNS). </p> <p>If you use an Amazon SNS topic in another account, you must attach a policy to it that grants DevOps Guru permission to send it notifications. DevOps Guru adds the required policy on your behalf to send notifications using Amazon SNS in your account. DevOps Guru only supports standard SNS topics. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-required-permissions.html\">Permissions for Amazon SNS topics</a>.</p> <p>If you use an Amazon SNS topic that is encrypted by an Amazon Web Services Key Management Service customer-managed key (CMK), then you must add permissions to the CMK. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-kms-permissions.html\">Permissions for Amazon Web Services KMS–encrypted Amazon SNS topics</a>.</p>"
     },
     "NotificationChannelConfig": {
       "type": "structure",
@@ -2845,7 +2915,11 @@
       "members": {
         "Sns": {
           "shape": "SnsChannelConfig",
-          "documentation": "<p> Information about a notification channel configured in DevOps Guru to send notifications when insights are created. </p> <p>If you use an Amazon SNS topic in another account, you must attach a policy to it that grants DevOps Guru permission to it notifications. DevOps Guru adds the required policy on your behalf to send notifications using Amazon SNS in your account. DevOps Guru only supports standard SNS topics. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-required-permissions.html\">Permissions for cross account Amazon SNS topics</a>.</p> <p>If you use an Amazon SNS topic in another account, you must attach a policy to it that grants DevOps Guru permission to it notifications. DevOps Guru adds the required policy on your behalf to send notifications using Amazon SNS in your account. For more information, see Permissions for cross account Amazon SNS topics.</p> <p>If you use an Amazon SNS topic that is encrypted by an Amazon Web Services Key Management Service customer-managed key (CMK), then you must add permissions to the CMK. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-kms-permissions.html\">Permissions for Amazon Web Services KMS–encrypted Amazon SNS topics</a>.</p>"
+          "documentation": "<p> Information about a notification channel configured in DevOps Guru to send notifications when insights are created. </p> <p>If you use an Amazon SNS topic in another account, you must attach a policy to it that grants DevOps Guru permission to send it notifications. DevOps Guru adds the required policy on your behalf to send notifications using Amazon SNS in your account. DevOps Guru only supports standard SNS topics. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-required-permissions.html\">Permissions for Amazon SNS topics</a>.</p> <p>If you use an Amazon SNS topic that is encrypted by an Amazon Web Services Key Management Service customer-managed key (CMK), then you must add permissions to the CMK. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-kms-permissions.html\">Permissions for Amazon Web Services KMS–encrypted Amazon SNS topics</a>.</p>"
+        },
+        "Filters": {
+          "shape": "NotificationFilterConfig",
+          "documentation": "<p> The filter configurations for the Amazon SNS notification topic you use with DevOps Guru. If you do not provide filter configurations, the default configurations are to receive notifications for all message types of <code>High</code> or <code>Medium</code> severity. </p>"
         }
       },
       "documentation": "<p> Information about notification channels you have configured with DevOps Guru. The one supported notification channel is Amazon Simple Notification Service (Amazon SNS).</p>"
@@ -2855,6 +2929,38 @@
       "max": 36,
       "min": 36,
       "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+    },
+    "NotificationFilterConfig": {
+      "type": "structure",
+      "members": {
+        "Severities": {
+          "shape": "InsightSeverities",
+          "documentation": "<p> The severity levels that you want to receive notifications for. For example, you can choose to receive notifications only for insights with <code>HIGH</code> and <code>MEDIUM</code> severity levels. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/working-with-insights.html#understanding-insights-severities\">Understanding insight severities</a>. </p>"
+        },
+        "MessageTypes": {
+          "shape": "NotificationMessageTypes",
+          "documentation": "<p> The events that you want to receive notifications for. For example, you can choose to receive notifications only when the severity level is upgraded or a new insight is created. </p>"
+        }
+      },
+      "documentation": "<p> The filter configurations for the Amazon SNS notification topic you use with DevOps Guru. You can choose to specify which events or message types to receive notifications for. You can also choose to specify which severity levels to receive notifications for. </p>"
+    },
+    "NotificationMessageType": {
+      "type": "string",
+      "enum": [
+        "NEW_INSIGHT",
+        "CLOSED_INSIGHT",
+        "NEW_ASSOCIATION",
+        "SEVERITY_UPGRADED",
+        "NEW_RECOMMENDATION"
+      ]
+    },
+    "NotificationMessageTypes": {
+      "type": "list",
+      "member": {
+        "shape": "NotificationMessageType"
+      },
+      "max": 5,
+      "min": 0
     },
     "NumMetricsAnalyzed": {
       "type": "integer"
@@ -3204,6 +3310,10 @@
         "AnomalyResources": {
           "shape": "AnomalyResources",
           "documentation": "<p>Information about a resource in which DevOps Guru detected anomalous behavior.</p>"
+        },
+        "Description": {
+          "shape": "AnomalyDescription",
+          "documentation": "<p> A description of the proactive anomaly. </p>"
         }
       },
       "documentation": "<p>Information about an anomaly. This object is returned by <code>ListAnomalies</code>.</p>"
@@ -3259,6 +3369,10 @@
         "AnomalyResources": {
           "shape": "AnomalyResources",
           "documentation": "<p>Information about a resource in which DevOps Guru detected anomalous behavior.</p>"
+        },
+        "Description": {
+          "shape": "AnomalyDescription",
+          "documentation": "<p> A description of the proactive anomaly. </p>"
         }
       },
       "documentation": "<p>Details about a proactive anomaly. This object is returned by <code>DescribeAnomaly.</code> </p>"
@@ -3879,7 +3993,7 @@
         },
         "Tags": {
           "shape": "TagCollections",
-          "documentation": "<p>The Amazon Web Services tags that are used by resources in the resource collection.</p> <p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://d1.awsstatic.com/whitepapers/aws-tagging-best-practices.pdf\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>Devops-guru-deployment-application</code> or <code>Devops-guru-rds-application</code>. While <i>keys</i> are case-sensitive, the case of <i>key</i> characters don't matter to DevOps Guru. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
+          "documentation": "<p>The Amazon Web Services tags that are used by resources in the resource collection.</p> <p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/tagging-best-practices.html\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>DevOps-Guru-deployment-application</code> or <code>devops-guru-rds-application</code>. When you create a <i>key</i>, the case of characters in the <i>key</i> can be whatever you choose. After you create a <i>key</i>, it is case-sensitive. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>, and these act as two different <i>keys</i>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
         }
       },
       "documentation": "<p> A collection of Amazon Web Services resources supported by DevOps Guru. The two types of Amazon Web Services resource collections supported are Amazon Web Services CloudFormation stacks and Amazon Web Services resources that contain the same Amazon Web Services tag. DevOps Guru can be configured to analyze the Amazon Web Services resources that are defined in the stacks or that are tagged using the same tag <i>key</i>. You can specify up to 500 Amazon Web Services CloudFormation stacks. </p>"
@@ -3893,7 +4007,7 @@
         },
         "Tags": {
           "shape": "TagCollectionFilters",
-          "documentation": "<p>The Amazon Web Services tags used to filter the resources in the resource collection.</p> <p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://d1.awsstatic.com/whitepapers/aws-tagging-best-practices.pdf\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>Devops-guru-deployment-application</code> or <code>Devops-guru-rds-application</code>. While <i>keys</i> are case-sensitive, the case of <i>key</i> characters don't matter to DevOps Guru. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
+          "documentation": "<p>The Amazon Web Services tags used to filter the resources in the resource collection.</p> <p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/tagging-best-practices.html\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>DevOps-Guru-deployment-application</code> or <code>devops-guru-rds-application</code>. When you create a <i>key</i>, the case of characters in the <i>key</i> can be whatever you choose. After you create a <i>key</i>, it is case-sensitive. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>, and these act as two different <i>keys</i>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
         }
       },
       "documentation": "<p> Information about a filter used to specify which Amazon Web Services resources are analyzed for anomalous behavior by DevOps Guru. </p>"
@@ -3928,7 +4042,33 @@
     "ResourceTypeFilter": {
       "type": "string",
       "enum": [
-        "LOG_GROUPS"
+        "LOG_GROUPS",
+        "CLOUDFRONT_DISTRIBUTION",
+        "DYNAMODB_TABLE",
+        "EC2_NAT_GATEWAY",
+        "ECS_CLUSTER",
+        "ECS_SERVICE",
+        "EKS_CLUSTER",
+        "ELASTIC_BEANSTALK_ENVIRONMENT",
+        "ELASTIC_LOAD_BALANCER_LOAD_BALANCER",
+        "ELASTIC_LOAD_BALANCING_V2_LOAD_BALANCER",
+        "ELASTIC_LOAD_BALANCING_V2_TARGET_GROUP",
+        "ELASTICACHE_CACHE_CLUSTER",
+        "ELASTICSEARCH_DOMAIN",
+        "KINESIS_STREAM",
+        "LAMBDA_FUNCTION",
+        "OPEN_SEARCH_SERVICE_DOMAIN",
+        "RDS_DB_INSTANCE",
+        "RDS_DB_CLUSTER",
+        "REDSHIFT_CLUSTER",
+        "ROUTE53_HOSTED_ZONE",
+        "ROUTE53_HEALTH_CHECK",
+        "S3_BUCKET",
+        "SAGEMAKER_ENDPOINT",
+        "SNS_TOPIC",
+        "SQS_QUEUE",
+        "STEP_FUNCTIONS_ACTIVITY",
+        "STEP_FUNCTIONS_STATE_MACHINE"
       ]
     },
     "ResourceTypeFilters": {
@@ -3964,7 +4104,7 @@
           "documentation": "<p>A collection of the names of Amazon Web Services services.</p>"
         }
       },
-      "documentation": "<p> Specifies one or more severity values and one or more status values that are used to search for insights. </p>"
+      "documentation": "<p>Specifies values used to filter responses when searching for insights. You can use a <code>ResourceCollection</code>, <code>ServiceCollection</code>, array of severities, and an array of status values. Each filter type contains one or more values to search for. If you specify multiple filter types, the filter types are joined with an <code>AND</code>, and the request returns only results that match all of the specified filters.</p>"
     },
     "SearchInsightsMaxResults": {
       "type": "integer",
@@ -4092,6 +4232,13 @@
         }
       }
     },
+    "ServerSideEncryptionType": {
+      "type": "string",
+      "enum": [
+        "CUSTOMER_MANAGED_KEY",
+        "AWS_OWNED_KMS_KEY"
+      ]
+    },
     "ServiceCollection": {
       "type": "structure",
       "members": {
@@ -4112,6 +4259,10 @@
         "Insight": {
           "shape": "ServiceInsightHealth",
           "documentation": "<p>Represents the health of an Amazon Web Services service. This is a <code>ServiceInsightHealth</code> that contains the number of open proactive and reactive insights for this service.</p>"
+        },
+        "AnalyzedResourceCount": {
+          "shape": "AnalyzedResourceCount",
+          "documentation": "<p> Number of resources that DevOps Guru is monitoring in an analyzed Amazon Web Services service. </p>"
         }
       },
       "documentation": "<p>Represents the health of an Amazon Web Services service.</p>"
@@ -4146,6 +4297,10 @@
         "LogsAnomalyDetection": {
           "shape": "LogsAnomalyDetectionIntegration",
           "documentation": "<p> Information about whether DevOps Guru is configured to perform log anomaly detection on Amazon CloudWatch log groups. </p>"
+        },
+        "KMSServerSideEncryption": {
+          "shape": "KMSServerSideEncryptionIntegration",
+          "documentation": "<p> Information about whether DevOps Guru is configured to encrypt server-side data using KMS. </p>"
         }
       },
       "documentation": "<p> Information about the integration of DevOps Guru with another Amazon Web Services service, such as Amazon Web Services Systems Manager. </p>"
@@ -4226,7 +4381,7 @@
           "documentation": "<p> The Amazon Resource Name (ARN) of an Amazon Simple Notification Service topic. </p>"
         }
       },
-      "documentation": "<p> Contains the Amazon Resource Name (ARN) of an Amazon Simple Notification Service topic. </p> <p>If you use an Amazon SNS topic in another account, you must attach a policy to it that grants DevOps Guru permission to it notifications. DevOps Guru adds the required policy on your behalf to send notifications using Amazon SNS in your account. DevOps Guru only supports standard SNS topics. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-required-permissions.html\">Permissions for cross account Amazon SNS topics</a>.</p> <p>If you use an Amazon SNS topic in another account, you must attach a policy to it that grants DevOps Guru permission to it notifications. DevOps Guru adds the required policy on your behalf to send notifications using Amazon SNS in your account. For more information, see Permissions for cross account Amazon SNS topics.</p> <p>If you use an Amazon SNS topic that is encrypted by an Amazon Web Services Key Management Service customer-managed key (CMK), then you must add permissions to the CMK. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-kms-permissions.html\">Permissions for Amazon Web Services KMS–encrypted Amazon SNS topics</a>.</p>"
+      "documentation": "<p> Contains the Amazon Resource Name (ARN) of an Amazon Simple Notification Service topic. </p> <p>If you use an Amazon SNS topic in another account, you must attach a policy to it that grants DevOps Guru permission to send it notifications. DevOps Guru adds the required policy on your behalf to send notifications using Amazon SNS in your account. DevOps Guru only supports standard SNS topics. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-required-permissions.html\">Permissions for Amazon SNS topics</a>.</p> <p>If you use an Amazon SNS topic that is encrypted by an Amazon Web Services Key Management Service customer-managed key (CMK), then you must add permissions to the CMK. For more information, see <a href=\"https://docs.aws.amazon.com/devops-guru/latest/userguide/sns-kms-permissions.html\">Permissions for Amazon Web Services KMS–encrypted Amazon SNS topics</a>.</p>"
     },
     "SsmOpsItemId": {
       "type": "string",
@@ -4290,14 +4445,14 @@
       "members": {
         "AppBoundaryKey": {
           "shape": "AppBoundaryKey",
-          "documentation": "<p>An Amazon Web Services tag <i>key</i> that is used to identify the Amazon Web Services resources that DevOps Guru analyzes. All Amazon Web Services resources in your account and Region tagged with this <i>key</i> make up your DevOps Guru application and analysis boundary.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>Devops-guru-deployment-application</code> or <code>Devops-guru-rds-application</code>. While <i>keys</i> are case-sensitive, the case of <i>key</i> characters don't matter to DevOps Guru. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
+          "documentation": "<p>An Amazon Web Services tag <i>key</i> that is used to identify the Amazon Web Services resources that DevOps Guru analyzes. All Amazon Web Services resources in your account and Region tagged with this <i>key</i> make up your DevOps Guru application and analysis boundary.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>DevOps-Guru-deployment-application</code> or <code>devops-guru-rds-application</code>. When you create a <i>key</i>, the case of characters in the <i>key</i> can be whatever you choose. After you create a <i>key</i>, it is case-sensitive. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>, and these act as two different <i>keys</i>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
         },
         "TagValues": {
           "shape": "TagValues",
           "documentation": "<p>The values in an Amazon Web Services tag collection.</p> <p>The tag's <i>value</i> is an optional field used to associate a string with the tag <i>key</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). The <i>key</i> and <i>value</i> are the tag's <i>key</i> pair. Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive. You can specify a maximum of 256 characters for a tag value.</p>"
         }
       },
-      "documentation": "<p>A collection of Amazon Web Services stags.</p> <p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://d1.awsstatic.com/whitepapers/aws-tagging-best-practices.pdf\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>Devops-guru-deployment-application</code> or <code>Devops-guru-rds-application</code>. While <i>keys</i> are case-sensitive, the case of <i>key</i> characters don't matter to DevOps Guru. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
+      "documentation": "<p>A collection of Amazon Web Services tags.</p> <p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/tagging-best-practices.html\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>DevOps-Guru-deployment-application</code> or <code>devops-guru-rds-application</code>. When you create a <i>key</i>, the case of characters in the <i>key</i> can be whatever you choose. After you create a <i>key</i>, it is case-sensitive. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>, and these act as two different <i>keys</i>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
     },
     "TagCollectionFilter": {
       "type": "structure",
@@ -4308,7 +4463,7 @@
       "members": {
         "AppBoundaryKey": {
           "shape": "AppBoundaryKey",
-          "documentation": "<p>An Amazon Web Services tag <i>key</i> that is used to identify the Amazon Web Services resources that DevOps Guru analyzes. All Amazon Web Services resources in your account and Region tagged with this <i>key</i> make up your DevOps Guru application and analysis boundary.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>Devops-guru-deployment-application</code> or <code>Devops-guru-rds-application</code>. While <i>keys</i> are case-sensitive, the case of <i>key</i> characters don't matter to DevOps Guru. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
+          "documentation": "<p>An Amazon Web Services tag <i>key</i> that is used to identify the Amazon Web Services resources that DevOps Guru analyzes. All Amazon Web Services resources in your account and Region tagged with this <i>key</i> make up your DevOps Guru application and analysis boundary.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>DevOps-Guru-deployment-application</code> or <code>devops-guru-rds-application</code>. When you create a <i>key</i>, the case of characters in the <i>key</i> can be whatever you choose. After you create a <i>key</i>, it is case-sensitive. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>, and these act as two different <i>keys</i>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
         },
         "TagValues": {
           "shape": "TagValues",
@@ -4338,7 +4493,7 @@
       "members": {
         "AppBoundaryKey": {
           "shape": "AppBoundaryKey",
-          "documentation": "<p>An Amazon Web Services tag <i>key</i> that is used to identify the Amazon Web Services resources that DevOps Guru analyzes. All Amazon Web Services resources in your account and Region tagged with this <i>key</i> make up your DevOps Guru application and analysis boundary.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>Devops-guru-deployment-application</code> or <code>Devops-guru-rds-application</code>. While <i>keys</i> are case-sensitive, the case of <i>key</i> characters don't matter to DevOps Guru. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
+          "documentation": "<p>An Amazon Web Services tag <i>key</i> that is used to identify the Amazon Web Services resources that DevOps Guru analyzes. All Amazon Web Services resources in your account and Region tagged with this <i>key</i> make up your DevOps Guru application and analysis boundary.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>DevOps-Guru-deployment-application</code> or <code>devops-guru-rds-application</code>. When you create a <i>key</i>, the case of characters in the <i>key</i> can be whatever you choose. After you create a <i>key</i>, it is case-sensitive. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>, and these act as two different <i>keys</i>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
         },
         "TagValues": {
           "shape": "CostEstimationTagValues",
@@ -4358,7 +4513,7 @@
       "members": {
         "AppBoundaryKey": {
           "shape": "AppBoundaryKey",
-          "documentation": "<p>An Amazon Web Services tag <i>key</i> that is used to identify the Amazon Web Services resources that DevOps Guru analyzes. All Amazon Web Services resources in your account and Region tagged with this <i>key</i> make up your DevOps Guru application and analysis boundary.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>Devops-guru-deployment-application</code> or <code>Devops-guru-rds-application</code>. While <i>keys</i> are case-sensitive, the case of <i>key</i> characters don't matter to DevOps Guru. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
+          "documentation": "<p>An Amazon Web Services tag <i>key</i> that is used to identify the Amazon Web Services resources that DevOps Guru analyzes. All Amazon Web Services resources in your account and Region tagged with this <i>key</i> make up your DevOps Guru application and analysis boundary.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>DevOps-Guru-deployment-application</code> or <code>devops-guru-rds-application</code>. When you create a <i>key</i>, the case of characters in the <i>key</i> can be whatever you choose. After you create a <i>key</i>, it is case-sensitive. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>, and these act as two different <i>keys</i>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
         },
         "TagValue": {
           "shape": "TagValue",
@@ -4367,6 +4522,10 @@
         "Insight": {
           "shape": "InsightHealth",
           "documentation": "<p>Information about the health of the Amazon Web Services resources in your account that are specified by an Amazon Web Services tag, including the number of open proactive, open reactive insights, and the Mean Time to Recover (MTTR) of closed insights. </p>"
+        },
+        "AnalyzedResourceCount": {
+          "shape": "AnalyzedResourceCount",
+          "documentation": "<p> Number of resources that DevOps Guru is monitoring in your account that are specified by an Amazon Web Services tag. </p>"
         }
       },
       "documentation": "<p> Information about the health of Amazon Web Services resources in your account that are specified by an Amazon Web Services tag <i>key</i>. </p>"
@@ -4457,7 +4616,7 @@
         },
         "Tags": {
           "shape": "UpdateTagCollectionFilters",
-          "documentation": "<p>The updated Amazon Web Services tags used to filter the resources in the resource collection.</p> <p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://d1.awsstatic.com/whitepapers/aws-tagging-best-practices.pdf\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>Devops-guru-deployment-application</code> or <code>Devops-guru-rds-application</code>. While <i>keys</i> are case-sensitive, the case of <i>key</i> characters don't matter to DevOps Guru. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
+          "documentation": "<p>The updated Amazon Web Services tags used to filter the resources in the resource collection.</p> <p>Tags help you identify and organize your Amazon Web Services resources. Many Amazon Web Services services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related. For example, you can assign the same tag to an Amazon DynamoDB table resource that you assign to an Lambda function. For more information about using tags, see the <a href=\"https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/tagging-best-practices.html\">Tagging best practices</a> whitepaper. </p> <p>Each Amazon Web Services tag has two parts. </p> <ul> <li> <p>A tag <i>key</i> (for example, <code>CostCenter</code>, <code>Environment</code>, <code>Project</code>, or <code>Secret</code>). Tag <i>keys</i> are case-sensitive.</p> </li> <li> <p>An optional field known as a tag <i>value</i> (for example, <code>111122223333</code>, <code>Production</code>, or a team name). Omitting the tag <i>value</i> is the same as using an empty string. Like tag <i>keys</i>, tag <i>values</i> are case-sensitive.</p> </li> </ul> <p>Together these are known as <i>key</i>-<i>value</i> pairs.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>DevOps-Guru-deployment-application</code> or <code>devops-guru-rds-application</code>. When you create a <i>key</i>, the case of characters in the <i>key</i> can be whatever you choose. After you create a <i>key</i>, it is case-sensitive. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>, and these act as two different <i>keys</i>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
         }
       },
       "documentation": "<p> Contains information used to update a collection of Amazon Web Services resources. </p>"
@@ -4491,6 +4650,10 @@
         "LogsAnomalyDetection": {
           "shape": "LogsAnomalyDetectionIntegrationConfig",
           "documentation": "<p> Information about whether DevOps Guru is configured to perform log anomaly detection on Amazon CloudWatch log groups. </p>"
+        },
+        "KMSServerSideEncryption": {
+          "shape": "KMSServerSideEncryptionIntegrationConfig",
+          "documentation": "<p> Information about whether DevOps Guru is configured to encrypt server-side data using KMS. </p>"
         }
       },
       "documentation": "<p> Information about updating the integration status of an Amazon Web Services service, such as Amazon Web Services Systems Manager, with DevOps Guru. </p>"
@@ -4528,7 +4691,7 @@
       "members": {
         "AppBoundaryKey": {
           "shape": "AppBoundaryKey",
-          "documentation": "<p>An Amazon Web Services tag <i>key</i> that is used to identify the Amazon Web Services resources that DevOps Guru analyzes. All Amazon Web Services resources in your account and Region tagged with this <i>key</i> make up your DevOps Guru application and analysis boundary.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>Devops-guru-deployment-application</code> or <code>Devops-guru-rds-application</code>. While <i>keys</i> are case-sensitive, the case of <i>key</i> characters don't matter to DevOps Guru. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
+          "documentation": "<p>An Amazon Web Services tag <i>key</i> that is used to identify the Amazon Web Services resources that DevOps Guru analyzes. All Amazon Web Services resources in your account and Region tagged with this <i>key</i> make up your DevOps Guru application and analysis boundary.</p> <important> <p>The string used for a <i>key</i> in a tag that you use to define your resource coverage must begin with the prefix <code>Devops-guru-</code>. The tag <i>key</i> might be <code>DevOps-Guru-deployment-application</code> or <code>devops-guru-rds-application</code>. When you create a <i>key</i>, the case of characters in the <i>key</i> can be whatever you choose. After you create a <i>key</i>, it is case-sensitive. For example, DevOps Guru works with a <i>key</i> named <code>devops-guru-rds</code> and a <i>key</i> named <code>DevOps-Guru-RDS</code>, and these act as two different <i>keys</i>. Possible <i>key</i>/<i>value</i> pairs in your application might be <code>Devops-Guru-production-application/RDS</code> or <code>Devops-Guru-production-application/containers</code>.</p> </important>"
         },
         "TagValues": {
           "shape": "UpdateTagValues",

@@ -553,7 +553,7 @@
           "documentation": "<p>400 response</p>"
         }
       ],
-      "documentation": "<p>Generates a model schema for existing backend API resource.</p>"
+      "documentation": "<p>Gets a model introspection schema for an existing backend API resource.</p>"
     },
     "GetBackendAuth": {
       "name": "GetBackendAuth",
@@ -1185,6 +1185,7 @@
     },
     "BackendAuthAppleProviderConfig": {
       "type": "structure",
+      "sensitive": true,
       "members": {
         "ClientId": {
           "shape": "__string",
@@ -1211,6 +1212,7 @@
     },
     "BackendAuthSocialProviderConfig": {
       "type": "structure",
+      "sensitive": true,
       "members": {
         "ClientId": {
           "shape": "__string",
@@ -2247,6 +2249,7 @@
     },
     "EmailSettings": {
       "type": "structure",
+      "sensitive": true,
       "members": {
         "EmailMessage": {
           "shape": "__string",
@@ -2364,6 +2367,11 @@
           "shape": "Status",
           "locationName": "status",
           "documentation": "<p>The current status of the request.</p>"
+        },
+        "ModelIntrospectionSchema": {
+          "shape": "__string",
+          "locationName": "modelIntrospectionSchema",
+          "documentation": "<p>Stringified JSON of the model introspection schema for an existing backend API resource.</p>"
         }
       }
     },
@@ -3169,6 +3177,7 @@
     },
     "SmsSettings": {
       "type": "structure",
+      "sensitive": true,
       "members": {
         "SmsMessage": {
           "shape": "__string",

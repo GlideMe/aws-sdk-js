@@ -187,6 +187,15 @@
     }
     return AWS.Service.defineService('mock', {
       ...mockServiceParams,
+      serviceIdentifier: 'mock',
+      initialize: function(config) {
+        AWS.Service.prototype.initialize.call(this, config);
+        this.config.credentials = {
+          accessKeyId: 'akid',
+          secretAccessKey: 'secret'
+        };
+        this.config.region = this.config.region || 'mock-region';
+      },
       api: new AWS.Model.Api(customApi)
     });
   };

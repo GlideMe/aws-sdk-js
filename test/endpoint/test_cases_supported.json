@@ -56,38 +56,6 @@
     "hostname": "api.tunneling.iot-fips.ca-central-1.amazonaws.com"
   },
   {
-    "endpointPrefix": "a4b",
-    "clientName": "AlexaForBusiness",
-    "region": "us-east-1",
-    "useFipsEndpoint": false,
-    "useDualstackEndpoint": false,
-    "hostname": "a4b.us-east-1.amazonaws.com"
-  },
-  {
-    "endpointPrefix": "a4b",
-    "clientName": "AlexaForBusiness",
-    "region": "us-east-1",
-    "useFipsEndpoint": false,
-    "useDualstackEndpoint": true,
-    "hostname": "a4b.us-east-1.api.aws"
-  },
-  {
-    "endpointPrefix": "a4b",
-    "clientName": "AlexaForBusiness",
-    "region": "us-east-1",
-    "useFipsEndpoint": true,
-    "useDualstackEndpoint": false,
-    "hostname": "a4b-fips.us-east-1.amazonaws.com"
-  },
-  {
-    "endpointPrefix": "a4b",
-    "clientName": "AlexaForBusiness",
-    "region": "us-east-1",
-    "useFipsEndpoint": true,
-    "useDualstackEndpoint": true,
-    "hostname": "a4b-fips.us-east-1.api.aws"
-  },
-  {
     "endpointPrefix": "access-analyzer",
     "clientName": "AccessAnalyzer",
     "region": "af-south-1",
@@ -3454,38 +3422,6 @@
     "useFipsEndpoint": true,
     "useDualstackEndpoint": true,
     "hostname": "healthlake-fips.us-east-1.api.aws"
-  },
-  {
-    "endpointPrefix": "honeycode",
-    "clientName": "Honeycode",
-    "region": "us-west-2",
-    "useFipsEndpoint": false,
-    "useDualstackEndpoint": false,
-    "hostname": "honeycode.us-west-2.amazonaws.com"
-  },
-  {
-    "endpointPrefix": "honeycode",
-    "clientName": "Honeycode",
-    "region": "us-west-2",
-    "useFipsEndpoint": false,
-    "useDualstackEndpoint": true,
-    "hostname": "honeycode.us-west-2.api.aws"
-  },
-  {
-    "endpointPrefix": "honeycode",
-    "clientName": "Honeycode",
-    "region": "us-west-2",
-    "useFipsEndpoint": true,
-    "useDualstackEndpoint": false,
-    "hostname": "honeycode-fips.us-west-2.amazonaws.com"
-  },
-  {
-    "endpointPrefix": "honeycode",
-    "clientName": "Honeycode",
-    "region": "us-west-2",
-    "useFipsEndpoint": true,
-    "useDualstackEndpoint": true,
-    "hostname": "honeycode-fips.us-west-2.api.aws"
   },
   {
     "endpointPrefix": "iam",

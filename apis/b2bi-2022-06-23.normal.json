@@ -1196,7 +1196,7 @@
         },
         "mappingTemplate": {
           "shape": "MappingTemplate",
-          "documentation": "<p>Specifies the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>"
+          "documentation": "<p>Specifies the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>"
         },
         "ediType": {
           "shape": "EdiType",
@@ -1248,7 +1248,7 @@
         },
         "mappingTemplate": {
           "shape": "MappingTemplate",
-          "documentation": "<p>Returns the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>"
+          "documentation": "<p>Returns the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>"
         },
         "status": {
           "shape": "TransformerStatus",
@@ -1643,7 +1643,7 @@
         },
         "mappingTemplate": {
           "shape": "MappingTemplate",
-          "documentation": "<p>Returns the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>"
+          "documentation": "<p>Returns the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>"
         },
         "status": {
           "shape": "TransformerStatus",
@@ -2126,7 +2126,7 @@
         },
         "mappingTemplate": {
           "shape": "MappingTemplate",
-          "documentation": "<p>Specifies the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>"
+          "documentation": "<p>Specifies the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>"
         },
         "fileFormat": {
           "shape": "FileFormat",
@@ -2250,7 +2250,7 @@
         },
         "mappingTemplate": {
           "shape": "MappingTemplate",
-          "documentation": "<p>Returns the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>"
+          "documentation": "<p>Returns the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>"
         },
         "status": {
           "shape": "TransformerStatus",
@@ -2533,7 +2533,7 @@
         },
         "mappingTemplate": {
           "shape": "MappingTemplate",
-          "documentation": "<p>Specifies the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>"
+          "documentation": "<p>Specifies the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>"
         },
         "status": {
           "shape": "TransformerStatus",
@@ -2581,7 +2581,7 @@
         },
         "mappingTemplate": {
           "shape": "MappingTemplate",
-          "documentation": "<p>Returns the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>"
+          "documentation": "<p>Returns the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>"
         },
         "status": {
           "shape": "TransformerStatus",
@@ -2673,7 +2673,30 @@
         "X12_945",
         "X12_990",
         "X12_997",
-        "X12_999"
+        "X12_999",
+        "X12_270_X279",
+        "X12_271_X279",
+        "X12_275_X210",
+        "X12_275_X211",
+        "X12_276_X212",
+        "X12_277_X212",
+        "X12_277_X214",
+        "X12_277_X364",
+        "X12_278_X217",
+        "X12_820_X218",
+        "X12_820_X306",
+        "X12_824_X186",
+        "X12_834_X220",
+        "X12_834_X307",
+        "X12_834_X318",
+        "X12_835_X221",
+        "X12_837_X222",
+        "X12_837_X223",
+        "X12_837_X224",
+        "X12_837_X291",
+        "X12_837_X292",
+        "X12_837_X298",
+        "X12_999_X231"
       ]
     },
     "X12Version": {
@@ -2681,7 +2704,8 @@
       "enum": [
         "VERSION_4010",
         "VERSION_4030",
-        "VERSION_5010"
+        "VERSION_5010",
+        "VERSION_5010_HIPAA"
       ]
     }
   },

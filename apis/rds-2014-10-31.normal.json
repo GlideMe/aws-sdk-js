@@ -4,6 +4,9 @@
     "apiVersion": "2014-10-31",
     "endpointPrefix": "rds",
     "protocol": "query",
+    "protocols": [
+      "query"
+    ],
     "serviceAbbreviation": "Amazon RDS",
     "serviceFullName": "Amazon Relational Database Service",
     "serviceId": "RDS",
@@ -791,6 +794,9 @@
         },
         {
           "shape": "TenantDatabaseQuotaExceededFault"
+        },
+        {
+          "shape": "CertificateNotFoundFault"
         }
       ],
       "documentation": "<p>Creates a new DB instance that acts as a read replica for an existing source DB instance or Multi-AZ DB cluster. You can create a read replica for a DB instance running Db2, MariaDB, MySQL, Oracle, PostgreSQL, or SQL Server. You can create a read replica for a Multi-AZ DB cluster running MySQL or PostgreSQL. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html\">Working with read replicas</a> and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html#multi-az-db-clusters-migrating-to-instance-with-read-replica\">Migrating from a Multi-AZ DB cluster to a DB instance using a read replica</a> in the <i>Amazon RDS User Guide</i>.</p> <p>Amazon Aurora doesn't support this operation. To create a DB instance for an Aurora DB cluster, use the <code>CreateDBInstance</code> operation.</p> <p>All read replica DB instances are created with backups disabled. All other attributes (including DB security groups and DB parameter groups) are inherited from the source DB instance or cluster, except as specified.</p> <important> <p>Your source DB instance or cluster must have backup retention enabled.</p> </important>"
@@ -4088,6 +4094,9 @@
           "shape": "DBClusterSnapshotNotFoundFault"
         },
         {
+          "shape": "CertificateNotFoundFault"
+        },
+        {
           "shape": "TenantDatabaseQuotaExceededFault"
         }
       ],
@@ -4160,6 +4169,9 @@
         },
         {
           "shape": "NetworkTypeNotSupported"
+        },
+        {
+          "shape": "CertificateNotFoundFault"
         }
       ],
       "documentation": "<p>Amazon Relational Database Service (Amazon RDS) supports importing MySQL databases by using backup files. You can create a backup of your on-premises database, store it on Amazon Simple Storage Service (Amazon S3), and then restore the backup file onto a new Amazon RDS DB instance running MySQL. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Procedural.Importing.html\">Importing Data into an Amazon RDS MySQL DB Instance</a> in the <i>Amazon RDS User Guide.</i> </p> <p>This operation doesn't apply to RDS Custom.</p>"
@@ -4249,6 +4261,9 @@
         },
         {
           "shape": "TenantDatabaseQuotaExceededFault"
+        },
+        {
+          "shape": "CertificateNotFoundFault"
         }
       ],
       "documentation": "<p>Restores a DB instance to an arbitrary point in time. You can restore to any point in time before the time identified by the <code>LatestRestorableTime</code> property. You can restore to a point up to the number of days specified by the <code>BackupRetentionPeriod</code> property.</p> <p>The target database is created with most of the original configuration, but in a system-selected Availability Zone, with the default security group, the default subnet group, and the default DB parameter group. By default, the new DB instance is created as a single-AZ deployment except when the instance is a SQL Server instance that has an option group that is associated with mirroring; in this case, the instance becomes a mirrored deployment and not a single-AZ deployment.</p> <note> <p>This operation doesn't apply to Aurora MySQL and Aurora PostgreSQL. For Aurora, use <code>RestoreDBClusterToPointInTime</code>.</p> </note>"
@@ -5627,7 +5642,7 @@
       "members": {
         "Engine": {
           "shape": "CustomEngineName",
-          "documentation": "<p>The database engine to use for your custom engine version (CEV). The only supported value is <code>custom-oracle-ee</code>.</p>"
+          "documentation": "<p>The database engine. RDS Custom for Oracle supports the following values:</p> <ul> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p> <code>custom-oracle-se2</code> </p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> </p> </li> </ul>"
         },
         "EngineVersion": {
           "shape": "CustomEngineVersion",
@@ -5713,7 +5728,7 @@
       "members": {
         "AvailabilityZones": {
           "shape": "AvailabilityZones",
-          "documentation": "<p>A list of Availability Zones (AZs) where DB instances in the DB cluster can be created.</p> <p>For information on Amazon Web Services Regions and Availability Zones, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.RegionsAndAvailabilityZones.html\">Choosing the Regions and Availability Zones</a> in the <i>Amazon Aurora User Guide</i>.</p> <p>Valid for Cluster Type: Aurora DB clusters only</p>"
+          "documentation": "<p>A list of Availability Zones (AZs) where you specifically want to create DB instances in the DB cluster.</p> <p>For information on AZs, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.AvailabilityZones\">Availability Zones</a> in the <i>Amazon Aurora User Guide</i>.</p> <p>Valid for Cluster Type: Aurora DB clusters only</p> <p>Constraints:</p> <ul> <li> <p>Can't specify more than three AZs.</p> </li> </ul>"
         },
         "BackupRetentionPeriod": {
           "shape": "IntegerOptional",
@@ -5745,7 +5760,7 @@
         },
         "Engine": {
           "shape": "String",
-          "documentation": "<p>The database engine to use for this DB cluster.</p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p> <p>Valid Values: <code>aurora-mysql | aurora-postgresql | mysql | postgres</code> </p>"
+          "documentation": "<p>The database engine to use for this DB cluster.</p> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p> <p>Valid Values:</p> <ul> <li> <p> <code>aurora-mysql</code> </p> </li> <li> <p> <code>aurora-postgresql</code> </p> </li> <li> <p> <code>mysql</code> </p> </li> <li> <p> <code>postgres</code> </p> </li> <li> <p> <code>neptune</code> - For information about using Amazon Neptune, see the <a href=\"https://docs.aws.amazon.com/neptune/latest/userguide/intro.html\"> <i>Amazon Neptune User Guide</i> </a>.</p> </li> </ul>"
         },
         "EngineVersion": {
           "shape": "String",
@@ -5809,7 +5824,7 @@
         },
         "EngineMode": {
           "shape": "String",
-          "documentation": "<p>The DB engine mode of the DB cluster, either <code>provisioned</code> or <code>serverless</code>.</p> <p>The <code>serverless</code> engine mode only applies for Aurora Serverless v1 DB clusters.</p> <p>For information about limitations and requirements for Serverless DB clusters, see the following sections in the <i>Amazon Aurora User Guide</i>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html#aurora-serverless.limitations\">Limitations of Aurora Serverless v1</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.requirements.html\">Requirements for Aurora Serverless v2</a> </p> </li> </ul> <p>Valid for Cluster Type: Aurora DB clusters only</p>"
+          "documentation": "<p>The DB engine mode of the DB cluster, either <code>provisioned</code> or <code>serverless</code>.</p> <p>The <code>serverless</code> engine mode only applies for Aurora Serverless v1 DB clusters. Aurora Serverless v2 DB clusters use the <code>provisioned</code> engine mode.</p> <p>For information about limitations and requirements for Serverless DB clusters, see the following sections in the <i>Amazon Aurora User Guide</i>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html#aurora-serverless.limitations\">Limitations of Aurora Serverless v1</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.requirements.html\">Requirements for Aurora Serverless v2</a> </p> </li> </ul> <p>Valid for Cluster Type: Aurora DB clusters only</p>"
         },
         "ScalingConfiguration": {
           "shape": "ScalingConfiguration",
@@ -5922,6 +5937,10 @@
           "shape": "String",
           "documentation": "<p>The CA certificate identifier to use for the DB cluster's server certificate.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html\">Using SSL/TLS to encrypt a connection to a DB instance</a> in the <i>Amazon RDS User Guide</i>.</p> <p>Valid for Cluster Type: Multi-AZ DB clusters</p>"
         },
+        "EngineLifecycleSupport": {
+          "shape": "String",
+          "documentation": "<p>The life cycle type for this DB cluster.</p> <note> <p>By default, this value is set to <code>open-source-rds-extended-support</code>, which enrolls your DB cluster into Amazon RDS Extended Support. At the end of standard support, you can avoid charges for Extended Support by setting the value to <code>open-source-rds-extended-support-disabled</code>. In this case, creating the DB cluster will fail if the DB major version is past its end of standard support date.</p> </note> <p>You can use this setting to enroll your DB cluster into Amazon RDS Extended Support. With RDS Extended Support, you can run the selected major engine version on your DB cluster past the end of standard support for that engine version. For more information, see the following sections:</p> <ul> <li> <p>Amazon Aurora (PostgreSQL only) - <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon Aurora User Guide</i> </p> </li> <li> <p>Amazon RDS - <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon RDS User Guide</i> </p> </li> </ul> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p> <p>Valid Values: <code>open-source-rds-extended-support | open-source-rds-extended-support-disabled</code> </p> <p>Default: <code>open-source-rds-extended-support</code> </p>"
+        },
         "SourceRegion": {
           "shape": "String",
           "documentation": "<p>The ID of the region that contains the source for the read replica.</p>"
@@ -6028,7 +6047,7 @@
         },
         "Engine": {
           "shape": "String",
-          "documentation": "<p>The database engine to use for this DB instance.</p> <p>Not every database engine is available in every Amazon Web Services Region.</p> <p>Valid Values:</p> <ul> <li> <p> <code>aurora-mysql</code> (for Aurora MySQL DB instances)</p> </li> <li> <p> <code>aurora-postgresql</code> (for Aurora PostgreSQL DB instances)</p> </li> <li> <p> <code>custom-oracle-ee</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-sqlserver-ee</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>custom-sqlserver-se</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>custom-sqlserver-web</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>db2-ae</code> </p> </li> <li> <p> <code>db2-se</code> </p> </li> <li> <p> <code>mariadb</code> </p> </li> <li> <p> <code>mysql</code> </p> </li> <li> <p> <code>oracle-ee</code> </p> </li> <li> <p> <code>oracle-ee-cdb</code> </p> </li> <li> <p> <code>oracle-se2</code> </p> </li> <li> <p> <code>oracle-se2-cdb</code> </p> </li> <li> <p> <code>postgres</code> </p> </li> <li> <p> <code>sqlserver-ee</code> </p> </li> <li> <p> <code>sqlserver-se</code> </p> </li> <li> <p> <code>sqlserver-ex</code> </p> </li> <li> <p> <code>sqlserver-web</code> </p> </li> </ul>"
+          "documentation": "<p>The database engine to use for this DB instance.</p> <p>Not every database engine is available in every Amazon Web Services Region.</p> <p>Valid Values:</p> <ul> <li> <p> <code>aurora-mysql</code> (for Aurora MySQL DB instances)</p> </li> <li> <p> <code>aurora-postgresql</code> (for Aurora PostgreSQL DB instances)</p> </li> <li> <p> <code>custom-oracle-ee</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-oracle-se2</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> (for RDS Custom for Oracle DB instances)</p> </li> <li> <p> <code>custom-sqlserver-ee</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>custom-sqlserver-se</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>custom-sqlserver-web</code> (for RDS Custom for SQL Server DB instances)</p> </li> <li> <p> <code>db2-ae</code> </p> </li> <li> <p> <code>db2-se</code> </p> </li> <li> <p> <code>mariadb</code> </p> </li> <li> <p> <code>mysql</code> </p> </li> <li> <p> <code>oracle-ee</code> </p> </li> <li> <p> <code>oracle-ee-cdb</code> </p> </li> <li> <p> <code>oracle-se2</code> </p> </li> <li> <p> <code>oracle-se2-cdb</code> </p> </li> <li> <p> <code>postgres</code> </p> </li> <li> <p> <code>sqlserver-ee</code> </p> </li> <li> <p> <code>sqlserver-se</code> </p> </li> <li> <p> <code>sqlserver-ex</code> </p> </li> <li> <p> <code>sqlserver-web</code> </p> </li> </ul>"
         },
         "MasterUsername": {
           "shape": "String",
@@ -6088,7 +6107,7 @@
         },
         "LicenseModel": {
           "shape": "String",
-          "documentation": "<p>The license model information for this DB instance.</p> <p>This setting doesn't apply to Amazon Aurora or RDS Custom DB instances.</p> <p>Valid Values:</p> <ul> <li> <p>RDS for Db2 - <code>bring-your-own-license</code> </p> </li> <li> <p>RDS for MariaDB - <code>general-public-license</code> </p> </li> <li> <p>RDS for Microsoft SQL Server - <code>license-included</code> </p> </li> <li> <p>RDS for MySQL - <code>general-public-license</code> </p> </li> <li> <p>RDS for Oracle - <code>bring-your-own-license | license-included</code> </p> </li> <li> <p>RDS for PostgreSQL - <code>postgresql-license</code> </p> </li> </ul>"
+          "documentation": "<p>The license model information for this DB instance.</p> <note> <p>License models for RDS for Db2 require additional configuration. The Bring Your Own License (BYOL) model requires a custom parameter group. The Db2 license through Amazon Web Services Marketplace model requires an Amazon Web Services Marketplace subscription. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/db2-licensing.html\">RDS for Db2 licensing options</a> in the <i>Amazon RDS User Guide</i>.</p> <p>The default for RDS for Db2 is <code>bring-your-own-license</code>.</p> </note> <p>This setting doesn't apply to Amazon Aurora or RDS Custom DB instances.</p> <p>Valid Values:</p> <ul> <li> <p>RDS for Db2 - <code>bring-your-own-license | marketplace-license</code> </p> </li> <li> <p>RDS for MariaDB - <code>general-public-license</code> </p> </li> <li> <p>RDS for Microsoft SQL Server - <code>license-included</code> </p> </li> <li> <p>RDS for MySQL - <code>general-public-license</code> </p> </li> <li> <p>RDS for Oracle - <code>bring-your-own-license | license-included</code> </p> </li> <li> <p>RDS for PostgreSQL - <code>postgresql-license</code> </p> </li> </ul>"
         },
         "Iops": {
           "shape": "IntegerOptional",
@@ -6180,7 +6199,7 @@
         },
         "Timezone": {
           "shape": "String",
-          "documentation": "<p>The time zone of the DB instance. The time zone parameter is currently supported only by <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SQLServer.html#SQLServer.Concepts.General.TimeZone\">Microsoft SQL Server</a>.</p>"
+          "documentation": "<p>The time zone of the DB instance. The time zone parameter is currently supported only by <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/db2-time-zone\">RDS for Db2</a> and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SQLServer.html#SQLServer.Concepts.General.TimeZone\">RDS for SQL Server</a>.</p>"
         },
         "EnableIAMDatabaseAuthentication": {
           "shape": "BooleanOptional",
@@ -6257,6 +6276,10 @@
         "MultiTenant": {
           "shape": "BooleanOptional",
           "documentation": "<p>Specifies whether to use the multi-tenant configuration or the single-tenant configuration (default). This parameter only applies to RDS for Oracle container database (CDB) engines.</p> <p>Note the following restrictions: </p> <ul> <li> <p>The DB engine that you specify in the request must support the multi-tenant configuration. If you attempt to enable the multi-tenant configuration on a DB engine that doesn't support it, the request fails.</p> </li> <li> <p>If you specify the multi-tenant configuration when you create your DB instance, you can't later modify this DB instance to use the single-tenant configuration.</p> </li> </ul>"
+        },
+        "EngineLifecycleSupport": {
+          "shape": "String",
+          "documentation": "<p>The life cycle type for this DB instance.</p> <note> <p>By default, this value is set to <code>open-source-rds-extended-support</code>, which enrolls your DB instance into Amazon RDS Extended Support. At the end of standard support, you can avoid charges for Extended Support by setting the value to <code>open-source-rds-extended-support-disabled</code>. In this case, creating the DB instance will fail if the DB major version is past its end of standard support date.</p> </note> <p>This setting applies only to RDS for MySQL and RDS for PostgreSQL. For Amazon Aurora DB instances, the life cycle type is managed by the DB cluster.</p> <p>You can use this setting to enroll your DB instance into Amazon RDS Extended Support. With RDS Extended Support, you can run the selected major engine version on your DB instance past the end of standard support for that engine version. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon RDS User Guide</i>.</p> <p>Valid Values: <code>open-source-rds-extended-support | open-source-rds-extended-support-disabled</code> </p> <p>Default: <code>open-source-rds-extended-support</code> </p>"
         }
       },
       "documentation": "<p/>"
@@ -6441,6 +6464,10 @@
         "UpgradeStorageConfig": {
           "shape": "BooleanOptional",
           "documentation": "<p>Whether to upgrade the storage file system configuration on the read replica. This option migrates the read replica from the old storage file system layout to the preferred layout.</p>"
+        },
+        "CACertificateIdentifier": {
+          "shape": "String",
+          "documentation": "<p>The CA certificate identifier to use for the read replica's server certificate.</p> <p>This setting doesn't apply to RDS Custom DB instances.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html\">Using SSL/TLS to encrypt a connection to a DB instance</a> in the <i>Amazon RDS User Guide</i> and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.SSL.html\"> Using SSL/TLS to encrypt a connection to a DB cluster</a> in the <i>Amazon Aurora User Guide</i>.</p>"
         },
         "SourceRegion": {
           "shape": "String",
@@ -6743,7 +6770,7 @@
         },
         "SourceType": {
           "shape": "String",
-          "documentation": "<p>The type of source that is generating the events. For example, if you want to be notified of events generated by a DB instance, you set this parameter to <code>db-instance</code>. For RDS Proxy events, specify <code>db-proxy</code>. If this value isn't specified, all events are returned.</p> <p>Valid Values: <code>db-instance</code> | <code>db-cluster</code> | <code>db-parameter-group</code> | <code>db-security-group</code> | <code>db-snapshot</code> | <code>db-cluster-snapshot</code> | <code>db-proxy</code> </p>"
+          "documentation": "<p>The type of source that is generating the events. For example, if you want to be notified of events generated by a DB instance, you set this parameter to <code>db-instance</code>. For RDS Proxy events, specify <code>db-proxy</code>. If this value isn't specified, all events are returned.</p> <p>Valid Values:<code> db-instance | db-cluster | db-parameter-group | db-security-group | db-snapshot | db-cluster-snapshot | db-proxy | zero-etl | custom-engine-version | blue-green-deployment </code> </p>"
         },
         "EventCategories": {
           "shape": "EventCategoriesList",
@@ -6789,6 +6816,10 @@
         "EngineVersion": {
           "shape": "String",
           "documentation": "<p>The engine version to use for this global database cluster.</p> <p>Constraints:</p> <ul> <li> <p>Can't be specified if <code>SourceDBClusterIdentifier</code> is specified. In this case, Amazon Aurora uses the engine version of the source DB cluster.</p> </li> </ul>"
+        },
+        "EngineLifecycleSupport": {
+          "shape": "String",
+          "documentation": "<p>The life cycle type for this global database cluster.</p> <note> <p>By default, this value is set to <code>open-source-rds-extended-support</code>, which enrolls your global cluster into Amazon RDS Extended Support. At the end of standard support, you can avoid charges for Extended Support by setting the value to <code>open-source-rds-extended-support-disabled</code>. In this case, creating the global cluster will fail if the DB major version is past its end of standard support date.</p> </note> <p>This setting only applies to Aurora PostgreSQL-based global databases.</p> <p>You can use this setting to enroll your global cluster into Amazon RDS Extended Support. With RDS Extended Support, you can run the selected major engine version on your global cluster past the end of standard support for that engine version. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon Aurora User Guide</i>.</p> <p>Valid Values: <code>open-source-rds-extended-support | open-source-rds-extended-support-disabled</code> </p> <p>Default: <code>open-source-rds-extended-support</code> </p>"
         },
         "DeletionProtection": {
           "shape": "BooleanOptional",
@@ -7293,6 +7324,10 @@
         },
         "CertificateDetails": {
           "shape": "CertificateDetails"
+        },
+        "EngineLifecycleSupport": {
+          "shape": "String",
+          "documentation": "<p>The life cycle type for the DB cluster.</p> <p>For more information, see CreateDBCluster.</p>"
         }
       },
       "documentation": "<p>Contains the details of an Amazon Aurora DB cluster or Multi-AZ DB cluster.</p> <p>For an Amazon Aurora DB cluster, this data type is used as a response element in the operations <code>CreateDBCluster</code>, <code>DeleteDBCluster</code>, <code>DescribeDBClusters</code>, <code>FailoverDBCluster</code>, <code>ModifyDBCluster</code>, <code>PromoteReadReplicaDBCluster</code>, <code>RestoreDBClusterFromS3</code>, <code>RestoreDBClusterFromSnapshot</code>, <code>RestoreDBClusterToPointInTime</code>, <code>StartDBCluster</code>, and <code>StopDBCluster</code>.</p> <p>For a Multi-AZ DB cluster, this data type is used as a response element in the operations <code>CreateDBCluster</code>, <code>DeleteDBCluster</code>, <code>DescribeDBClusters</code>, <code>FailoverDBCluster</code>, <code>ModifyDBCluster</code>, <code>RebootDBCluster</code>, <code>RestoreDBClusterFromSnapshot</code>, and <code>RestoreDBClusterToPointInTime</code>.</p> <p>For more information on Amazon Aurora DB clusters, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html\"> What is Amazon Aurora?</a> in the <i>Amazon Aurora User Guide.</i> </p> <p>For more information on Multi-AZ DB clusters, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/multi-az-db-clusters-concepts.html\"> Multi-AZ deployments with two readable standby DB instances</a> in the <i>Amazon RDS User Guide.</i> </p>",
@@ -8051,6 +8086,10 @@
           "shape": "CustomDBEngineVersionManifest",
           "documentation": "<p>JSON string that lists the installation files and parameters that RDS Custom uses to create a custom engine version (CEV). RDS Custom applies the patches in the order in which they're listed in the manifest. You can set the Oracle home, Oracle base, and UNIX/Linux user and group using the installation parameters. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-cev.preparing.html#custom-cev.preparing.manifest.fields\">JSON fields in the CEV manifest</a> in the <i>Amazon RDS User Guide</i>. </p>"
         },
+        "SupportsLimitlessDatabase": {
+          "shape": "Boolean",
+          "documentation": "<p>Indicates whether the DB engine version supports Aurora Limitless Database.</p>"
+        },
         "SupportsCertificateRotationWithoutRestart": {
           "shape": "BooleanOptional",
           "documentation": "<p>Indicates whether the engine version supports rotating the server certificate without rebooting the DB instance.</p>"
@@ -8204,7 +8243,7 @@
         },
         "LicenseModel": {
           "shape": "String",
-          "documentation": "<p>The license model information for this DB instance. This setting doesn't apply to RDS Custom DB instances.</p>"
+          "documentation": "<p>The license model information for this DB instance. This setting doesn't apply to Amazon Aurora or RDS Custom DB instances.</p>"
         },
         "Iops": {
           "shape": "IntegerOptional",
@@ -8296,7 +8335,7 @@
         },
         "Timezone": {
           "shape": "String",
-          "documentation": "<p>The time zone of the DB instance. In most cases, the <code>Timezone</code> element is empty. <code>Timezone</code> content appears only for Microsoft SQL Server DB instances that were created with a time zone specified.</p>"
+          "documentation": "<p>The time zone of the DB instance. In most cases, the <code>Timezone</code> element is empty. <code>Timezone</code> content appears only for RDS for Db2 and RDS for SQL Server DB instances that were created with a time zone specified.</p>"
         },
         "IAMDatabaseAuthenticationEnabled": {
           "shape": "Boolean",
@@ -8432,6 +8471,10 @@
         "MultiTenant": {
           "shape": "BooleanOptional",
           "documentation": "<p>Specifies whether the DB instance is in the multi-tenant configuration (TRUE) or the single-tenant configuration (FALSE).</p>"
+        },
+        "EngineLifecycleSupport": {
+          "shape": "String",
+          "documentation": "<p>The life cycle type for the DB instance.</p> <p>For more information, see CreateDBInstance.</p>"
         }
       },
       "documentation": "<p>Contains the details of an Amazon RDS DB instance.</p> <p>This data type is used as a response element in the operations <code>CreateDBInstance</code>, <code>CreateDBInstanceReadReplica</code>, <code>DeleteDBInstance</code>, <code>DescribeDBInstances</code>, <code>ModifyDBInstance</code>, <code>PromoteReadReplica</code>, <code>RebootDBInstance</code>, <code>RestoreDBInstanceFromDBSnapshot</code>, <code>RestoreDBInstanceFromS3</code>, <code>RestoreDBInstanceToPointInTime</code>, <code>StartDBInstance</code>, and <code>StopDBInstance</code>.</p>",
@@ -9652,7 +9695,7 @@
       "members": {
         "Engine": {
           "shape": "CustomEngineName",
-          "documentation": "<p>The database engine. The only supported engines are <code>custom-oracle-ee</code> and <code>custom-oracle-ee-cdb</code>.</p>"
+          "documentation": "<p>The database engine. RDS Custom for Oracle supports the following values:</p> <ul> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p> <code>custom-oracle-se2</code> </p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> </p> </li> </ul>"
         },
         "EngineVersion": {
           "shape": "CustomEngineVersion",
@@ -10340,7 +10383,7 @@
       "members": {
         "Engine": {
           "shape": "String",
-          "documentation": "<p>The database engine to return version details for.</p> <p>Valid Values:</p> <ul> <li> <p> <code>aurora-mysql</code> </p> </li> <li> <p> <code>aurora-postgresql</code> </p> </li> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>db2-ae</code> </p> </li> <li> <p> <code>db2-se</code> </p> </li> <li> <p> <code>mariadb</code> </p> </li> <li> <p> <code>mysql</code> </p> </li> <li> <p> <code>oracle-ee</code> </p> </li> <li> <p> <code>oracle-ee-cdb</code> </p> </li> <li> <p> <code>oracle-se2</code> </p> </li> <li> <p> <code>oracle-se2-cdb</code> </p> </li> <li> <p> <code>postgres</code> </p> </li> <li> <p> <code>sqlserver-ee</code> </p> </li> <li> <p> <code>sqlserver-se</code> </p> </li> <li> <p> <code>sqlserver-ex</code> </p> </li> <li> <p> <code>sqlserver-web</code> </p> </li> </ul>"
+          "documentation": "<p>The database engine to return version details for.</p> <p>Valid Values:</p> <ul> <li> <p> <code>aurora-mysql</code> </p> </li> <li> <p> <code>aurora-postgresql</code> </p> </li> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p> <code>custom-oracle-se2</code> </p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> </p> </li> <li> <p> <code>db2-ae</code> </p> </li> <li> <p> <code>db2-se</code> </p> </li> <li> <p> <code>mariadb</code> </p> </li> <li> <p> <code>mysql</code> </p> </li> <li> <p> <code>oracle-ee</code> </p> </li> <li> <p> <code>oracle-ee-cdb</code> </p> </li> <li> <p> <code>oracle-se2</code> </p> </li> <li> <p> <code>oracle-se2-cdb</code> </p> </li> <li> <p> <code>postgres</code> </p> </li> <li> <p> <code>sqlserver-ee</code> </p> </li> <li> <p> <code>sqlserver-se</code> </p> </li> <li> <p> <code>sqlserver-ex</code> </p> </li> <li> <p> <code>sqlserver-web</code> </p> </li> </ul>"
         },
         "EngineVersion": {
           "shape": "String",
@@ -10956,7 +10999,7 @@
       "members": {
         "DBParameterGroupFamily": {
           "shape": "String",
-          "documentation": "<p>The name of the DB parameter group family.</p> <p>Valid Values:</p> <ul> <li> <p> <code>aurora-mysql5.7</code> </p> </li> <li> <p> <code>aurora-mysql8.0</code> </p> </li> <li> <p> <code>aurora-postgresql10</code> </p> </li> <li> <p> <code>aurora-postgresql11</code> </p> </li> <li> <p> <code>aurora-postgresql12</code> </p> </li> <li> <p> <code>aurora-postgresql13</code> </p> </li> <li> <p> <code>aurora-postgresql14</code> </p> </li> <li> <p> <code>custom-oracle-ee-19</code> </p> </li> <li> <p> <code>db2-ae</code> </p> </li> <li> <p> <code>db2-se</code> </p> </li> <li> <p> <code>mariadb10.2</code> </p> </li> <li> <p> <code>mariadb10.3</code> </p> </li> <li> <p> <code>mariadb10.4</code> </p> </li> <li> <p> <code>mariadb10.5</code> </p> </li> <li> <p> <code>mariadb10.6</code> </p> </li> <li> <p> <code>mysql5.7</code> </p> </li> <li> <p> <code>mysql8.0</code> </p> </li> <li> <p> <code>oracle-ee-19</code> </p> </li> <li> <p> <code>oracle-ee-cdb-19</code> </p> </li> <li> <p> <code>oracle-ee-cdb-21</code> </p> </li> <li> <p> <code>oracle-se2-19</code> </p> </li> <li> <p> <code>oracle-se2-cdb-19</code> </p> </li> <li> <p> <code>oracle-se2-cdb-21</code> </p> </li> <li> <p> <code>postgres10</code> </p> </li> <li> <p> <code>postgres11</code> </p> </li> <li> <p> <code>postgres12</code> </p> </li> <li> <p> <code>postgres13</code> </p> </li> <li> <p> <code>postgres14</code> </p> </li> <li> <p> <code>sqlserver-ee-11.0</code> </p> </li> <li> <p> <code>sqlserver-ee-12.0</code> </p> </li> <li> <p> <code>sqlserver-ee-13.0</code> </p> </li> <li> <p> <code>sqlserver-ee-14.0</code> </p> </li> <li> <p> <code>sqlserver-ee-15.0</code> </p> </li> <li> <p> <code>sqlserver-ex-11.0</code> </p> </li> <li> <p> <code>sqlserver-ex-12.0</code> </p> </li> <li> <p> <code>sqlserver-ex-13.0</code> </p> </li> <li> <p> <code>sqlserver-ex-14.0</code> </p> </li> <li> <p> <code>sqlserver-ex-15.0</code> </p> </li> <li> <p> <code>sqlserver-se-11.0</code> </p> </li> <li> <p> <code>sqlserver-se-12.0</code> </p> </li> <li> <p> <code>sqlserver-se-13.0</code> </p> </li> <li> <p> <code>sqlserver-se-14.0</code> </p> </li> <li> <p> <code>sqlserver-se-15.0</code> </p> </li> <li> <p> <code>sqlserver-web-11.0</code> </p> </li> <li> <p> <code>sqlserver-web-12.0</code> </p> </li> <li> <p> <code>sqlserver-web-13.0</code> </p> </li> <li> <p> <code>sqlserver-web-14.0</code> </p> </li> <li> <p> <code>sqlserver-web-15.0</code> </p> </li> </ul>"
+          "documentation": "<p>The name of the DB parameter group family.</p> <p>Valid Values:</p> <ul> <li> <p> <code>aurora-mysql5.7</code> </p> </li> <li> <p> <code>aurora-mysql8.0</code> </p> </li> <li> <p> <code>aurora-postgresql10</code> </p> </li> <li> <p> <code>aurora-postgresql11</code> </p> </li> <li> <p> <code>aurora-postgresql12</code> </p> </li> <li> <p> <code>aurora-postgresql13</code> </p> </li> <li> <p> <code>aurora-postgresql14</code> </p> </li> <li> <p> <code>custom-oracle-ee-19</code> </p> </li> <li> <p> <code>custom-oracle-ee-cdb-19</code> </p> </li> <li> <p> <code>db2-ae</code> </p> </li> <li> <p> <code>db2-se</code> </p> </li> <li> <p> <code>mariadb10.2</code> </p> </li> <li> <p> <code>mariadb10.3</code> </p> </li> <li> <p> <code>mariadb10.4</code> </p> </li> <li> <p> <code>mariadb10.5</code> </p> </li> <li> <p> <code>mariadb10.6</code> </p> </li> <li> <p> <code>mysql5.7</code> </p> </li> <li> <p> <code>mysql8.0</code> </p> </li> <li> <p> <code>oracle-ee-19</code> </p> </li> <li> <p> <code>oracle-ee-cdb-19</code> </p> </li> <li> <p> <code>oracle-ee-cdb-21</code> </p> </li> <li> <p> <code>oracle-se2-19</code> </p> </li> <li> <p> <code>oracle-se2-cdb-19</code> </p> </li> <li> <p> <code>oracle-se2-cdb-21</code> </p> </li> <li> <p> <code>postgres10</code> </p> </li> <li> <p> <code>postgres11</code> </p> </li> <li> <p> <code>postgres12</code> </p> </li> <li> <p> <code>postgres13</code> </p> </li> <li> <p> <code>postgres14</code> </p> </li> <li> <p> <code>sqlserver-ee-11.0</code> </p> </li> <li> <p> <code>sqlserver-ee-12.0</code> </p> </li> <li> <p> <code>sqlserver-ee-13.0</code> </p> </li> <li> <p> <code>sqlserver-ee-14.0</code> </p> </li> <li> <p> <code>sqlserver-ee-15.0</code> </p> </li> <li> <p> <code>sqlserver-ex-11.0</code> </p> </li> <li> <p> <code>sqlserver-ex-12.0</code> </p> </li> <li> <p> <code>sqlserver-ex-13.0</code> </p> </li> <li> <p> <code>sqlserver-ex-14.0</code> </p> </li> <li> <p> <code>sqlserver-ex-15.0</code> </p> </li> <li> <p> <code>sqlserver-se-11.0</code> </p> </li> <li> <p> <code>sqlserver-se-12.0</code> </p> </li> <li> <p> <code>sqlserver-se-13.0</code> </p> </li> <li> <p> <code>sqlserver-se-14.0</code> </p> </li> <li> <p> <code>sqlserver-se-15.0</code> </p> </li> <li> <p> <code>sqlserver-web-11.0</code> </p> </li> <li> <p> <code>sqlserver-web-12.0</code> </p> </li> <li> <p> <code>sqlserver-web-13.0</code> </p> </li> <li> <p> <code>sqlserver-web-14.0</code> </p> </li> <li> <p> <code>sqlserver-web-15.0</code> </p> </li> </ul>"
         },
         "Filters": {
           "shape": "FilterList",
@@ -11210,7 +11253,7 @@
       "members": {
         "Engine": {
           "shape": "String",
-          "documentation": "<p>The name of the engine to describe DB instance options for.</p> <p>Valid Values:</p> <ul> <li> <p> <code>aurora-mysql</code> </p> </li> <li> <p> <code>aurora-postgresql</code> </p> </li> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>db2-ae</code> </p> </li> <li> <p> <code>db2-se</code> </p> </li> <li> <p> <code>mariadb</code> </p> </li> <li> <p> <code>mysql</code> </p> </li> <li> <p> <code>oracle-ee</code> </p> </li> <li> <p> <code>oracle-ee-cdb</code> </p> </li> <li> <p> <code>oracle-se2</code> </p> </li> <li> <p> <code>oracle-se2-cdb</code> </p> </li> <li> <p> <code>postgres</code> </p> </li> <li> <p> <code>sqlserver-ee</code> </p> </li> <li> <p> <code>sqlserver-se</code> </p> </li> <li> <p> <code>sqlserver-ex</code> </p> </li> <li> <p> <code>sqlserver-web</code> </p> </li> </ul>"
+          "documentation": "<p>The name of the database engine to describe DB instance options for.</p> <p>Valid Values:</p> <ul> <li> <p> <code>aurora-mysql</code> </p> </li> <li> <p> <code>aurora-postgresql</code> </p> </li> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p> <code>custom-oracle-se2</code> </p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> </p> </li> <li> <p> <code>db2-ae</code> </p> </li> <li> <p> <code>db2-se</code> </p> </li> <li> <p> <code>mariadb</code> </p> </li> <li> <p> <code>mysql</code> </p> </li> <li> <p> <code>oracle-ee</code> </p> </li> <li> <p> <code>oracle-ee-cdb</code> </p> </li> <li> <p> <code>oracle-se2</code> </p> </li> <li> <p> <code>oracle-se2-cdb</code> </p> </li> <li> <p> <code>postgres</code> </p> </li> <li> <p> <code>sqlserver-ee</code> </p> </li> <li> <p> <code>sqlserver-se</code> </p> </li> <li> <p> <code>sqlserver-ex</code> </p> </li> <li> <p> <code>sqlserver-web</code> </p> </li> </ul>"
         },
         "EngineVersion": {
           "shape": "String",
@@ -11238,7 +11281,7 @@
         },
         "MaxRecords": {
           "shape": "IntegerOptional",
-          "documentation": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 10000.</p>"
+          "documentation": "<p>The maximum number of records to include in the response. If more records exist than the specified <code>MaxRecords</code> value, a pagination token called a marker is included in the response so that you can retrieve the remaining results.</p> <p>Default: 100</p> <p>Constraints: Minimum 20, maximum 1000.</p>"
         },
         "Marker": {
           "shape": "String",
@@ -12115,6 +12158,10 @@
           "shape": "String",
           "documentation": "<p>Indicates the database engine version.</p>"
         },
+        "EngineLifecycleSupport": {
+          "shape": "String",
+          "documentation": "<p>The life cycle type for the global cluster.</p> <p>For more information, see CreateGlobalCluster.</p>"
+        },
         "DatabaseName": {
           "shape": "String",
           "documentation": "<p>The default database name within the new global database cluster.</p>"
@@ -12561,7 +12608,7 @@
       "members": {
         "ResourceArn": {
           "shape": "String",
-          "documentation": "<p>The Amazon Resource Name (ARN) of the RDS for Oracle or Microsoft SQL Server DB instance. For example, <code>arn:aws:rds:us-east-1:12345667890:instance:my-orcl-db</code>.</p>"
+          "documentation": "<p>The Amazon Resource Name (ARN) of the RDS for Oracle or Microsoft SQL Server DB instance. For example, <code>arn:aws:rds:us-east-1:12345667890:db:my-orcl-db</code>.</p>"
         },
         "AuditPolicyState": {
           "shape": "AuditPolicyState",
@@ -12652,7 +12699,7 @@
       "members": {
         "Engine": {
           "shape": "CustomEngineName",
-          "documentation": "<p>The DB engine. The only supported values are <code>custom-oracle-ee</code> and <code>custom-oracle-ee-cdb</code>.</p>"
+          "documentation": "<p>The database engine. RDS Custom for Oracle supports the following values:</p> <ul> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p> <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p> <code>custom-oracle-se2</code> </p> </li> <li> <p> <code>custom-oracle-se2-cdb</code> </p> </li> </ul>"
         },
         "EngineVersion": {
           "shape": "CustomEngineVersion",
@@ -12952,7 +12999,7 @@
         },
         "AllocatedStorage": {
           "shape": "IntegerOptional",
-          "documentation": "<p>The new amount of storage in gibibytes (GiB) to allocate for the DB instance.</p> <p>For RDS for Db2, MariaDB, RDS for MySQL, RDS for Oracle, and RDS for PostgreSQL, the value supplied must be at least 10% greater than the current value. Values that are not at least 10% greater than the existing value are rounded up so that they are 10% greater than the current value.</p> <p>For the valid values for allocated storage for each engine, see <code>CreateDBInstance</code>.</p>"
+          "documentation": "<p>The new amount of storage in gibibytes (GiB) to allocate for the DB instance.</p> <p>For RDS for Db2, MariaDB, RDS for MySQL, RDS for Oracle, and RDS for PostgreSQL, the value supplied must be at least 10% greater than the current value. Values that are not at least 10% greater than the existing value are rounded up so that they are 10% greater than the current value.</p> <p>For the valid values for allocated storage for each engine, see <code>CreateDBInstance</code>.</p> <p>Constraints:</p> <ul> <li> <p>When you increase the allocated storage for a DB instance that uses Provisioned IOPS (<code>gp3</code>, <code>io1</code>, or <code>io2</code> storage type), you must also specify the <code>Iops</code> parameter. You can use the current value for <code>Iops</code>.</p> </li> </ul>"
         },
         "DBInstanceClass": {
           "shape": "String",
@@ -12960,7 +13007,7 @@
         },
         "DBSubnetGroupName": {
           "shape": "String",
-          "documentation": "<p>The new DB subnet group for the DB instance. You can use this parameter to move your DB instance to a different VPC. If your DB instance isn't in a VPC, you can also use this parameter to move your DB instance into a VPC. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html#USER_VPC.Non-VPC2VPC\">Working with a DB instance in a VPC</a> in the <i>Amazon RDS User Guide</i>.</p> <p>Changing the subnet group causes an outage during the change. The change is applied during the next maintenance window, unless you enable <code>ApplyImmediately</code>.</p> <p>This parameter doesn't apply to RDS Custom DB instances.</p> <p>Constraints:</p> <ul> <li> <p>If supplied, must match existing DB subnet group.</p> </li> </ul> <p>Example: <code>mydbsubnetgroup</code> </p>"
+          "documentation": "<p>The new DB subnet group for the DB instance. You can use this parameter to move your DB instance to a different VPC. If your DB instance isn't in a VPC, you can also use this parameter to move your DB instance into a VPC. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html#USER_VPC.Non-VPC2VPC\">Working with a DB instance in a VPC</a> in the <i>Amazon RDS User Guide</i>.</p> <p>Changing the subnet group causes an outage during the change. The change is applied during the next maintenance window, unless you enable <code>ApplyImmediately</code>.</p> <p>This setting doesn't apply to RDS Custom DB instances.</p> <p>Constraints:</p> <ul> <li> <p>If supplied, must match existing DB subnet group.</p> </li> </ul> <p>Example: <code>mydbsubnetgroup</code> </p>"
         },
         "DBSecurityGroups": {
           "shape": "DBSecurityGroupNameList",
@@ -13016,7 +13063,7 @@
         },
         "Iops": {
           "shape": "IntegerOptional",
-          "documentation": "<p>The new Provisioned IOPS (I/O operations per second) value for the RDS instance.</p> <p>Changing this setting doesn't result in an outage and the change is applied during the next maintenance window unless the <code>ApplyImmediately</code> parameter is enabled for this request. If you are migrating from Provisioned IOPS to standard storage, set this value to 0. The DB instance will require a reboot for the change in storage type to take effect.</p> <p>If you choose to migrate your DB instance from using standard storage to using Provisioned IOPS, or from using Provisioned IOPS to using standard storage, the process can take time. The duration of the migration depends on several factors such as database load, storage size, storage type (standard or Provisioned IOPS), amount of IOPS provisioned (if any), and the number of prior scale storage operations. Typical migration times are under 24 hours, but the process can take up to several days in some cases. During the migration, the DB instance is available for use, but might experience performance degradation. While the migration takes place, nightly backups for the instance are suspended. No other Amazon RDS operations can take place for the instance, including modifying the instance, rebooting the instance, deleting the instance, creating a read replica for the instance, and creating a DB snapshot of the instance.</p> <p>Constraints:</p> <ul> <li> <p>For RDS for MariaDB, RDS for MySQL, RDS for Oracle, and RDS for PostgreSQL - The value supplied must be at least 10% greater than the current value. Values that are not at least 10% greater than the existing value are rounded up so that they are 10% greater than the current value.</p> </li> </ul> <p>Default: Uses existing setting</p>"
+          "documentation": "<p>The new Provisioned IOPS (I/O operations per second) value for the RDS instance.</p> <p>Changing this setting doesn't result in an outage and the change is applied during the next maintenance window unless the <code>ApplyImmediately</code> parameter is enabled for this request. If you are migrating from Provisioned IOPS to standard storage, set this value to 0. The DB instance will require a reboot for the change in storage type to take effect.</p> <p>If you choose to migrate your DB instance from using standard storage to using Provisioned IOPS, or from using Provisioned IOPS to using standard storage, the process can take time. The duration of the migration depends on several factors such as database load, storage size, storage type (standard or Provisioned IOPS), amount of IOPS provisioned (if any), and the number of prior scale storage operations. Typical migration times are under 24 hours, but the process can take up to several days in some cases. During the migration, the DB instance is available for use, but might experience performance degradation. While the migration takes place, nightly backups for the instance are suspended. No other Amazon RDS operations can take place for the instance, including modifying the instance, rebooting the instance, deleting the instance, creating a read replica for the instance, and creating a DB snapshot of the instance.</p> <p>Constraints:</p> <ul> <li> <p>For RDS for MariaDB, RDS for MySQL, RDS for Oracle, and RDS for PostgreSQL - The value supplied must be at least 10% greater than the current value. Values that are not at least 10% greater than the existing value are rounded up so that they are 10% greater than the current value.</p> </li> <li> <p>When you increase the Provisioned IOPS, you must also specify the <code>AllocatedStorage</code> parameter. You can use the current value for <code>AllocatedStorage</code>.</p> </li> </ul> <p>Default: Uses existing setting</p>"
         },
         "OptionGroupName": {
           "shape": "String",
@@ -13124,7 +13171,7 @@
         },
         "DeletionProtection": {
           "shape": "BooleanOptional",
-          "documentation": "<p>Specifies whether the DB instance has deletion protection enabled. The database can't be deleted when deletion protection is enabled. By default, deletion protection isn't enabled. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_DeleteInstance.html\"> Deleting a DB Instance</a>.</p>"
+          "documentation": "<p>Specifies whether the DB instance has deletion protection enabled. The database can't be deleted when deletion protection is enabled. By default, deletion protection isn't enabled. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_DeleteInstance.html\"> Deleting a DB Instance</a>.</p> <p>This setting doesn't apply to Amazon Aurora DB instances. You can enable or disable deletion protection for the DB cluster. For more information, see <code>ModifyDBCluster</code>. DB instances in a DB cluster can be deleted even when deletion protection is enabled for the DB cluster.</p>"
         },
         "MaxAllocatedStorage": {
           "shape": "IntegerOptional",
@@ -13475,7 +13522,7 @@
         },
         "SourceType": {
           "shape": "String",
-          "documentation": "<p>The type of source that is generating the events. For example, if you want to be notified of events generated by a DB instance, you would set this parameter to db-instance. For RDS Proxy events, specify <code>db-proxy</code>. If this value isn't specified, all events are returned.</p> <p>Valid Values: <code>db-instance</code> | <code>db-cluster</code> | <code>db-parameter-group</code> | <code>db-security-group</code> | <code>db-snapshot</code> | <code>db-cluster-snapshot</code> | <code>db-proxy</code> </p>"
+          "documentation": "<p>The type of source that is generating the events. For example, if you want to be notified of events generated by a DB instance, you would set this parameter to db-instance. For RDS Proxy events, specify <code>db-proxy</code>. If this value isn't specified, all events are returned.</p> <p>Valid Values:<code> db-instance | db-cluster | db-parameter-group | db-security-group | db-snapshot | db-cluster-snapshot | db-proxy | zero-etl | custom-engine-version | blue-green-deployment </code> </p>"
         },
         "EventCategories": {
           "shape": "EventCategoriesList",
@@ -14296,7 +14343,7 @@
       "members": {
         "Action": {
           "shape": "String",
-          "documentation": "<p>The type of pending maintenance action that is available for the resource. Valid actions are <code>system-update</code>, <code>db-upgrade</code>, <code>hardware-maintenance</code>, and <code>ca-certificate-rotation</code>.</p>"
+          "documentation": "<p>The type of pending maintenance action that is available for the resource. </p> <p>For more information about maintenance actions, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html\">Maintaining a DB instance</a>.</p> <p>Valid Values:<code> system-update | db-upgrade | hardware-maintenance | ca-certificate-rotation</code> </p>"
         },
         "AutoAppliedAfterDate": {
           "shape": "TStamp",
@@ -15368,6 +15415,10 @@
         "StorageType": {
           "shape": "String",
           "documentation": "<p>Specifies the storage type to be associated with the DB cluster.</p> <p>Valid Values: <code>aurora</code>, <code>aurora-iopt1</code> </p> <p>Default: <code>aurora</code> </p> <p>Valid for: Aurora DB clusters only</p>"
+        },
+        "EngineLifecycleSupport": {
+          "shape": "String",
+          "documentation": "<p>The life cycle type for this DB cluster.</p> <note> <p>By default, this value is set to <code>open-source-rds-extended-support</code>, which enrolls your DB cluster into Amazon RDS Extended Support. At the end of standard support, you can avoid charges for Extended Support by setting the value to <code>open-source-rds-extended-support-disabled</code>. In this case, RDS automatically upgrades your restored DB cluster to a higher engine version, if the major engine version is past its end of standard support date.</p> </note> <p>You can use this setting to enroll your DB cluster into Amazon RDS Extended Support. With RDS Extended Support, you can run the selected major engine version on your DB cluster past the end of standard support for that engine version. For more information, see the following sections:</p> <ul> <li> <p>Amazon Aurora (PostgreSQL only) - <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon Aurora User Guide</i> </p> </li> <li> <p>Amazon RDS - <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon RDS User Guide</i> </p> </li> </ul> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p> <p>Valid Values: <code>open-source-rds-extended-support | open-source-rds-extended-support-disabled</code> </p> <p>Default: <code>open-source-rds-extended-support</code> </p>"
         }
       }
     },
@@ -15501,6 +15552,10 @@
         "RdsCustomClusterConfiguration": {
           "shape": "RdsCustomClusterConfiguration",
           "documentation": "<p>Reserved for future use.</p>"
+        },
+        "EngineLifecycleSupport": {
+          "shape": "String",
+          "documentation": "<p>The life cycle type for this DB cluster.</p> <note> <p>By default, this value is set to <code>open-source-rds-extended-support</code>, which enrolls your DB cluster into Amazon RDS Extended Support. At the end of standard support, you can avoid charges for Extended Support by setting the value to <code>open-source-rds-extended-support-disabled</code>. In this case, RDS automatically upgrades your restored DB cluster to a higher engine version, if the major engine version is past its end of standard support date.</p> </note> <p>You can use this setting to enroll your DB cluster into Amazon RDS Extended Support. With RDS Extended Support, you can run the selected major engine version on your DB cluster past the end of standard support for that engine version. For more information, see the following sections:</p> <ul> <li> <p>Amazon Aurora (PostgreSQL only) - <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon Aurora User Guide</i> </p> </li> <li> <p>Amazon RDS - <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon RDS User Guide</i> </p> </li> </ul> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p> <p>Valid Values: <code>open-source-rds-extended-support | open-source-rds-extended-support-disabled</code> </p> <p>Default: <code>open-source-rds-extended-support</code> </p>"
         }
       },
       "documentation": "<p/>"
@@ -15632,6 +15687,10 @@
         "RdsCustomClusterConfiguration": {
           "shape": "RdsCustomClusterConfiguration",
           "documentation": "<p>Reserved for future use.</p>"
+        },
+        "EngineLifecycleSupport": {
+          "shape": "String",
+          "documentation": "<p>The life cycle type for this DB cluster.</p> <note> <p>By default, this value is set to <code>open-source-rds-extended-support</code>, which enrolls your DB cluster into Amazon RDS Extended Support. At the end of standard support, you can avoid charges for Extended Support by setting the value to <code>open-source-rds-extended-support-disabled</code>. In this case, RDS automatically upgrades your restored DB cluster to a higher engine version, if the major engine version is past its end of standard support date.</p> </note> <p>You can use this setting to enroll your DB cluster into Amazon RDS Extended Support. With RDS Extended Support, you can run the selected major engine version on your DB cluster past the end of standard support for that engine version. For more information, see the following sections:</p> <ul> <li> <p>Amazon Aurora (PostgreSQL only) - <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon Aurora User Guide</i> </p> </li> <li> <p>Amazon RDS - <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon RDS User Guide</i> </p> </li> </ul> <p>Valid for Cluster Type: Aurora DB clusters and Multi-AZ DB clusters</p> <p>Valid Values: <code>open-source-rds-extended-support | open-source-rds-extended-support-disabled</code> </p> <p>Default: <code>open-source-rds-extended-support</code> </p>"
         }
       },
       "documentation": "<p/>"
@@ -15688,7 +15747,7 @@
         },
         "LicenseModel": {
           "shape": "String",
-          "documentation": "<p>License model information for the restored DB instance.</p> <p>This setting doesn't apply to RDS Custom.</p> <p>Default: Same as source.</p> <p>Valid Values: <code>license-included</code> | <code>bring-your-own-license</code> | <code>general-public-license</code> </p>"
+          "documentation": "<p>License model information for the restored DB instance.</p> <note> <p>License models for RDS for Db2 require additional configuration. The Bring Your Own License (BYOL) model requires a custom parameter group. The Db2 license through Amazon Web Services Marketplace model requires an Amazon Web Services Marketplace subscription. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/db2-licensing.html\">RDS for Db2 licensing options</a> in the <i>Amazon RDS User Guide</i>.</p> </note> <p>This setting doesn't apply to Amazon Aurora or RDS Custom DB instances.</p> <p>Valid Values:</p> <ul> <li> <p>RDS for Db2 - <code>bring-your-own-license | marketplace-license</code> </p> </li> <li> <p>RDS for MariaDB - <code>general-public-license</code> </p> </li> <li> <p>RDS for Microsoft SQL Server - <code>license-included</code> </p> </li> <li> <p>RDS for MySQL - <code>general-public-license</code> </p> </li> <li> <p>RDS for Oracle - <code>bring-your-own-license | license-included</code> </p> </li> <li> <p>RDS for PostgreSQL - <code>postgresql-license</code> </p> </li> </ul> <p>Default: Same as the source.</p>"
         },
         "DBName": {
           "shape": "String",
@@ -15808,6 +15867,14 @@
         "DedicatedLogVolume": {
           "shape": "BooleanOptional",
           "documentation": "<p>Specifies whether to enable a dedicated log volume (DLV) for the DB instance.</p>"
+        },
+        "CACertificateIdentifier": {
+          "shape": "String",
+          "documentation": "<p>The CA certificate identifier to use for the DB instance's server certificate.</p> <p>This setting doesn't apply to RDS Custom DB instances.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html\">Using SSL/TLS to encrypt a connection to a DB instance</a> in the <i>Amazon RDS User Guide</i> and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.SSL.html\"> Using SSL/TLS to encrypt a connection to a DB cluster</a> in the <i>Amazon Aurora User Guide</i>.</p>"
+        },
+        "EngineLifecycleSupport": {
+          "shape": "String",
+          "documentation": "<p>The life cycle type for this DB instance.</p> <note> <p>By default, this value is set to <code>open-source-rds-extended-support</code>, which enrolls your DB instance into Amazon RDS Extended Support. At the end of standard support, you can avoid charges for Extended Support by setting the value to <code>open-source-rds-extended-support-disabled</code>. In this case, RDS automatically upgrades your restored DB instance to a higher engine version, if the major engine version is past its end of standard support date.</p> </note> <p>You can use this setting to enroll your DB instance into Amazon RDS Extended Support. With RDS Extended Support, you can run the selected major engine version on your DB instance past the end of standard support for that engine version. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon RDS User Guide</i>.</p> <p>This setting applies only to RDS for MySQL and RDS for PostgreSQL. For Amazon Aurora DB instances, the life cycle type is managed by the DB cluster.</p> <p>Valid Values: <code>open-source-rds-extended-support | open-source-rds-extended-support-disabled</code> </p> <p>Default: <code>open-source-rds-extended-support</code> </p>"
         }
       },
       "documentation": "<p/>"
@@ -16027,6 +16094,14 @@
         "DedicatedLogVolume": {
           "shape": "BooleanOptional",
           "documentation": "<p>Specifies whether to enable a dedicated log volume (DLV) for the DB instance.</p>"
+        },
+        "CACertificateIdentifier": {
+          "shape": "String",
+          "documentation": "<p>The CA certificate identifier to use for the DB instance's server certificate.</p> <p>This setting doesn't apply to RDS Custom DB instances.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html\">Using SSL/TLS to encrypt a connection to a DB instance</a> in the <i>Amazon RDS User Guide</i> and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.SSL.html\"> Using SSL/TLS to encrypt a connection to a DB cluster</a> in the <i>Amazon Aurora User Guide</i>.</p>"
+        },
+        "EngineLifecycleSupport": {
+          "shape": "String",
+          "documentation": "<p>The life cycle type for this DB instance.</p> <note> <p>By default, this value is set to <code>open-source-rds-extended-support</code>, which enrolls your DB instance into Amazon RDS Extended Support. At the end of standard support, you can avoid charges for Extended Support by setting the value to <code>open-source-rds-extended-support-disabled</code>. In this case, RDS automatically upgrades your restored DB instance to a higher engine version, if the major engine version is past its end of standard support date.</p> </note> <p>You can use this setting to enroll your DB instance into Amazon RDS Extended Support. With RDS Extended Support, you can run the selected major engine version on your DB instance past the end of standard support for that engine version. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon RDS User Guide</i>.</p> <p>This setting applies only to RDS for MySQL and RDS for PostgreSQL. For Amazon Aurora DB instances, the life cycle type is managed by the DB cluster.</p> <p>Valid Values: <code>open-source-rds-extended-support | open-source-rds-extended-support-disabled</code> </p> <p>Default: <code>open-source-rds-extended-support</code> </p>"
         }
       }
     },
@@ -16090,7 +16165,7 @@
         },
         "LicenseModel": {
           "shape": "String",
-          "documentation": "<p>The license model information for the restored DB instance.</p> <p>This setting doesn't apply to RDS Custom.</p> <p>Valid Values: <code>license-included</code> | <code>bring-your-own-license</code> | <code>general-public-license</code> </p> <p>Default: Same as the source.</p>"
+          "documentation": "<p>The license model information for the restored DB instance.</p> <note> <p>License models for RDS for Db2 require additional configuration. The Bring Your Own License (BYOL) model requires a custom parameter group. The Db2 license through Amazon Web Services Marketplace model requires an Amazon Web Services Marketplace subscription. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/db2-licensing.html\">RDS for Db2 licensing options</a> in the <i>Amazon RDS User Guide</i>.</p> </note> <p>This setting doesn't apply to Amazon Aurora or RDS Custom DB instances.</p> <p>Valid Values:</p> <ul> <li> <p>RDS for Db2 - <code>bring-your-own-license | marketplace-license</code> </p> </li> <li> <p>RDS for MariaDB - <code>general-public-license</code> </p> </li> <li> <p>RDS for Microsoft SQL Server - <code>license-included</code> </p> </li> <li> <p>RDS for MySQL - <code>general-public-license</code> </p> </li> <li> <p>RDS for Oracle - <code>bring-your-own-license | license-included</code> </p> </li> <li> <p>RDS for PostgreSQL - <code>postgresql-license</code> </p> </li> </ul> <p>Default: Same as the source.</p>"
         },
         "DBName": {
           "shape": "String",
@@ -16218,6 +16293,14 @@
         "DedicatedLogVolume": {
           "shape": "BooleanOptional",
           "documentation": "<p>Specifies whether to enable a dedicated log volume (DLV) for the DB instance.</p>"
+        },
+        "CACertificateIdentifier": {
+          "shape": "String",
+          "documentation": "<p>The CA certificate identifier to use for the DB instance's server certificate.</p> <p>This setting doesn't apply to RDS Custom DB instances.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html\">Using SSL/TLS to encrypt a connection to a DB instance</a> in the <i>Amazon RDS User Guide</i> and <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.SSL.html\"> Using SSL/TLS to encrypt a connection to a DB cluster</a> in the <i>Amazon Aurora User Guide</i>.</p>"
+        },
+        "EngineLifecycleSupport": {
+          "shape": "String",
+          "documentation": "<p>The life cycle type for this DB instance.</p> <note> <p>By default, this value is set to <code>open-source-rds-extended-support</code>, which enrolls your DB instance into Amazon RDS Extended Support. At the end of standard support, you can avoid charges for Extended Support by setting the value to <code>open-source-rds-extended-support-disabled</code>. In this case, RDS automatically upgrades your restored DB instance to a higher engine version, if the major engine version is past its end of standard support date.</p> </note> <p>You can use this setting to enroll your DB instance into Amazon RDS Extended Support. With RDS Extended Support, you can run the selected major engine version on your DB instance past the end of standard support for that engine version. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/extended-support.html\">Using Amazon RDS Extended Support</a> in the <i>Amazon RDS User Guide</i>.</p> <p>This setting applies only to RDS for MySQL and RDS for PostgreSQL. For Amazon Aurora DB instances, the life cycle type is managed by the DB cluster.</p> <p>Valid Values: <code>open-source-rds-extended-support | open-source-rds-extended-support-disabled</code> </p> <p>Default: <code>open-source-rds-extended-support</code> </p>"
         }
       },
       "documentation": "<p/>"
@@ -17127,7 +17210,7 @@
         },
         "AutoUpgrade": {
           "shape": "Boolean",
-          "documentation": "<p>Indicates whether the target version is applied to any source DB instances that have <code>AutoMinorVersionUpgrade</code> set to true.</p>"
+          "documentation": "<p>Indicates whether the target version is applied to any source DB instances that have <code>AutoMinorVersionUpgrade</code> set to true.</p> <p>This parameter is dynamic, and is set by RDS.</p>"
         },
         "IsMajorVersionUpgrade": {
           "shape": "Boolean",
@@ -17148,6 +17231,10 @@
         "SupportsBabelfish": {
           "shape": "BooleanOptional",
           "documentation": "<p>Indicates whether you can use Babelfish for Aurora PostgreSQL with the target engine version.</p>"
+        },
+        "SupportsLimitlessDatabase": {
+          "shape": "BooleanOptional",
+          "documentation": "<p>Indicates whether the DB engine version supports Aurora Limitless Database.</p>"
         },
         "SupportsLocalWriteForwarding": {
           "shape": "BooleanOptional",

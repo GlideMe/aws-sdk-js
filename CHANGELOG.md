@@ -1,6 +1,31 @@
 # Changelog for AWS SDK for JavaScript
-<!--LATEST=2.1628.0-->
+<!--LATEST=2.1632.0-->
 <!--ENTRYINSERT-->
+
+## 2.1632.0
+* feature: CodeGuruSecurity: This release includes minor model updates and documentation updates.
+* feature: LaunchWizard: This release adds support for describing workload deployment specifications, deploying additional workload types, and managing tags for Launch Wizard resources with API operations.
+
+## 2.1631.0
+* feature: ACM: add v2 smoke tests and smithy smokeTests trait for SDK testing.
+* feature: BedrockAgent: With this release, Knowledge bases for Bedrock adds support for Titan Text Embedding v2.
+* feature: BedrockRuntime: This release adds Converse and ConverseStream APIs to Bedrock Runtime
+* feature: CloudTrail: CloudTrail Lake returns PartitionKeys in the GetEventDataStore API response. Events are grouped into partitions based on these keys for better query performance. For example, the calendarday key groups events by day, while combining the calendarday key with the hour key groups them by day and hour.
+* feature: Connect: Adding associatedQueueIds as a SearchCriteria and response field to the SearchRoutingProfiles API
+* feature: EMRServerless: The release adds support for spark structured streaming.
+* feature: SageMaker: Adds Model Card information as a new component to Model Package. Autopilot launches algorithm selection for TimeSeries modality to generate AutoML candidates per algorithm.
+
+## 2.1630.0
+* feature: Athena: Throwing validation errors on CreateNotebook with Name containing `/`,`:`,`\`
+* feature: CodeBuild: AWS CodeBuild now supports manually creating GitHub webhooks
+* feature: Connect: This release includes changes to DescribeContact API's response by including ConnectedToSystemTimestamp, RoutingCriteria, Customer, Campaign, AnsweringMachineDetectionStatus, CustomerVoiceActivity, QualityMetrics, DisconnectDetails, and SegmentAttributes information from a contact in Amazon Connect.
+* feature: Glue: Add optional field JobMode to CreateJob and UpdateJob APIs.
+* feature: SecurityHub: Add ROOT type for TargetType model
+
+## 2.1629.0
+* feature: EC2: Providing support to accept BgpAsnExtended attribute
+* feature: Kafka: Adds ControllerNodeInfo in ListNodes response to support Raft mode for MSK
+* feature: SWF: This release adds new APIs for deleting activity type and workflow type resources.
 
 ## 2.1628.0
 * feature: IoTFleetWise: AWS IoT FleetWise now supports listing vehicles with attributes filter, ListVehicles API is updated to support additional attributes filter.

@@ -1053,7 +1053,7 @@ declare namespace CodeBuild {
     overflowBehavior?: FleetOverflowBehavior;
     vpcConfig?: VpcConfig;
     /**
-     * The service role associated with the compute fleet.
+     * The service role associated with the compute fleet. For more information, see  Allow a user to add a permission policy for a fleet service role in the CodeBuild User Guide.
      */
     fleetServiceRole?: NonEmptyString;
     /**
@@ -1200,6 +1200,10 @@ declare namespace CodeBuild {
      * Specifies the type of build this webhook will trigger.
      */
     buildType?: WebhookBuildType;
+    /**
+     * If manualCreation is true, CodeBuild doesn't create a webhook in GitHub and instead returns payloadUrl and secret values for the webhook. The payloadUrl and secret values in the output can be used to manually create a webhook within GitHub.   manualCreation is only available for GitHub webhooks. 
+     */
+    manualCreation?: WrapperBoolean;
   }
   export interface CreateWebhookOutput {
     /**
@@ -1485,7 +1489,7 @@ declare namespace CodeBuild {
     overflowBehavior?: FleetOverflowBehavior;
     vpcConfig?: VpcConfig;
     /**
-     * The service role associated with the compute fleet.
+     * The service role associated with the compute fleet. For more information, see  Allow a user to add a permission policy for a fleet service role in the CodeBuild User Guide.
      */
     fleetServiceRole?: NonEmptyString;
     /**
@@ -3038,7 +3042,7 @@ declare namespace CodeBuild {
     overflowBehavior?: FleetOverflowBehavior;
     vpcConfig?: VpcConfig;
     /**
-     * The service role associated with the compute fleet.
+     * The service role associated with the compute fleet. For more information, see  Allow a user to add a permission policy for a fleet service role in the CodeBuild User Guide.
      */
     fleetServiceRole?: NonEmptyString;
     /**
@@ -3252,6 +3256,10 @@ declare namespace CodeBuild {
      */
     buildType?: WebhookBuildType;
     /**
+     * If manualCreation is true, CodeBuild doesn't create a webhook in GitHub and instead returns payloadUrl and secret values for the webhook. The payloadUrl and secret values in the output can be used to manually create a webhook within GitHub.  manualCreation is only available for GitHub webhooks. 
+     */
+    manualCreation?: WrapperBoolean;
+    /**
      * A timestamp that indicates the last time a repository's secret token was modified. 
      */
     lastModifiedSecret?: Timestamp;
@@ -3259,7 +3267,7 @@ declare namespace CodeBuild {
   export type WebhookBuildType = "BUILD"|"BUILD_BATCH"|string;
   export interface WebhookFilter {
     /**
-     *  The type of webhook filter. There are nine webhook filter types: EVENT, ACTOR_ACCOUNT_ID, HEAD_REF, BASE_REF, FILE_PATH, COMMIT_MESSAGE, TAG_NAME, RELEASE_NAME, and WORKFLOW_NAME.     EVENT     A webhook event triggers a build when the provided pattern matches one of nine event types: PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED, PULL_REQUEST_CLOSED, PULL_REQUEST_REOPENED, PULL_REQUEST_MERGED, RELEASED, PRERELEASED, and WORKFLOW_JOB_QUEUED. The EVENT patterns are specified as a comma-separated string. For example, PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED filters all push, pull request created, and pull request updated events.    The PULL_REQUEST_REOPENED works with GitHub and GitHub Enterprise only. The RELEASED, PRERELEASED, and WORKFLOW_JOB_QUEUED work with GitHub only.      ACTOR_ACCOUNT_ID    A webhook event triggers a build when a GitHub, GitHub Enterprise, or Bitbucket account ID matches the regular expression pattern.      HEAD_REF    A webhook event triggers a build when the head reference matches the regular expression pattern. For example, refs/heads/branch-name and refs/tags/tag-name.    Works with GitHub and GitHub Enterprise push, GitHub and GitHub Enterprise pull request, Bitbucket push, and Bitbucket pull request events.      BASE_REF    A webhook event triggers a build when the base reference matches the regular expression pattern. For example, refs/heads/branch-name.    Works with pull request events only.       FILE_PATH    A webhook triggers a build when the path of a changed file matches the regular expression pattern.    Works with GitHub and Bitbucket events push and pull requests events. Also works with GitHub Enterprise push events, but does not work with GitHub Enterprise pull request events.       COMMIT_MESSAGE   A webhook triggers a build when the head commit message matches the regular expression pattern.   Works with GitHub and Bitbucket events push and pull requests events. Also works with GitHub Enterprise push events, but does not work with GitHub Enterprise pull request events.       TAG_NAME   A webhook triggers a build when the tag name of the release matches the regular expression pattern.   Works with RELEASED and PRERELEASED events only.       RELEASE_NAME   A webhook triggers a build when the release name matches the regular expression pattern.   Works with RELEASED and PRERELEASED events only.       WORKFLOW_NAME   A webhook triggers a build when the workflow name matches the regular expression pattern.   Works with WORKFLOW_JOB_QUEUED events only.      
+     *  The type of webhook filter. There are nine webhook filter types: EVENT, ACTOR_ACCOUNT_ID, HEAD_REF, BASE_REF, FILE_PATH, COMMIT_MESSAGE, TAG_NAME, RELEASE_NAME, and WORKFLOW_NAME.     EVENT     A webhook event triggers a build when the provided pattern matches one of nine event types: PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED, PULL_REQUEST_CLOSED, PULL_REQUEST_REOPENED, PULL_REQUEST_MERGED, RELEASED, PRERELEASED, and WORKFLOW_JOB_QUEUED. The EVENT patterns are specified as a comma-separated string. For example, PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED filters all push, pull request created, and pull request updated events.    Types PULL_REQUEST_REOPENED and WORKFLOW_JOB_QUEUED work with GitHub and GitHub Enterprise only. Types RELEASED and PRERELEASED work with GitHub only.      ACTOR_ACCOUNT_ID    A webhook event triggers a build when a GitHub, GitHub Enterprise, or Bitbucket account ID matches the regular expression pattern.      HEAD_REF    A webhook event triggers a build when the head reference matches the regular expression pattern. For example, refs/heads/branch-name and refs/tags/tag-name.    Works with GitHub and GitHub Enterprise push, GitHub and GitHub Enterprise pull request, Bitbucket push, and Bitbucket pull request events.      BASE_REF    A webhook event triggers a build when the base reference matches the regular expression pattern. For example, refs/heads/branch-name.    Works with pull request events only.       FILE_PATH    A webhook triggers a build when the path of a changed file matches the regular expression pattern.    Works with GitHub and Bitbucket events push and pull requests events. Also works with GitHub Enterprise push events, but does not work with GitHub Enterprise pull request events.       COMMIT_MESSAGE   A webhook triggers a build when the head commit message matches the regular expression pattern.   Works with GitHub and Bitbucket events push and pull requests events. Also works with GitHub Enterprise push events, but does not work with GitHub Enterprise pull request events.       TAG_NAME   A webhook triggers a build when the tag name of the release matches the regular expression pattern.   Works with RELEASED and PRERELEASED events only.       RELEASE_NAME   A webhook triggers a build when the release name matches the regular expression pattern.   Works with RELEASED and PRERELEASED events only.       WORKFLOW_NAME   A webhook triggers a build when the workflow name matches the regular expression pattern.   Works with WORKFLOW_JOB_QUEUED events only.      
      */
     type: WebhookFilterType;
     /**

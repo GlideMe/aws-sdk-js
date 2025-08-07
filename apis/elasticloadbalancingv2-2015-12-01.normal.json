@@ -12,7 +12,10 @@
     "serviceId": "Elastic Load Balancing v2",
     "signatureVersion": "v4",
     "uid": "elasticloadbalancingv2-2015-12-01",
-    "xmlNamespace": "http://elasticloadbalancing.amazonaws.com/doc/2015-12-01/"
+    "xmlNamespace": "http://elasticloadbalancing.amazonaws.com/doc/2015-12-01/",
+    "auth": [
+      "aws.auth#sigv4"
+    ]
   },
   "operations": {
     "AddListenerCertificates": {
@@ -439,6 +442,32 @@
       ],
       "documentation": "<p>Deletes the specified rule.</p> <p>You can't delete the default rule.</p>"
     },
+    "DeleteSharedTrustStoreAssociation": {
+      "name": "DeleteSharedTrustStoreAssociation",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "DeleteSharedTrustStoreAssociationInput"
+      },
+      "output": {
+        "shape": "DeleteSharedTrustStoreAssociationOutput",
+        "resultWrapper": "DeleteSharedTrustStoreAssociationResult"
+      },
+      "errors": [
+        {
+          "shape": "TrustStoreNotFoundException"
+        },
+        {
+          "shape": "DeleteAssociationSameAccountException"
+        },
+        {
+          "shape": "TrustStoreAssociationNotFoundException"
+        }
+      ],
+      "documentation": "<p>Deletes a shared trust store association.</p>"
+    },
     "DeleteTargetGroup": {
       "name": "DeleteTargetGroup",
       "http": {
@@ -519,6 +548,26 @@
         "resultWrapper": "DescribeAccountLimitsResult"
       },
       "documentation": "<p>Describes the current Elastic Load Balancing resource limits for your Amazon Web Services account.</p> <p>For more information, see the following:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-limits.html\">Quotas for your Application Load Balancers</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-limits.html\">Quotas for your Network Load Balancers</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/quotas-limits.html\">Quotas for your Gateway Load Balancers</a> </p> </li> </ul>"
+    },
+    "DescribeListenerAttributes": {
+      "name": "DescribeListenerAttributes",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "DescribeListenerAttributesInput"
+      },
+      "output": {
+        "shape": "DescribeListenerAttributesOutput",
+        "resultWrapper": "DescribeListenerAttributesResult"
+      },
+      "errors": [
+        {
+          "shape": "ListenerNotFoundException"
+        }
+      ],
+      "documentation": "<p>Describes the attributes for the specified listener.</p>"
     },
     "DescribeListenerCertificates": {
       "name": "DescribeListenerCertificates",
@@ -794,7 +843,7 @@
           "shape": "RevocationIdNotFoundException"
         }
       ],
-      "documentation": "<p>Describes the revocation files in use by the specified trust store arn, or revocation ID.</p>"
+      "documentation": "<p>Describes the revocation files in use by the specified trust store or revocation files.</p>"
     },
     "DescribeTrustStores": {
       "name": "DescribeTrustStores",
@@ -814,7 +863,27 @@
           "shape": "TrustStoreNotFoundException"
         }
       ],
-      "documentation": "<p>Describes all trust stores for a given account by trust store arn’s or name.</p>"
+      "documentation": "<p>Describes all trust stores for the specified account.</p>"
+    },
+    "GetResourcePolicy": {
+      "name": "GetResourcePolicy",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "GetResourcePolicyInput"
+      },
+      "output": {
+        "shape": "GetResourcePolicyOutput",
+        "resultWrapper": "GetResourcePolicyResult"
+      },
+      "errors": [
+        {
+          "shape": "ResourceNotFoundException"
+        }
+      ],
+      "documentation": "<p>Retrieves the resource policy for a specified resource.</p>"
     },
     "GetTrustStoreCaCertificatesBundle": {
       "name": "GetTrustStoreCaCertificatesBundle",
@@ -932,6 +1001,29 @@
         }
       ],
       "documentation": "<p>Replaces the specified properties of the specified listener. Any properties that you do not specify remain unchanged.</p> <p>Changing the protocol from HTTPS to HTTP, or from TLS to TCP, removes the security policy and default certificate properties. If you change the protocol from HTTP to HTTPS, or from TCP to TLS, you must add the security policy and default certificate properties.</p> <p>To add an item to a list, remove an item from a list, or update an item in a list, you must provide the entire list. For example, to add an action, specify a list with the current actions plus the new action.</p>"
+    },
+    "ModifyListenerAttributes": {
+      "name": "ModifyListenerAttributes",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "ModifyListenerAttributesInput"
+      },
+      "output": {
+        "shape": "ModifyListenerAttributesOutput",
+        "resultWrapper": "ModifyListenerAttributesResult"
+      },
+      "errors": [
+        {
+          "shape": "ListenerNotFoundException"
+        },
+        {
+          "shape": "InvalidConfigurationRequestException"
+        }
+      ],
+      "documentation": "<p>Modifies the specified attributes of the specified listener.</p>"
     },
     "ModifyLoadBalancerAttributes": {
       "name": "ModifyLoadBalancerAttributes",
@@ -1076,7 +1168,7 @@
           "shape": "CaCertificatesBundleNotFoundException"
         }
       ],
-      "documentation": "<p>Update the ca certificate bundle for a given trust store.</p>"
+      "documentation": "<p>Update the ca certificate bundle for the specified trust store.</p>"
     },
     "RegisterTargets": {
       "name": "RegisterTargets",
@@ -2085,6 +2177,27 @@
       "type": "structure",
       "members": {}
     },
+    "DeleteSharedTrustStoreAssociationInput": {
+      "type": "structure",
+      "required": [
+        "TrustStoreArn",
+        "ResourceArn"
+      ],
+      "members": {
+        "TrustStoreArn": {
+          "shape": "TrustStoreArn",
+          "documentation": "<p>The Amazon Resource Name (ARN) of the trust store.</p>"
+        },
+        "ResourceArn": {
+          "shape": "ResourceArn",
+          "documentation": "<p>The Amazon Resource Name (ARN) of the resource.</p>"
+        }
+      }
+    },
+    "DeleteSharedTrustStoreAssociationOutput": {
+      "type": "structure",
+      "members": {}
+    },
     "DeleteTargetGroupInput": {
       "type": "structure",
       "required": [
@@ -2161,6 +2274,27 @@
         "NextMarker": {
           "shape": "Marker",
           "documentation": "<p>If there are additional results, this is the marker for the next set of results. Otherwise, this is null.</p>"
+        }
+      }
+    },
+    "DescribeListenerAttributesInput": {
+      "type": "structure",
+      "required": [
+        "ListenerArn"
+      ],
+      "members": {
+        "ListenerArn": {
+          "shape": "ListenerArn",
+          "documentation": "<p>The Amazon Resource Name (ARN) of the listener.</p>"
+        }
+      }
+    },
+    "DescribeListenerAttributesOutput": {
+      "type": "structure",
+      "members": {
+        "Attributes": {
+          "shape": "ListenerAttributes",
+          "documentation": "<p>Information about the listener attributes.</p>"
         }
       }
     },
@@ -2450,7 +2584,7 @@
         },
         "Include": {
           "shape": "ListOfDescribeTargetHealthIncludeOptions",
-          "documentation": "<p>Used to inclue anomaly detection information.</p>"
+          "documentation": "<p>Used to include anomaly detection information.</p>"
         }
       }
     },
@@ -2664,6 +2798,27 @@
       },
       "documentation": "<p>Information about a forward action.</p>"
     },
+    "GetResourcePolicyInput": {
+      "type": "structure",
+      "required": [
+        "ResourceArn"
+      ],
+      "members": {
+        "ResourceArn": {
+          "shape": "ResourceArn",
+          "documentation": "<p>The Amazon Resource Name (ARN) of the resource.</p>"
+        }
+      }
+    },
+    "GetResourcePolicyOutput": {
+      "type": "structure",
+      "members": {
+        "Policy": {
+          "shape": "Policy",
+          "documentation": "<p>The content of the resource policy.</p>"
+        }
+      }
+    },
     "GetTrustStoreCaCertificatesBundleInput": {
       "type": "structure",
       "required": [
@@ -2876,6 +3031,34 @@
       "type": "list",
       "member": {
         "shape": "ListenerArn"
+      }
+    },
+    "ListenerAttribute": {
+      "type": "structure",
+      "members": {
+        "Key": {
+          "shape": "ListenerAttributeKey",
+          "documentation": "<p>The name of the attribute.</p> <p>The following attribute is supported by Network Load Balancers, and Gateway Load Balancers.</p> <ul> <li> <p> <code>tcp.idle_timeout.seconds</code> - The tcp idle timeout value, in seconds. The valid range is 60-6000 seconds. The default is 350 seconds.</p> </li> </ul>"
+        },
+        "Value": {
+          "shape": "ListenerAttributeValue",
+          "documentation": "<p>The value of the attribute.</p>"
+        }
+      },
+      "documentation": "<p>Information about a listener attribute.</p>"
+    },
+    "ListenerAttributeKey": {
+      "type": "string",
+      "max": 256,
+      "pattern": "^[a-zA-Z0-9._]+$"
+    },
+    "ListenerAttributeValue": {
+      "type": "string"
+    },
+    "ListenerAttributes": {
+      "type": "list",
+      "member": {
+        "shape": "ListenerAttribute"
       }
     },
     "Listeners": {
@@ -3099,6 +3282,32 @@
     "Mode": {
       "type": "string"
     },
+    "ModifyListenerAttributesInput": {
+      "type": "structure",
+      "required": [
+        "ListenerArn",
+        "Attributes"
+      ],
+      "members": {
+        "ListenerArn": {
+          "shape": "ListenerArn",
+          "documentation": "<p>The Amazon Resource Name (ARN) of the listener.</p>"
+        },
+        "Attributes": {
+          "shape": "ListenerAttributes",
+          "documentation": "<p>The listener attributes.</p>"
+        }
+      }
+    },
+    "ModifyListenerAttributesOutput": {
+      "type": "structure",
+      "members": {
+        "Attributes": {
+          "shape": "ListenerAttributes",
+          "documentation": "<p>Information about the listener attributes.</p>"
+        }
+      }
+    },
     "ModifyListenerInput": {
       "type": "structure",
       "required": [
@@ -3216,7 +3425,7 @@
         },
         "Attributes": {
           "shape": "TargetGroupAttributes",
-          "documentation": "<p>The attributes.</p>"
+          "documentation": "<p>The target group attributes.</p>"
         }
       }
     },
@@ -3225,7 +3434,7 @@
       "members": {
         "Attributes": {
           "shape": "TargetGroupAttributes",
-          "documentation": "<p>Information about the attributes.</p>"
+          "documentation": "<p>Information about the target group attributes.</p>"
         }
       }
     },
@@ -3335,6 +3544,10 @@
         "IgnoreClientCertificateExpiry": {
           "shape": "IgnoreClientCertificateExpiry",
           "documentation": "<p>Indicates whether expired client certificates are ignored.</p>"
+        },
+        "TrustStoreAssociationStatus": {
+          "shape": "TrustStoreAssociationStatusEnum",
+          "documentation": "<p>Indicates a shared trust stores association status.</p>"
         }
       },
       "documentation": "<p>Information about the mutual authentication attributes of a listener.</p>"
@@ -3370,6 +3583,10 @@
         }
       },
       "documentation": "<p>Information about a path pattern condition.</p>"
+    },
+    "Policy": {
+      "type": "string",
+      "min": 1
     },
     "Port": {
       "type": "integer",
@@ -3763,7 +3980,7 @@
         },
         "IpAddressType": {
           "shape": "IpAddressType",
-          "documentation": "<p>Note: Internal load balancers must use the <code>ipv4</code> IP address type.</p> <p>[Application Load Balancers] The IP address type. The possible values are <code>ipv4</code> (for only IPv4 addresses), <code>dualstack</code> (for IPv4 and IPv6 addresses), and <code>dualstack-without-public-ipv4</code> (for IPv6 only public addresses, with private IPv4 and IPv6 addresses).</p> <p>[Network Load Balancers] The IP address type. The possible values are <code>ipv4</code> (for only IPv4 addresses) and <code>dualstack</code> (for IPv4 and IPv6 addresses). You can’t specify <code>dualstack</code> for a load balancer with a UDP or TCP_UDP listener.</p> <p>[Gateway Load Balancers] The IP address type. The possible values are <code>ipv4</code> (for only IPv4 addresses) and <code>dualstack</code> (for IPv4 and IPv6 addresses).</p>"
+          "documentation": "<p>Note: Internal load balancers must use the <code>ipv4</code> IP address type.</p> <p>[Application Load Balancers] The IP address type. The possible values are <code>ipv4</code> (for only IPv4 addresses), <code>dualstack</code> (for IPv4 and IPv6 addresses), and <code>dualstack-without-public-ipv4</code> (for IPv6 only public addresses, with private IPv4 and IPv6 addresses).</p> <p>Note: Application Load Balancer authentication only supports IPv4 addresses when connecting to an Identity Provider (IdP) or Amazon Cognito endpoint. Without a public IPv4 address the load balancer cannot complete the authentication process, resulting in HTTP 500 errors.</p> <p>[Network Load Balancers] The IP address type. The possible values are <code>ipv4</code> (for only IPv4 addresses) and <code>dualstack</code> (for IPv4 and IPv6 addresses). You can’t specify <code>dualstack</code> for a load balancer with a UDP or TCP_UDP listener.</p> <p>[Gateway Load Balancers] The IP address type. The possible values are <code>ipv4</code> (for only IPv4 addresses) and <code>dualstack</code> (for IPv4 and IPv6 addresses).</p>"
         }
       }
     },
@@ -4376,6 +4593,13 @@
     },
     "TrustStoreAssociationResourceArn": {
       "type": "string"
+    },
+    "TrustStoreAssociationStatusEnum": {
+      "type": "string",
+      "enum": [
+        "active",
+        "removed"
+      ]
     },
     "TrustStoreAssociations": {
       "type": "list",

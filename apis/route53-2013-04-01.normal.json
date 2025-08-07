@@ -5,11 +5,17 @@
     "endpointPrefix": "route53",
     "globalEndpoint": "route53.amazonaws.com",
     "protocol": "rest-xml",
+    "protocols": [
+      "rest-xml"
+    ],
     "serviceAbbreviation": "Route 53",
     "serviceFullName": "Amazon Route 53",
     "serviceId": "Route 53",
     "signatureVersion": "v4",
-    "uid": "route53-2013-04-01"
+    "uid": "route53-2013-04-01",
+    "auth": [
+      "aws.auth#sigv4"
+    ]
   },
   "operations": {
     "ActivateKeySigningKey": {
@@ -2559,7 +2565,8 @@
         "us-isob-east-1",
         "ap-southeast-4",
         "il-central-1",
-        "ca-west-1"
+        "ca-west-1",
+        "ap-southeast-5"
       ],
       "max": 64,
       "min": 1
@@ -5913,7 +5920,8 @@
         "eu-south-2",
         "ap-southeast-4",
         "il-central-1",
-        "ca-west-1"
+        "ca-west-1",
+        "ap-southeast-5"
       ],
       "max": 64,
       "min": 1
@@ -6677,7 +6685,8 @@
         "eu-south-2",
         "ap-southeast-4",
         "il-central-1",
-        "ca-west-1"
+        "ca-west-1",
+        "ap-southeast-5"
       ],
       "max": 64,
       "min": 1
